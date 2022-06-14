@@ -1,5 +1,15 @@
-import Head from "next/head";
+import Head from "next/dist/shared/lib/head";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 export default function Home() {
-  return <h1>hello world</h1>;
+  return (
+    <div>
+      <Head>
+        <title>Shopfi</title>
+      </Head>
+      <Header />
+      <Footer />
+    </div>
+  );
 }

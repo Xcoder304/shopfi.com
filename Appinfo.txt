@@ -13,8 +13,8 @@ values are
 these colors are for light mode 
 
 **************light mode******************
-white =  #EFFFFB  40% - 45%
-green = #50D890   30% - 35%
+white =  #F0F0F0  40% - 45%
+green = #24AF65   30% - 35%
 blue = #4F98CA    20% - 20% else: 25%
 black = #272727   8% or 10% - 12% or 15%
 **************light mode******************
@@ -35,6 +35,9 @@ white for background and text on button or on dark area
 green for button and actionable things
 blue for headings or any things you liked to be blue
 black for text on light area and paragraphs
+
+
+
 
 
 
