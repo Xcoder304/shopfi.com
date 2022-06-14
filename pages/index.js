@@ -1,6 +1,6 @@
 import Head from "next/dist/shared/lib/head";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+// import Footer from "../components/Footer";
+// import Header from "../components/Header";
 import HomeLayout from "../components/HomeLayout";
 
 export default function Home() {
@@ -9,9 +9,9 @@ export default function Home() {
       <Head>
         <title>Shopfi</title>
       </Head>
-      <Header />
+      {/* <Header /> */}
       <HomeLayout />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

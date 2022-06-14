@@ -11,18 +11,21 @@ import { MdPersonAddAlt } from "react-icons/md";
 import { CgLogOut } from "react-icons/cg";
 import { FiMenu } from "react-icons/fi";
 import HeaderMenu from "./HeaderMenu";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [openModal, handleModal] = useDisclosure(false);
   const [openMenu, setOpenMenu] = useState(false);
-
-  console.log(openMenu);
+  const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between py-3 px-2 md:px-5 shadow-md overflow-x-hidden">
+    <header className="w-full flex items-center justify-between py-4 px-2 md:px-5 shadow-md overflow-x-hidden sticky top-0 z-40 bg-white">
       <HeaderMenu open={openMenu} setOpen={setOpenMenu} />
       <div className="flex items-center justify-center space-x-2 md:space-x-5">
-        <h1 className="font-bold capitalize text-App_green_L select-none text-5xl px-0 hidden sm:inline-block">
+        <h1
+          className="font-bold capitalize text-App_green_L select-none text-5xl cursor-pointer px-0 hidden sm:inline-block"
+          onClick={() => router.push("/")}
+        >
           shopfi
           <span className="font-bold text-App_blue_L text-5xl">.</span>
         </h1>

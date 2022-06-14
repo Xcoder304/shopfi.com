@@ -176,7 +176,7 @@ const HeaderMenu = ({ open, setOpen }) => {
       className={`fixed top-0 left-0  w-full h-auto min-h-screen overflow-auto ${
         bg && "!bg-[#24242454]"
       }  ${
-        open && "translate-x-0"
+        open && "-translate-x-0"
       }  -translate-x-[1500px] transition-all duration-100 ease-in-out z-40`}
     >
       <div className="w-[80%] md:w-[45%] lg:w-[30%] h-screen top-0 left-0 bg-white ] relative">

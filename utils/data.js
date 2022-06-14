@@ -36,7 +36,7 @@ export const data = {
     },
     {
       name: "Black TShirt Men/Woman",
-      slug: "black-tshirt-men-woman",
+      slug: "black-tshirt-men-woman2",
       image: "https://m.media-amazon.com/images/I/714s29JGWIL._AC_UY500_.jpg",
       price: 12,
       brand: "Nike",
@@ -47,7 +47,7 @@ export const data = {
     },
     {
       name: "Gildan Men's Heavy Cotton T-Shirt, Style G5000, Multipack",
-      slug: "Gildan-Cotton-T-Shirt-2-Pack",
+      slug: "Gildan-Cotton-T-Shirt-2-Pack2",
       image: "https://m.media-amazon.com/images/I/71kM3J7wfHL._AC_UX522_.jpg",
       price: 85,
       brand: "Gildan Store",
@@ -59,7 +59,7 @@ export const data = {
     },
     {
       name: "Hanes Women's Short Sleeve V-Neck Graphic T-Shirt",
-      slug: "Hanes-Graphic-multiple-graphics-available",
+      slug: "Hanes-Graphic-multiple-graphics-available2",
       image: "https://m.media-amazon.com/images/I/811n9roXHTL._AC_UY500_.jpg",
       price: 45,
       brand: "Hanes Store",
