@@ -173,10 +173,10 @@ const HeaderMenu = ({ open, setOpen }) => {
 
   return (
     <div
-      className={`absolute top-0 left-0  w-full h-auto min-h-screen overflow-auto ${
+      className={`fixed top-0 left-0  w-full h-auto min-h-screen overflow-auto ${
         bg && "!bg-[#24242454]"
       }  ${
-        open && "-translate-x-0"
+        open && "translate-x-0"
       }  -translate-x-[1500px] transition-all duration-100 ease-in-out z-40`}
     >
       <div className="w-[80%] md:w-[45%] lg:w-[30%] h-screen top-0 left-0 bg-white ] relative">
@@ -194,7 +194,7 @@ const HeaderMenu = ({ open, setOpen }) => {
             backgroundColor:
               theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
           })}
-          className="pt-16 px-2"
+          className="pt-16 px-2 select-none"
         >
           {links}
         </Box>
