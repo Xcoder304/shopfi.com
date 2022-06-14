@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { data } from "../utils/data";
 import { useRouter } from "next/router";
-import { RatingStarNumber } from "../utils/Funtions";
 
 const HomeLayout = () => {
   const [productData, setProductData] = useState(data.products);
   const router = useRouter();
-  const rating = RatingStarNumber(5);
-
-  console.log("rating", rating.props);
 
   return (
     <section className="text-gray-600 body-font w-full bg-App_white_L">
