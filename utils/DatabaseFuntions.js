@@ -23,3 +23,13 @@ export const fetchTheProduct = async (slug) => {
 
   return product;
 };
+
+// saving the product to the cart
+export const AddProductToCart = async (data) => {
+  const send = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/addToCart`,
+    data
+  );
+
+  console.log("send", send);
+};

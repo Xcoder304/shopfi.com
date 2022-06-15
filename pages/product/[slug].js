@@ -1,17 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Button } from "@mantine/core";
 import { ShoppingCart, ArrowLeft } from "tabler-icons-react";
 import Head from "next/head";
 import { fetchTheProduct } from "../../utils/DatabaseFuntions";
 import { useDispatch, useSelector } from "react-redux";
-import { setTheCart, selectecart } from "../../Redux/features/ProductSlice";
+import {
+  setTheCart,
+  selectecart,
+  selecteErrorMsgVal,
+} from "../../Redux/features/ProductSlice";
+import { AddProductToCart } from "../../utils/DatabaseFuntions";
 import Cookies from "js-cookie";
 
 const Slug = ({ product }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const cart = useSelector(selectecart);
+  const Error = useSelector(selecteErrorMsgVal);
+  const [checkVal, setCheckVal] = useState(0);
 
   useEffect(() => {
     Cookies.set("cart", JSON.stringify(cart));
@@ -21,11 +28,35 @@ const Slug = ({ product }) => {
     <h1>product not founded</h1>;
   }
 
-  const AddToCart = () => {
-    dispatch(setTheCart(product));
+  useLayoutEffect(() => {
+    const fetchData = async () => {
+      if (checkVal > 0) {
+        if (Error.status) {
+          alert(Error.message);
+        } else {
+          let data = {
+            ...product,
+            productname: product.name,
+          };
 
-    router.push("/");
+          await AddProductToCart(data);
+        }
+      }
+    };
+
+    fetchData();
+  }, [checkVal]);
+
+  const AddToCart = async () => {
+    dispatch(setTheCart(product));
+    // router.push(
+    //   `${process.env.NEXT_PUBLIC_HOSTING_URL}/products/${product.slug}`
+    // );
+
+    setCheckVal(checkVal + 1);
   };
+
+  console.log("error", Error);
 
   return (
     <>
@@ -33,7 +64,7 @@ const Slug = ({ product }) => {
         <title>{product?.name + "-"} shopfi</title>
       </Head>
       <section className="text-gray-600 body-font overflow-hidden relative">
-        <div className="absolute top-[60px] left-14">
+        <div className="fixed top-[120px] left-14">
           <Button
             className="w-12 h-12 !p-0 cursor-pointer !m-0 bg-green-100 hover:bg-green-200 text-green-600 text-2xl rounded-full"
             onClick={() => router.back()}
