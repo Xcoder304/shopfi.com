@@ -1,17 +1,24 @@
 import Head from "next/dist/shared/lib/head";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import HomeLayout from "../components/HomeLayout";
+import { fetchTheProducts } from "../utils/DatabaseFuntions";
 
-export default function Home() {
+const Home = ({ products }) => {
   return (
     <div>
       <Head>
         <title>Shopfi</title>
       </Head>
-      <Header />
-      <HomeLayout />
-      <Footer />
+      <HomeLayout products={products} />
     </div>
   );
+};
+
+export async function getServerSideProps(context) {
+  const products = await fetchTheProducts();
+
+  return {
+    props: { products: products },
+  };
 }
+
+export default Home;
