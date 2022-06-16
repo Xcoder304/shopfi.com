@@ -35,6 +35,9 @@ export const ProductSlice = createSlice({
 
       // console.log(Cookies.get(JSON.parse(Cookies.get("cart"))));
     },
+    ChangeCartValue: (state, action) => {
+      state.cart = action.payload;
+    },
 
     setproductQty: (state, action) => {
       state.productQty = action.payload;
@@ -42,7 +45,8 @@ export const ProductSlice = createSlice({
   },
 });
 
-export const { setproductQty, setTheCart } = ProductSlice.actions;
+export const { setproductQty, setTheCart, ChangeCartValue } =
+  ProductSlice.actions;
 export const selecteproductQty = (state) => state.product.productQty;
 export const selectecart = (state) => state.product.cart;
 export const selecteErrorMsgVal = (state) => state.product.errorMsg;

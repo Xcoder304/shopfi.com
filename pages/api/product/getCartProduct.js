@@ -4,13 +4,12 @@ import Cart from "../../../modals/Cart";
 
 const handler = nc();
 
-handler.post(async (req, res) => {
+handler.get(async (req, res) => {
   await db.connect();
-  const items = await new Cart(req.body);
-  items.save();
+  const items = await Cart.find({});
   await db.disconnect();
 
-  res.send("Done");
+  res.send(items);
 });
 
 export default handler;

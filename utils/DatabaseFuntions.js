@@ -1,15 +1,16 @@
 import db from "./db";
 import axios from "axios";
 import Product from "../modals/Product";
+import Cart from "../modals/Cart";
 
-// for fetching the products for Home Page
-export const fetchTheProducts = async () => {
-  db.connect();
+// getProducts
+
+//fetching the data from api
+export const fetchApiData = async (apiName) => {
   const f = await axios.get(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/getProducts`
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/${apiName}`
   );
   const res = f.data;
-  db.disconnect();
 
   return res;
 };
@@ -30,6 +31,16 @@ export const AddProductToCart = async (data) => {
     `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/addToCart`,
     data
   );
+};
 
-  console.log("send", send);
+// fetching the cart data without api and its fast
+export const fetchCartData = async () => {
+  db.connect();
+  const f = await Cart.find({}).lean();
+
+  const res = f.map((data) => db.convertDocToString(data));
+  // const res = db.convertDocToString(f.data);
+  db.disconnect();
+
+  return res;
 };

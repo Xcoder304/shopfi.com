@@ -40,6 +40,7 @@ const Slug = ({ product }) => {
           };
 
           await AddProductToCart(data);
+          router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
         }
       }
     };
@@ -49,10 +50,6 @@ const Slug = ({ product }) => {
 
   const AddToCart = async () => {
     dispatch(setTheCart(product));
-    // router.push(
-    //   `${process.env.NEXT_PUBLIC_HOSTING_URL}/products/${product.slug}`
-    // );
-
     setCheckVal(checkVal + 1);
   };
 

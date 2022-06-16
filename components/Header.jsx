@@ -58,7 +58,13 @@ const Header = () => {
           )}
         </div>
         <Indicator inline label={cart.length} size={16} color="green">
-          <ActionIcon color="blue" size="xl">
+          <ActionIcon
+            color="blue"
+            size="xl"
+            onClick={() =>
+              router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`)
+            }
+          >
             <MdShoppingCart className="text-blue-600 text-3xl" />
           </ActionIcon>
         </Indicator>

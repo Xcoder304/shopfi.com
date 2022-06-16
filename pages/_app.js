@@ -1,14 +1,40 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles/globals.css";
 import { Provider } from "react-redux";
 import { store } from "../Redux/app/store";
+import Subapp from "./subapp";
+import { useRouter } from "next/router";
+import LoadingBar from "react-top-loading-bar";
 
 function MyApp({ Component, pageProps }) {
+  const [progress, setProgress] = useState(0);
+  const router = useRouter();
+
+  useEffect(() => {
+    router.events.on("routeChangeStart", () => {
+      setProgress(34);
+    });
+
+    router.events.on("routeChangeComplete", () => {
+      setProgress(100);
+    });
+  });
+
   return (
     <>
       <Provider store={store}>
+        <Subapp />
+        <LoadingBar
+          color="#24AF65"
+          height={4}
+          progress={progress}
+          shadow={false}
+          waitingTime={300}
+          onLoaderFinished={() => setProgress(0)}
+        />
         <Header />
         <Head>
           <link rel="icon" href="/assist/web-icon.png" />
