@@ -44,3 +44,11 @@ export const fetchCartData = async () => {
 
   return res;
 };
+
+// remove the singal product from the cart
+export const RemoveProductFromCart = async (data) => {
+  let rm = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/removeCartProduct`,
+    data
+  );
+};

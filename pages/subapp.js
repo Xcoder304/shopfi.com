@@ -17,6 +17,6 @@ const Subapp = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 };
 export default Subapp;

@@ -15,7 +15,13 @@ const HomeLayout = ({ products }) => {
                 <div
                   className="lg:w-1/4 w-[350px] m-2 h-[470px] bg-white !cursor-pointer rounded-lg shadow-md p-5 hover:scale-105 tranition-all duration-300 ease-out"
                   key={_id}
-                  onClick={() => router.push(`/product/${slug}?id=${_id}`)}
+                  onClick={() =>
+                    router.push(
+                      `${
+                        process.env.NEXT_PUBLIC_HOSTING_URL
+                      }/product/${slug}?id=${_id}?spm=${_id + "*" + slug}`
+                    )
+                  }
                 >
                   <div className="block overflow-hidden w-full h-[300px]">
                     <img

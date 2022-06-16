@@ -21,10 +21,12 @@ import { FiMenu } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectecart } from "../Redux/features/ProductSlice";
+import { selecteUser } from "../Redux/features/OtherStateteSlice";
 
 const Header = () => {
   const [openModal, handleModal] = useDisclosure(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const user = useSelector(selecteUser);
   const cart = useSelector(selectecart);
   const router = useRouter();
 
@@ -68,55 +70,64 @@ const Header = () => {
             <MdShoppingCart className="text-blue-600 text-3xl" />
           </ActionIcon>
         </Indicator>
-        <Menu
-          opened={openModal}
-          onOpen={handleModal.open}
-          onClose={handleModal.close}
-          control={
-            <div className="hover:bg-slate-200 rounded-full transition-all duration-200 ease-out">
-              <Avatar
-                radius="xl"
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
-                className="cursor-pointer hover:scale-90 transition-all duration-150 ease-out"
-              />
-            </div>
-          }
-        >
-          <Menu.Item
-            icon={<FcSettings size={14} />}
-            className="hover:bg-slate-100"
+        {user ? (
+          <Menu
+            opened={openModal}
+            onOpen={handleModal.open}
+            onClose={handleModal.close}
+            control={
+              <div className="hover:bg-slate-200 rounded-full transition-all duration-200 ease-out">
+                <Avatar
+                  radius="xl"
+                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
+                  className="cursor-pointer hover:scale-90 transition-all duration-150 ease-out"
+                />
+              </div>
+            }
           >
-            Account Settings
-          </Menu.Item>
-          <Menu.Item
-            icon={<AiOutlineMessage size={14} />}
-            className="hover:bg-blue-100"
-          >
-            Contact us
-          </Menu.Item>
-          <Menu.Item
-            icon={<BiHelpCircle size={14} />}
-            className="hover:bg-yellow-100"
-          >
-            Help
-          </Menu.Item>
+            <Menu.Item
+              icon={<FcSettings size={14} />}
+              className="hover:bg-slate-100"
+            >
+              Account Settings
+            </Menu.Item>
+            <Menu.Item
+              icon={<AiOutlineMessage size={14} />}
+              className="hover:bg-blue-100"
+            >
+              Contact us
+            </Menu.Item>
+            <Menu.Item
+              icon={<BiHelpCircle size={14} />}
+              className="hover:bg-yellow-100"
+            >
+              Help
+            </Menu.Item>
 
-          <Divider />
+            <Divider />
 
-          <Menu.Item
-            icon={<MdPersonAddAlt size={14} />}
-            className="hover:bg-green-100"
+            <Menu.Item
+              icon={<MdPersonAddAlt size={14} />}
+              className="hover:bg-green-100"
+            >
+              Add Another Account
+            </Menu.Item>
+            <Menu.Item
+              color="red"
+              icon={<CgLogOut size={14} />}
+              className="hover:bg-red-100"
+            >
+              Logout
+            </Menu.Item>
+          </Menu>
+        ) : (
+          <Button
+            variant="filled"
+            className="bg-App_green_L hover:bg-App_green_D text-base transition-all duration-200 ease-out outline-none"
           >
-            Add Another Account
-          </Menu.Item>
-          <Menu.Item
-            color="red"
-            icon={<CgLogOut size={14} />}
-            className="hover:bg-red-100"
-          >
-            Logout
-          </Menu.Item>
-        </Menu>
+            Login
+          </Button>
+        )}
       </div>
     </header>
   );
