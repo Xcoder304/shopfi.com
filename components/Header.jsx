@@ -19,15 +19,19 @@ import { CgLogOut } from "react-icons/cg";
 import { FiMenu } from "react-icons/fi";
 // import HeaderMenu from "./HeaderMenu";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectecart } from "../Redux/features/ProductSlice";
-import { selecteUser } from "../Redux/features/OtherStateteSlice";
+import {
+  selecteUser,
+  setOpenLoginModal,
+} from "../Redux/features/OtherStateteSlice";
 
 const Header = () => {
   const [openModal, handleModal] = useDisclosure(false);
   const [openMenu, setOpenMenu] = useState(false);
   const user = useSelector(selecteUser);
   const cart = useSelector(selectecart);
+  const dispatch = useDispatch();
   const router = useRouter();
 
   return (
@@ -124,6 +128,7 @@ const Header = () => {
           <Button
             variant="filled"
             className="bg-App_green_L hover:bg-App_green_D text-base transition-all duration-200 ease-out outline-none"
+            onClick={() => dispatch(setOpenLoginModal(true))}
           >
             Login
           </Button>

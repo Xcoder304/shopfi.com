@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import "../styles/globals.css";
+
 import { Provider } from "react-redux";
 import { store } from "../Redux/app/store";
-import Subapp from "./subapp";
 import { useRouter } from "next/router";
 import LoadingBar from "react-top-loading-bar";
+
+import Subapp from "./subapp";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import AuthModal from "../components/AuthModal";
 
 function MyApp({ Component, pageProps }) {
   const [progress, setProgress] = useState(0);
@@ -35,6 +38,7 @@ function MyApp({ Component, pageProps }) {
           waitingTime={300}
           onLoaderFinished={() => setProgress(0)}
         />
+        <AuthModal />
         <Header />
         <Head>
           <link rel="icon" href="/assist/web-icon.png" />
