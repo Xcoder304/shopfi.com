@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 // login the user
 export const LoginTheUser = async (userInfo) => {
@@ -6,6 +7,12 @@ export const LoginTheUser = async (userInfo) => {
     `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/auth/login`,
     userInfo
   );
+
+  if (data.success) {
+    Cookies.remove("token");
+    Cookies.remove("cart");
+    Cookies.set("token", data.token);
+  }
 
   return data;
 };
