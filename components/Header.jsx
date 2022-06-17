@@ -35,7 +35,7 @@ const Header = () => {
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between py-4 px-2 md:px-5 shadow-md overflow-x-hidden sticky top-0 z-40 bg-white">
+    <header className="w-full flex items-center justify-between py-4 px-2 md:px-5 shadow-md overflow-x-hidden sticky top-0 z-30 bg-white">
       {/* <HeaderMenu open={openMenu} setOpen={setOpenMenu} /> */}
       <div className="flex items-center justify-center space-x-2 md:space-x-5">
         <h1

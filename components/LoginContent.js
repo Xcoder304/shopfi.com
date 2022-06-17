@@ -1,10 +1,15 @@
-import React from "react";
+import { useState } from "react";
 import { TextInput, Button, PasswordInput } from "@mantine/core";
 import { At } from "tabler-icons-react";
 import { useForm } from "@mantine/form";
 import { LoginTheUser } from "../utils/AuthFuntions";
+import { useDispatch } from "react-redux";
+import { setOpenLoginModal } from "../Redux/features/OtherStateteSlice";
 
-const LoginContent = ({ setIsLoginOpen }) => {
+const LoginContent = ({ setIsLoginOpen, toast, setloading }) => {
+  const [Status, setStatus] = useState({ success: false, message: "" });
+  const dispatch = useDispatch();
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -19,12 +24,25 @@ const LoginContent = ({ setIsLoginOpen }) => {
   });
 
   const handleLogin = async () => {
-    const data = {
-      email: form.values.email,
-      password: form.values.password,
-    };
+    if (form.values.email === "" || form.values.password === "") {
+      setStatus({ success: false, message: "Please fill all fields" });
+    } else {
+      setloading(true);
+      const data = {
+        email: form.values.email,
+        password: form.values.password,
+      };
 
-    await LoginTheUser(data);
+      const loginRes = await LoginTheUser(data);
+      setStatus(loginRes);
+
+      setloading(false);
+      if (loginRes.success) {
+        toast.success("Your are Successfully logged in");
+        setStatus({ success: false, message: "" });
+        dispatch(setOpenLoginModal(false));
+      }
+    }
   };
 
   return (
@@ -40,6 +58,7 @@ const LoginContent = ({ setIsLoginOpen }) => {
           label="Email"
           placeholder="your@email.com"
           size="md"
+          error={Status?.success ? "" : Status?.message}
           radius="md"
           className="!w-[96%] mx-auto"
           {...form.getInputProps("email")}
@@ -51,6 +70,7 @@ const LoginContent = ({ setIsLoginOpen }) => {
           size="md"
           radius="md"
           required
+          error={Status?.success ? "" : Status?.message}
           className="!w-[96%] mx-auto mt-4"
           {...form.getInputProps("password")}
         />

@@ -29,13 +29,13 @@ handler.post(async (req, res) => {
         token: token,
       });
     } else {
-      res.status(401).send({
+      res.send({
         success: false,
-        message: "worong email or password please try again",
+        message: "wrong email or password please try again",
       });
     }
   } else {
-    res.status(404).send({
+    res.send({
       success: false,
       message: "Account not found please create an account",
     });

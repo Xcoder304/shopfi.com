@@ -4,7 +4,7 @@ import Product from "../modals/Product";
 import Cart from "../modals/Cart";
 
 // fetchProducts
-export const fetchProductData = async () => {
+export const fetchProductsData = async () => {
   db.connect();
   const product = await Product.find({}).lean();
 
