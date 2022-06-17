@@ -3,14 +3,14 @@ import axios from "axios";
 import Product from "../modals/Product";
 import Cart from "../modals/Cart";
 
-// getProducts
+// fetchProducts
+export const fetchProductData = async () => {
+  db.connect();
+  const product = await Product.find({}).lean();
 
-//fetching the data from api
-export const fetchApiData = async (apiName) => {
-  const f = await axios.get(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/${apiName}`
-  );
-  const res = f.data;
+  const res = product.map((data) => db.convertDocToString(data));
+
+  db.disconnect();
 
   return res;
 };
@@ -25,12 +25,15 @@ export const fetchTheProduct = async (slug) => {
   return product;
 };
 
-// saving the product to the cart
-export const AddProductToCart = async (data) => {
-  const send = await axios.post(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/addToCart`,
-    data
+// ***************cart functions**********************
+
+// fetching the cart data with api
+export const fetchCartDataWithApi = async () => {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/getCartProduct`
   );
+
+  return data;
 };
 
 // fetching the cart data without api and its fast
@@ -43,6 +46,14 @@ export const fetchCartData = async () => {
   db.disconnect();
 
   return res;
+};
+
+// saving the product to the cart
+export const AddProductToCart = async (data) => {
+  const send = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/addToCart`,
+    data
+  );
 };
 
 // remove the singal product from the cart

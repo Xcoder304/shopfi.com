@@ -102,7 +102,7 @@ const RegisterContent = ({ setIsLoginOpen }) => {
 
         <Checkbox
           required
-          className="mt-4 lg:mt-3"
+          className="mt-4 lg:mt-3 cursor-pointer"
           label="I agree to the All terms of service"
           {...form.getInputProps("termsOfService", { type: "checkbox" })}
         />

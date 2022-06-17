@@ -2,6 +2,7 @@ import React from "react";
 import { TextInput, Button, PasswordInput } from "@mantine/core";
 import { At } from "tabler-icons-react";
 import { useForm } from "@mantine/form";
+import { LoginTheUser } from "../utils/AuthFuntions";
 
 const LoginContent = ({ setIsLoginOpen }) => {
   const form = useForm({
@@ -17,10 +18,20 @@ const LoginContent = ({ setIsLoginOpen }) => {
     },
   });
 
+  const handleLogin = async () => {
+    const data = {
+      email: form.values.email,
+      password: form.values.password,
+    };
+
+    await LoginTheUser(data);
+  };
+
   return (
     <div>
       <form
         onSubmit={form.onSubmit((values) => console.log("login done"))}
+        method="POST"
         className="w-full mx-auto"
       >
         <TextInput
@@ -54,6 +65,7 @@ const LoginContent = ({ setIsLoginOpen }) => {
           <Button
             type="submit"
             className="text-base bg-App_green_L hover:bg-App_green_D transition-all duration-200 ease-out md:m-0 mx-auto mt-2 w-[60%] md:w-auto"
+            onClick={handleLogin}
           >
             Login
           </Button>

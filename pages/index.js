@@ -1,6 +1,6 @@
 import Head from "next/dist/shared/lib/head";
 import HomeLayout from "../components/HomeLayout";
-import { fetchApiData } from "../utils/DatabaseFuntions";
+import { fetchProductData } from "../utils/DatabaseFuntions";
 
 const Home = ({ products }) => {
   return (
@@ -14,7 +14,7 @@ const Home = ({ products }) => {
 };
 
 export async function getServerSideProps(context) {
-  const products = await fetchApiData("getProducts");
+  const products = await fetchProductData();
 
   return {
     props: { products: products },

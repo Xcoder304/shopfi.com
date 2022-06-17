@@ -1,4 +1,24 @@
+import bcrypt from "bcryptjs";
 export const data = {
+  user: [
+    {
+      name: "kaif ali",
+      email: "kaif@gmail.com",
+      phonenumber: "123456789",
+      profileImg: null,
+      password: bcrypt.hashSync("imkaifali"),
+      isAdmin: true,
+    },
+    {
+      name: "jhonwick",
+      email: "jhonwick@gmail.com",
+      phonenumber: "1234567899",
+      profileImg:
+        "https://m.media-amazon.com/images/I/714s29JGWIL._AC_UY500_.jpg",
+      password: bcrypt.hashSync("imjhonwick"),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       name: "Black TShirt Men/Woman",
