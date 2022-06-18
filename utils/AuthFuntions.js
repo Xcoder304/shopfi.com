@@ -23,6 +23,5 @@ export const RegisterTheUser = async (userInfo) => {
     `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/auth/register`,
     userInfo
   );
-
   return data;
 };

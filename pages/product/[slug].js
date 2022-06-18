@@ -12,6 +12,7 @@ import {
 } from "../../Redux/features/ProductSlice";
 import { AddProductToCart } from "../../utils/DatabaseFuntions";
 import Cookies from "js-cookie";
+import { data } from "../../utils/data";
 
 const Slug = ({ product }) => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const Slug = ({ product }) => {
   const cart = useSelector(selectecart);
   const Error = useSelector(selecteErrorMsgVal);
   const [checkVal, setCheckVal] = useState(0);
+  const [imageUrlIndex, setimageUrlIndex] = useState(0);
 
   useEffect(() => {
     Cookies.set("cart", JSON.stringify(cart));
@@ -28,29 +30,35 @@ const Slug = ({ product }) => {
     <h1>product not founded</h1>;
   }
 
-  useLayoutEffect(() => {
-    const fetchData = async () => {
-      if (checkVal > 0) {
-        if (Error.status) {
-          alert(Error.message);
-        } else {
-          let data = {
-            ...product,
-            productname: product.name,
-          };
+  const CheckActiveImg = (index) => {
+    if (imageUrlIndex == index) return " activeImg";
+    else return "";
+  };
 
-          await AddProductToCart(data);
-          router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
-        }
-      }
-    };
+  // useLayoutEffect(() => {
+  //   const fetchData = async () => {
+  //     if (checkVal > 0) {
+  //       if (Error.status) {
+  //         alert(Error.message);
+  //       } else {
+  //         let data = {
+  //           ...product,
+  //           productname: product.name,
+  //         };
 
-    fetchData();
-  }, [checkVal]);
+  //         await AddProductToCart(data);
+  //         router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
+  //       }
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [checkVal]);
 
   const AddToCart = async () => {
     dispatch(setTheCart(product));
-    setCheckVal(checkVal + 1);
+    alert("added");
+    // setCheckVal(checkVal + 1);
   };
 
   console.log("error", Error);
@@ -61,7 +69,7 @@ const Slug = ({ product }) => {
         <title>{product?.name + "-"} shopfi</title>
       </Head>
       <section className="text-gray-600 body-font overflow-hidden relative">
-        <div className="fixed top-[120px] left-14">
+        <div className="fixed top-[120px] left-5 lg:left-14 z-10">
           <Button
             className="w-12 h-12 !p-0 cursor-pointer !m-0 bg-green-100 hover:bg-green-200 text-green-600 text-2xl rounded-full"
             onClick={() => router.back()}
@@ -72,11 +80,30 @@ const Slug = ({ product }) => {
 
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <img
-              alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-[400px] h-64 object-contain object-center rounded "
-              src={product?.image}
-            />
+            <div className="flex-1">
+              <img
+                alt="ecommerce"
+                className="lg:w-1/2 w-full lg:h-[400px] h-64 object-contain object-center rounded mx-auto"
+                src={product?.images[imageUrlIndex].url}
+              />
+
+              <div className="flex items-center justify-center mt-5 lg:mt-0 gap-3 flex-wrap w-[100%]">
+                {product?.images.map((imageUrl, index) => {
+                  return (
+                    <img
+                      key={index}
+                      alt="ecommerce"
+                      className={`w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] object-cover object-center rounded hover:scale-95 transition-all duration-200 ease-out cursor-pointer ${CheckActiveImg(
+                        index
+                      )} `}
+                      src={imageUrl.url}
+                      onClick={() => setimageUrlIndex(index)}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 {product?.brand}
@@ -176,6 +203,7 @@ const Slug = ({ product }) => {
 
 export async function getServerSideProps(context) {
   const product = await fetchTheProduct(context.query.slug);
+  console.log(product);
 
   return {
     props: { product },

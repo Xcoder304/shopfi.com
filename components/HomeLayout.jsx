@@ -14,7 +14,7 @@ const HomeLayout = ({ products }) => {
               ({
                 name,
                 slug,
-                image,
+                images,
                 price,
                 brand,
                 rating,
@@ -29,7 +29,7 @@ const HomeLayout = ({ products }) => {
                       router.push(
                         `${
                           process.env.NEXT_PUBLIC_HOSTING_URL
-                        }/product/${slug}?id=${_id}?spm=${_id + "*" + slug}`
+                        }/product/${slug}?id=${_id}?spm=${_id + "-" + slug}`
                       )
                     }
                   >
@@ -37,14 +37,14 @@ const HomeLayout = ({ products }) => {
                       <img
                         alt="ecommerce"
                         className="object-contain object-center block select-none w-full h-full mx-auto"
-                        src={image}
+                        src={images[0].url}
                       />
                     </div>
 
                     <div className="mt-4 text-center md:text-left">
-                      <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1 select-none">
-                        CATEGORY-
-                        <span className="font-bold text-sm select-none text-App_blue_L">
+                      <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase   select-none">
+                        brand-
+                        <span className="font-bold text-sm select-none text-App_blue_L !normal-case">
                           {brand}
                         </span>
                       </h3>

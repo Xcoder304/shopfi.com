@@ -15,7 +15,7 @@ export const fetchProductsData = async () => {
   return res;
 };
 
-// fetching the product for the Product Page
+// fetching the singal product for the Product Page
 export const fetchTheProduct = async (slug) => {
   db.connect();
   const fetchData = await Product.findOne({ slug }).lean();

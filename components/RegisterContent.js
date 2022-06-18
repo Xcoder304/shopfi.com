@@ -57,6 +57,7 @@ const RegisterContent = ({ setIsLoginOpen, toast, setloading }) => {
           profileImg: null,
           password: form.values.password,
           isAdmin: false,
+          MainAdmin: false,
         };
         const reg = await RegisterTheUser(data);
         console.log("req", reg);

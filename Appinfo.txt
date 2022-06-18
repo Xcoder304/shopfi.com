@@ -37,3 +37,8 @@ blue for headings or any things you liked to be blue
 black for text on light area and paragraphs
 
 
+mongodb cloud
+
+project name = shopfi
+user name = xcoder304
+password = xcoder304mongoidbproductshopify30341

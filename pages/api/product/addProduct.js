@@ -8,7 +8,7 @@ const handler = nc();
 handler.post(async (req, res) => {
   await db.connect();
   await Product.deleteMany();
-  await Product.insertMany(data.products);
+  await Product.insertMany(data.newProducts);
   await db.disconnect();
 
   res.send({ message: "success" });

@@ -14,6 +14,7 @@ handler.post(async (req, res) => {
     profileImg: req.body.profileImg,
     password: bcrypt.hashSync(req.body.password),
     isAdmin: req.body.isAdmin,
+    MainAdmin: req.body.MainAdmin,
   });
   user.save();
 

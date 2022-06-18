@@ -15,25 +15,27 @@ import {
   selecteUser,
   setOpenLoginModal,
 } from "../Redux/features/OtherStateteSlice";
+import { data } from "../utils/data";
 
-const Cart = ({ products }) => {
+const Cart = () => {
   const user = useSelector(selecteUser);
-  const [Products, setProducts] = useState(products);
+  const [Products, setProducts] = useState(data.products);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const RemoveTheProduct = async (e, id, index) => {
     e.preventDefault();
-    Products.splice(index, 1);
-    RemoveProductFromCart({ id });
-    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
+    // Products.splice(index, 1);
+    // RemoveProductFromCart({ id });
+    // router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
+    alert("removed");
   };
 
-  useEffect(() => {
-    if (!user || user == null) {
-      dispatch(setOpenLoginModal(true));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!user || user == null) {
+  //     dispatch(setOpenLoginModal(true));
+  //   }
+  // }, []);
 
   return (
     <>
@@ -141,11 +143,11 @@ const Cart = ({ products }) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const products = await fetchCartData();
-  return {
-    props: { products: products },
-  };
-}
+// export async function getServerSideProps(context) {
+//   const products = await fetchCartData();
+//   return {
+//     props: { products: products },
+//   };
+// }
 
 export default Cart;
