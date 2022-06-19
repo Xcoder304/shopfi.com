@@ -11,6 +11,7 @@ const CartSchema = new mongoose.Schema(
     numReviews: { type: Number, required: true, default: 0 },
     inStock: { type: Number, required: true, default: 0 },
     sold: { type: Number, required: true, default: 0 },
+    userSelectedQty: { type: Number, required: true, default: 1 },
     content: { type: String, required: true },
     checked: { type: Boolean, default: false },
     category: { type: String, required: true },

@@ -9,6 +9,7 @@ import {
   setTheCart,
   selectecart,
   selecteErrorMsgVal,
+  setproductQty,
 } from "../../Redux/features/ProductSlice";
 import { AddProductToCart } from "../../utils/DatabaseFuntions";
 import Cookies from "js-cookie";
@@ -46,6 +47,7 @@ const Slug = ({ product }) => {
           };
 
           await AddProductToCart(data);
+          dispatch(setproductQty(1));
           router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
         }
       }

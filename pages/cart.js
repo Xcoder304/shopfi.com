@@ -11,16 +11,23 @@ import {
 import { useRouter } from "next/router";
 import CartEmpty from "../components/CartEmpty";
 import { useSelector, useDispatch } from "react-redux";
+import { setOpenLoginModal } from "../Redux/features/OtherStateteSlice";
 import {
-  selecteUser,
-  setOpenLoginModal,
-} from "../Redux/features/OtherStateteSlice";
+  setproductQty,
+  selecteproductQty,
+  selectecart,
+  setTheCart,
+} from "../Redux/features/ProductSlice";
 import Cookies from "js-cookie";
 
 const Cart = ({ products }) => {
-  const user = useSelector(selecteUser);
+  const productQty = useSelector(selecteproductQty);
+  const cart = useSelector(selectecart);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [Productsinfo, setProductsinfo] = useState({});
+  const [totalProduct, setTotalProduct] = useState([]);
 
   const RemoveTheProduct = async (e, id, index) => {
     e.preventDefault();
@@ -35,7 +42,26 @@ const Cart = ({ products }) => {
     }
   }, []);
 
-  console.log("product", products);
+  useEffect(() => {
+    let itemsSum = products.map((data) => {
+      return parseInt(data.price * data.userSelectedQty);
+    });
+
+    setTotalProduct(itemsSum);
+  }, [products, Productsinfo, router.query]);
+
+  const handelProductQty = (e, id, index) => {
+    dispatch(setproductQty(e.target.value));
+
+    products.forEach((data) => {
+      if (data._id == id) {
+        data.userSelectedQty = parseInt(e.target.value);
+      }
+    });
+
+    Cookies.remove("temp_cart");
+    Cookies.set("temp_cart", JSON.stringify(products));
+  };
 
   return (
     <>
@@ -95,6 +121,7 @@ const Cart = ({ products }) => {
                         className="select-none"
                         rightSection={<ChevronDown size={14} />}
                         rightSectionWidth={25}
+                        onChange={(e) => handelProductQty(e, _id, index)}
                       />
                     </div>
                     <Button
@@ -119,11 +146,18 @@ const Cart = ({ products }) => {
           {/* subtotal */}
           <div className="w-[80%] md:w-[50%] lg:w-[25%] md:h-[180px] lg:h-[200px] bg-white rounded-md py-3 px-4 flex flex-col items-start justify-center space-y-3">
             <h3 className="font-medium text-lg text-App_black_L capitalize select-none">
-              total item <span className="text-App_blue_L">4</span>
+              total item{" "}
+              <span className="text-App_blue_L">{products.length}</span>
             </h3>
 
             <h2 className="text-xl font-bold text-App_black_L capitalize select-none">
-              subtotal <span className="text-App_blue_L">$32</span>
+              subtotal{" "}
+              <span className="text-App_blue_L">
+                $
+                {products
+                  .map((data) => data.price * data.userSelectedQty)
+                  .reduce((a, b) => a + b, 0)}
+              </span>
             </h2>
 
             <div className="w-full flex flex-wrap items-center space-x-3">
