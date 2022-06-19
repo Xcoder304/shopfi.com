@@ -7,6 +7,7 @@ import { ChevronDown } from "tabler-icons-react";
 import {
   fetchCartData,
   RemoveProductFromCart,
+  ClearTheCart,
 } from "../utils/DatabaseFuntions";
 import { useRouter } from "next/router";
 import CartEmpty from "../components/CartEmpty";
@@ -16,7 +17,6 @@ import {
   setproductQty,
   selecteproductQty,
   selectecart,
-  setTheCart,
 } from "../Redux/features/ProductSlice";
 import Cookies from "js-cookie";
 
@@ -25,9 +25,6 @@ const Cart = ({ products }) => {
   const cart = useSelector(selectecart);
   const dispatch = useDispatch();
   const router = useRouter();
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [Productsinfo, setProductsinfo] = useState({});
-  const [totalProduct, setTotalProduct] = useState([]);
 
   const RemoveTheProduct = async (e, id, index) => {
     e.preventDefault();
@@ -42,14 +39,6 @@ const Cart = ({ products }) => {
     }
   }, []);
 
-  useEffect(() => {
-    let itemsSum = products.map((data) => {
-      return parseInt(data.price * data.userSelectedQty);
-    });
-
-    setTotalProduct(itemsSum);
-  }, [products, Productsinfo, router.query]);
-
   const handelProductQty = (e, id, index) => {
     dispatch(setproductQty(e.target.value));
 
@@ -61,6 +50,12 @@ const Cart = ({ products }) => {
 
     Cookies.remove("temp_cart");
     Cookies.set("temp_cart", JSON.stringify(products));
+  };
+
+  const ClearCart = async () => {
+    await ClearTheCart();
+    products.splice(0, products.length);
+    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
   };
 
   return (
@@ -161,7 +156,10 @@ const Cart = ({ products }) => {
             </h2>
 
             <div className="w-full flex flex-wrap items-center space-x-3">
-              <Button className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] flex-1 transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0 mb-2">
+              <Button
+                className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] flex-1 transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0 mb-2"
+                onClick={ClearCart}
+              >
                 Clear Cart
               </Button>
 

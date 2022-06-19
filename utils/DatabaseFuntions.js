@@ -63,3 +63,12 @@ export const RemoveProductFromCart = async (data) => {
     data
   );
 };
+
+// clear the cart
+export const ClearTheCart = async () => {
+  await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/clearTheCart`
+  );
+
+  alert("Cart Cleared");
+};
