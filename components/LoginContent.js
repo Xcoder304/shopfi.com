@@ -4,7 +4,10 @@ import { At } from "tabler-icons-react";
 import { useForm } from "@mantine/form";
 import { LoginTheUser } from "../utils/AuthFuntions";
 import { useDispatch } from "react-redux";
-import { setOpenLoginModal } from "../Redux/features/OtherStateteSlice";
+import {
+  setOpenLoginModal,
+  setUser,
+} from "../Redux/features/OtherStateteSlice";
 
 const LoginContent = ({ setIsLoginOpen, toast, setloading }) => {
   const [Status, setStatus] = useState({ success: false, message: "" });
@@ -40,6 +43,7 @@ const LoginContent = ({ setIsLoginOpen, toast, setloading }) => {
       if (loginRes.success) {
         toast.success("Your are Successfully logged in");
         setStatus({ success: false, message: "" });
+        dispatch(setUser(loginRes.token));
         dispatch(setOpenLoginModal(false));
       }
     }

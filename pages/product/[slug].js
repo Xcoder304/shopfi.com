@@ -12,7 +12,6 @@ import {
 } from "../../Redux/features/ProductSlice";
 import { AddProductToCart } from "../../utils/DatabaseFuntions";
 import Cookies from "js-cookie";
-import { data } from "../../utils/data";
 
 const Slug = ({ product }) => {
   const router = useRouter();
@@ -35,30 +34,29 @@ const Slug = ({ product }) => {
     else return "";
   };
 
-  // useLayoutEffect(() => {
-  //   const fetchData = async () => {
-  //     if (checkVal > 0) {
-  //       if (Error.status) {
-  //         alert(Error.message);
-  //       } else {
-  //         let data = {
-  //           ...product,
-  //           productname: product.name,
-  //         };
+  useLayoutEffect(() => {
+    const fetchData = async () => {
+      if (checkVal > 0) {
+        if (Error.status) {
+          alert(Error.message);
+        } else {
+          let data = {
+            ...product,
+            productname: product.name,
+          };
 
-  //         await AddProductToCart(data);
-  //         router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
-  //       }
-  //     }
-  //   };
+          await AddProductToCart(data);
+          router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
+        }
+      }
+    };
 
-  //   fetchData();
-  // }, [checkVal]);
+    fetchData();
+  }, [checkVal]);
 
   const AddToCart = async () => {
     dispatch(setTheCart(product));
-    alert("added");
-    // setCheckVal(checkVal + 1);
+    setCheckVal(checkVal + 1);
   };
 
   console.log("error", Error);

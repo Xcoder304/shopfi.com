@@ -43,6 +43,8 @@ export const data = {
       content:
         "Welcome to our channel Dev AT. Here you can learn web designing, UI/UX designing, html css tutorials, css animations and css effects, javascript and jquery tutorials and related so on.",
       category: "5faa35a88fdff228384d51d8",
+      rating: 3.2,
+      numReviews: 10,
     },
     {
       images: [
@@ -79,6 +81,8 @@ export const data = {
       content:
         "Welcome to our channel Dev AT. Here you can learn web designing, UI/UX designing, html css tutorials, css animations and css effects, javascript and jquery tutorials and related so on.",
       category: "5faa35b58fdff228384d51da",
+      rating: 2.2,
+      numReviews: 20,
     },
     {
       images: [
@@ -111,6 +115,8 @@ export const data = {
       content:
         "Welcome to our channel Dev AT. Here you can learn web designing, UI/UX designing, html css tutorials, css animations and css effects, javascript and jquery tutorials and related so on.",
       category: "5faa35a88fdff228384d51d8",
+      rating: 4.9,
+      numReviews: 200,
     },
   ],
   products: [

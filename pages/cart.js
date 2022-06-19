@@ -15,27 +15,27 @@ import {
   selecteUser,
   setOpenLoginModal,
 } from "../Redux/features/OtherStateteSlice";
-import { data } from "../utils/data";
+import Cookies from "js-cookie";
 
-const Cart = () => {
+const Cart = ({ products }) => {
   const user = useSelector(selecteUser);
-  const [Products, setProducts] = useState(data.products);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const RemoveTheProduct = async (e, id, index) => {
     e.preventDefault();
-    // Products.splice(index, 1);
-    // RemoveProductFromCart({ id });
-    // router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
-    alert("removed");
+    products.splice(index, 1);
+    RemoveProductFromCart({ id });
+    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
   };
 
-  // useEffect(() => {
-  //   if (!user || user == null) {
-  //     dispatch(setOpenLoginModal(true));
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!Cookies.get("token")) {
+      dispatch(setOpenLoginModal(true));
+    }
+  }, []);
+
+  console.log("product", products);
 
   return (
     <>
@@ -43,13 +43,13 @@ const Cart = () => {
         <title>Cart - Shopfi</title>
       </Head>
 
-      {Products.length == 0 ? (
+      {products.length == 0 ? (
         <CartEmpty />
       ) : (
         <div className="flex  p-7 bg-App_white_L lg:items-start items-center justify-start lg:justify-between flex-col-reverse lg:flex-row gap-3">
           <div className="w-[96%] lg:w-[75%]">
-            {Products.map(
-              ({ name, image, price, countInStock, slug, _id }, index) => {
+            {products.map(
+              ({ name, images, price, inStock, slug, _id }, index) => {
                 return (
                   <form
                     method="POST"
@@ -67,7 +67,7 @@ const Cart = () => {
                       }
                     >
                       <img
-                        src={image}
+                        src={images[0].url}
                         className="w-[130px] h-[100px] object-contain "
                       />
                       <h2 className="font-bold text-lg text-App_black_L">
@@ -88,7 +88,7 @@ const Cart = () => {
                       </h4>
 
                       <NativeSelect
-                        data={[...Array(countInStock).keys()].map((x) => {
+                        data={[...Array(inStock).keys()].map((x) => {
                           const num = x + 1;
                           return String(num);
                         })}
@@ -103,7 +103,6 @@ const Cart = () => {
                     >
                       Buy Now
                     </Button>
-
                     <Button
                       type="submit"
                       className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] w-[76px] transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0"
@@ -118,7 +117,7 @@ const Cart = () => {
           </div>
 
           {/* subtotal */}
-          <div className="w-[80%] md:w-[50%] lg:w-[25%] h-[180px] bg-white rounded-md py-3 px-4 flex flex-col items-start justify-center space-y-3">
+          <div className="w-[80%] md:w-[50%] lg:w-[25%] md:h-[180px] lg:h-[200px] bg-white rounded-md py-3 px-4 flex flex-col items-start justify-center space-y-3">
             <h3 className="font-medium text-lg text-App_black_L capitalize select-none">
               total item <span className="text-App_blue_L">4</span>
             </h3>
@@ -128,7 +127,7 @@ const Cart = () => {
             </h2>
 
             <div className="w-full flex flex-wrap items-center space-x-3">
-              <Button className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] flex-1 transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0">
+              <Button className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] flex-1 transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0 mb-2">
                 Clear Cart
               </Button>
 
@@ -143,11 +142,11 @@ const Cart = () => {
   );
 };
 
-// export async function getServerSideProps(context) {
-//   const products = await fetchCartData();
-//   return {
-//     props: { products: products },
-//   };
-// }
+export async function getServerSideProps(context) {
+  const products = await fetchCartData();
+  return {
+    props: { products },
+  };
+}
 
 export default Cart;

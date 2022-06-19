@@ -19,7 +19,7 @@ export const OtherStatesSlice = createSlice({
   },
 });
 
-export const { setOpenLoginModal } = OtherStatesSlice.actions;
+export const { setOpenLoginModal, setUser } = OtherStatesSlice.actions;
 
 export const selecteUser = (state) => state.otherStates.user;
 
