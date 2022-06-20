@@ -30,7 +30,7 @@ export const fetchTheProduct = async (slug) => {
 // fetching the cart data with api
 export const fetchCartDataWithApi = async () => {
   const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/getCartProduct`
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/cart/getCartProduct`
   );
 
   return data;
@@ -51,7 +51,7 @@ export const fetchCartData = async () => {
 // saving the product to the cart
 export const AddProductToCart = async (data) => {
   const send = await axios.post(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/addToCart`,
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/cart/addToCart`,
     data
   );
 };
@@ -59,7 +59,7 @@ export const AddProductToCart = async (data) => {
 // remove the singal product from the cart
 export const RemoveProductFromCart = async (data) => {
   let rm = await axios.post(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/removeCartProduct`,
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/cart/removeCartProduct`,
     data
   );
 };
@@ -67,7 +67,7 @@ export const RemoveProductFromCart = async (data) => {
 // clear the cart
 export const ClearTheCart = async () => {
   await axios.post(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/product/clearTheCart`
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/cart/clearTheCart`
   );
 
   alert("Cart Cleared");

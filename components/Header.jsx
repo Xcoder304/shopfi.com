@@ -24,7 +24,10 @@ import { selectecart } from "../Redux/features/ProductSlice";
 import {
   selecteUser,
   setOpenLoginModal,
+  setUser,
 } from "../Redux/features/OtherStateteSlice";
+import Cookies from "js-cookie";
+import { Toaster, toast } from "react-hot-toast";
 
 const Header = () => {
   const [openModal, handleModal] = useDisclosure(false);
@@ -34,8 +37,15 @@ const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const LoginOutTheUser = () => {
+    Cookies.remove("token");
+    dispatch(setUser(null));
+    toast.success("Logout Successfully");
+  };
+
   return (
     <header className="w-full flex items-center justify-between py-4 px-2 md:px-5 shadow-md overflow-x-hidden sticky top-0 z-30 bg-white">
+      <Toaster position="top-center" reverseOrder={false} />
       {/* <HeaderMenu open={openMenu} setOpen={setOpenMenu} /> */}
       <div className="flex items-center justify-center space-x-2 md:space-x-5">
         <h1
@@ -120,6 +130,7 @@ const Header = () => {
               color="red"
               icon={<CgLogOut size={14} />}
               className="hover:bg-red-100"
+              onClick={LoginOutTheUser}
             >
               Logout
             </Menu.Item>

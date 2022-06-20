@@ -11,6 +11,7 @@ import {
   selecteErrorMsgVal,
   setproductQty,
 } from "../../Redux/features/ProductSlice";
+import { setOpenLoginModal } from "../../Redux/features/OtherStateteSlice";
 import { AddProductToCart } from "../../utils/DatabaseFuntions";
 import Cookies from "js-cookie";
 
@@ -57,8 +58,12 @@ const Slug = ({ product }) => {
   }, [checkVal]);
 
   const AddToCart = async () => {
-    dispatch(setTheCart(product));
-    setCheckVal(checkVal + 1);
+    if (Cookies.get("token")) {
+      dispatch(setTheCart(product));
+      setCheckVal(checkVal + 1);
+    } else {
+      dispatch(setOpenLoginModal(true));
+    }
   };
 
   console.log("error", Error);

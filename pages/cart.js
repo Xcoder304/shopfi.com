@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Head from "next/head";
 import { MdDelete } from "react-icons/md";
-import { Button } from "@mantine/core";
-import { NativeSelect } from "@mantine/core";
+import { Button, NativeSelect } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import {
   fetchCartData,
@@ -56,6 +55,12 @@ const Cart = ({ products }) => {
     await ClearTheCart();
     products.splice(0, products.length);
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
+  };
+
+  const Buy_All_Products = () => {
+    Cookies.remove("temp_cart");
+    Cookies.set("temp_cart", JSON.stringify(products));
+    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
   };
 
   return (
@@ -157,13 +162,16 @@ const Cart = ({ products }) => {
 
             <div className="w-full flex flex-wrap items-center space-x-3">
               <Button
-                className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] flex-1 transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0 mb-2"
+                className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] flex-1 transition-all  duration-200 ease-out rounded-lg py-0 mb-2"
                 onClick={ClearCart}
               >
                 Clear Cart
               </Button>
 
-              <Button className="bg-App_green_L hover:bg-App_green_D h-[47px] text-base  flex-1 transition-all duration-200 ease-out rounded-lg capitalize">
+              <Button
+                className="bg-App_green_L hover:bg-App_green_D h-[47px] text-base flex-1 transition-all duration-200 ease-out rounded-lg capitalize"
+                onClick={Buy_All_Products}
+              >
                 buy all products
               </Button>
             </div>
