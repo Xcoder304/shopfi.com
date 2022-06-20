@@ -2,6 +2,7 @@ import db from "./db";
 import axios from "axios";
 import Product from "../modals/Product";
 import Cart from "../modals/Cart";
+import TempData from "../modals/TempData";
 
 // fetchProducts
 export const fetchProductsData = async () => {
@@ -71,4 +72,22 @@ export const ClearTheCart = async () => {
   );
 
   alert("Cart Cleared");
+};
+
+// adding the temp data
+export const AddTempData = async (data) => {
+  await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/tempdata/addTempData`,
+    data
+  );
+};
+
+// fetching the temp data products
+export const fetchTempData = async () => {
+  db.connect();
+  const f = await TempData.find({}).lean();
+  const res = f.map((data) => db.convertDocToString(data));
+  db.disconnect();
+
+  return res;
 };

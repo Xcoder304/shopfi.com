@@ -7,8 +7,9 @@ import axios from "axios";
 import UserDetails from "../components/paymentSection/UserDetails";
 import PaymentMethod from "../components/paymentSection/PaymentMethod";
 import ComfirmOrder from "../components/paymentSection/ComfirmOrder";
+import { fetchTempData } from "../utils/DatabaseFuntions";
 
-const PaymentSec = ({ countriesName }) => {
+const PaymentSec = ({ countriesName, tempdata }) => {
   const active = useSelector(selecteActivePaymentSection);
 
   return (
@@ -31,7 +32,10 @@ const PaymentSec = ({ countriesName }) => {
             label="Second step"
             description="Verify Your order & Enter your details"
           >
-            <UserDetails countriesName={countriesName} />
+            <UserDetails
+              countriesName={countriesName}
+              tempProductdata={tempdata}
+            />
           </Stepper.Step>
 
           <Stepper.Step
@@ -42,7 +46,7 @@ const PaymentSec = ({ countriesName }) => {
           </Stepper.Step>
 
           <Stepper.Step label="Final step" description="Comfirm Your order">
-            <ComfirmOrder />
+            <ComfirmOrder tempProductdata={tempdata} />
           </Stepper.Step>
 
           <Stepper.Completed>
@@ -55,12 +59,17 @@ const PaymentSec = ({ countriesName }) => {
 };
 
 export const getServerSideProps = async (ctx) => {
+  // fetching the countries data from the API
   const { data } = await axios.get("https://restcountries.com/v3.1/all");
   const res = data.map((data) => data.name.common);
+
+  // fetching the temp data from the server
+  const tempdata = await fetchTempData();
 
   return {
     props: {
       countriesName: res,
+      tempdata,
     },
   };
 };

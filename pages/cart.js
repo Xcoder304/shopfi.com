@@ -7,6 +7,7 @@ import {
   fetchCartData,
   RemoveProductFromCart,
   ClearTheCart,
+  AddTempData,
 } from "../utils/DatabaseFuntions";
 import { useRouter } from "next/router";
 import CartEmpty from "../components/CartEmpty";
@@ -46,9 +47,6 @@ const Cart = ({ products }) => {
         data.userSelectedQty = parseInt(e.target.value);
       }
     });
-
-    Cookies.remove("temp_cart");
-    Cookies.set("temp_cart", JSON.stringify(products));
   };
 
   const ClearCart = async () => {
@@ -57,9 +55,8 @@ const Cart = ({ products }) => {
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
   };
 
-  const Buy_All_Products = () => {
-    Cookies.remove("temp_cart");
-    Cookies.set("temp_cart", JSON.stringify(products));
+  const Buy_All_Products = async () => {
+    await AddTempData(products);
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
   };
 

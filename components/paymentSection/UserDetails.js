@@ -13,10 +13,11 @@ import { MdDelete } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { NextPaymentStep } from "../../Redux/features/OtherStateteSlice";
 import Cookies from "js-cookie";
+import { AddTempData } from "../../utils/DatabaseFuntions";
 import { useRouter } from "next/router";
 
-const UserDetails = ({ countriesName }) => {
-  const [products, setproducts] = useState([]);
+const UserDetails = ({ countriesName, tempProductdata }) => {
+  const [products, setproducts] = useState(tempProductdata);
   const [Errors, setErrors] = useState({
     status: false,
     message: "",
@@ -49,6 +50,12 @@ const UserDetails = ({ countriesName }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (products.length == 0) {
+      router.back();
+    }
+  });
+
   const NEXT_PAYMENT_SEC = () => {
     const regex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -58,7 +65,7 @@ const UserDetails = ({ countriesName }) => {
       form.values.lastname == "" &&
       form.values.email == "" &&
       form.values.phonenumber == "" &&
-      form.values.region == "" &&
+      form.values.region == "Pick one" &&
       form.values.address == ""
     ) {
       setErrors({ status: true, message: "Please fill all fields" });
@@ -80,9 +87,9 @@ const UserDetails = ({ countriesName }) => {
     }
   };
 
-  const Remove_temp_Product = (index) => {
+  const Remove_temp_Product = async (index) => {
     products.splice(index, 1);
-    Cookies.set("temp_cart", JSON.stringify(products));
+    await AddTempData(products);
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
   };
 
@@ -188,7 +195,6 @@ const UserDetails = ({ countriesName }) => {
 
           <NativeSelect
             data={countriesName}
-            placeholder="Pick one"
             label="Select your Region"
             className="flex-1 mx-auto mt-3"
             size="md"

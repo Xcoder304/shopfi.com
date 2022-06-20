@@ -18,8 +18,8 @@ import {
 import Cookies from "js-cookie";
 import { Toaster, toast } from "react-hot-toast";
 
-const ComfirmOrder = () => {
-  const [products, setproducts] = useState([]);
+const ComfirmOrder = ({ tempProductdata }) => {
+  const [products, setproducts] = useState(tempProductdata);
   const [UserDetails, setuserDetails] = useState(null);
   const [loading, setloading] = useState(false);
 
@@ -36,12 +36,6 @@ const ComfirmOrder = () => {
       isOrderComfirm: false,
     },
   });
-
-  useEffect(() => {
-    if (Cookies.get("temp_cart")) {
-      setproducts(JSON.parse(Cookies.get("temp_cart")));
-    }
-  }, []);
 
   useEffect(() => {
     if (Cookies.get("user_details")) {
@@ -63,13 +57,12 @@ const ComfirmOrder = () => {
   }, [UserDetails]);
 
   const Comfirm_The_Order = () => {
-    setloading(true);
     if (form.values.isOrderComfirm == false) {
       toast.error("Please Comfirm the Order");
-    } else {
+    }
+    if (form.values.isOrderComfirm == true) {
       dispatch(NextPaymentStep());
     }
-    setloading(false);
   };
 
   return (
