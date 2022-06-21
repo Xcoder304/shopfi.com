@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Modal, useMantineTheme } from "@mantine/core";
 import { Toaster, toast } from "react-hot-toast";
 import { useForm } from "@mantine/form";
@@ -6,8 +7,11 @@ import { CreditCard, Key } from "tabler-icons-react";
 import Image from "next/image";
 import { AddOrder } from "../../utils/DatabaseFuntions";
 import { CreateRamdomOrderID } from "../../utils/UtilsFuntions";
+import { useRouter } from "next/router";
 
 const Card = ({ open, setopen, totalPrice, UserDetails, products }) => {
+  const [loading, setlaoding] = useState(false);
+  const router = useRouter();
   const theme = useMantineTheme();
   const form = useForm({
     initialValues: {
@@ -20,6 +24,7 @@ const Card = ({ open, setopen, totalPrice, UserDetails, products }) => {
   });
 
   const AddTheOrder = async () => {
+    setlaoding(true);
     const orderID = CreateRamdomOrderID();
 
     let data = {
@@ -36,8 +41,10 @@ const Card = ({ open, setopen, totalPrice, UserDetails, products }) => {
     };
 
     await AddOrder(data);
+    setlaoding(false);
     setopen(false);
     toast.success("Order Placed Successfully");
+    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
   };
 
   return (
@@ -140,6 +147,7 @@ const Card = ({ open, setopen, totalPrice, UserDetails, products }) => {
           <div className="w-full flex items-center justify-center">
             <Button
               type="submit"
+              disabled={loading ? true : false}
               className="bg-red-600 text-white text-lg mt-5 transition-all duration-200 ease-out hover:bg-red-700 hover:shadow-md lg:w-[80%]  w-[100%] h-12"
               onClick={AddTheOrder}
             >

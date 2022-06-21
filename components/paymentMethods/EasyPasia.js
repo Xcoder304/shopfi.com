@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Modal, useMantineTheme } from "@mantine/core";
 import { Toaster, toast } from "react-hot-toast";
 import { useForm } from "@mantine/form";
@@ -5,8 +6,12 @@ import { Button, Checkbox, NumberInput } from "@mantine/core";
 import { ReportMoney } from "tabler-icons-react";
 import { AddOrder } from "../../utils/DatabaseFuntions";
 import { CreateRamdomOrderID } from "../../utils/UtilsFuntions";
+import { useRouter } from "next/router";
 
 const EasyPasia = ({ open, setopen, totalPrice, UserDetails, products }) => {
+  const [loading, setlaoding] = useState(false);
+
+  const router = useRouter();
   const form = useForm({
     initialValues: {
       EasyPaisaAccountNum: "",
@@ -17,6 +22,7 @@ const EasyPasia = ({ open, setopen, totalPrice, UserDetails, products }) => {
   const theme = useMantineTheme();
 
   const AddTheOrder = async () => {
+    setlaoding(true);
     const orderID = CreateRamdomOrderID();
 
     let data = {
@@ -33,8 +39,10 @@ const EasyPasia = ({ open, setopen, totalPrice, UserDetails, products }) => {
     };
 
     await AddOrder(data);
+    setlaoding(false);
     setopen(false);
     toast.success("Order Placed Successfully");
+    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
   };
   return (
     <>
@@ -79,6 +87,7 @@ const EasyPasia = ({ open, setopen, totalPrice, UserDetails, products }) => {
           <div className="w-full flex items-center justify-center">
             <Button
               type="submit"
+              disabled={loading ? true : false}
               className="bg-green-600 text-white text-lg mt-5 transition-all duration-200 ease-out hover:bg-green-700 hover:shadow-md lg:w-[80%]  w-[100%] h-12 rounded-full"
               onClick={AddTheOrder}
             >

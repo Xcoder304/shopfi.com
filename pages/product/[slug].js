@@ -139,12 +139,19 @@ const Slug = ({ product }) => {
                 </div>
 
                 {/* instock */}
-                <div className="flex items-center space-x-1 select-none">
+                <div className="flex items-center space-x-3 select-none">
                   <h4 className="p-0 m-0 text-lg font-bold capitalize text-App_green_L">
                     instock
                   </h4>
                   <span className="p-0 m-0 text-lg font-bold capitalize text-App_green_L">
                     {product?.inStock}
+                  </span>
+
+                  <h4 className="m-0 text-lg font-bold capitalize text-red-600">
+                    Sold
+                  </h4>
+                  <span className="p-0 m-0 text-lg font-bold capitalize text-red-600">
+                    {product?.sold}
                   </span>
                 </div>
               </div>

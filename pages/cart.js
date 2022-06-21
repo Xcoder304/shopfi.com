@@ -32,7 +32,7 @@ const Cart = ({ products }) => {
   const RemoveTheProduct = async (e, id, index) => {
     e.preventDefault();
     products.splice(index, 1);
-    RemoveProductFromCart({ id });
+    await RemoveProductFromCart({ id });
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
   };
 
