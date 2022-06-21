@@ -7,23 +7,32 @@ import {
 } from "../../Redux/features/OtherStateteSlice";
 import { Button } from "@mantine/core";
 import { Toaster, toast } from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const PaymentMethod = () => {
+  const [UserDetails, setUserDetails] = useState(
+    JSON.parse(Cookies.get("user_details"))
+  );
   const [value, setValue] = useState("");
+
   const dispatch = useDispatch();
 
   const NEXT_PAYMENT_SEC = () => {
     if (value == "") {
       toast.error("Please select a payment method");
     } else {
+      Cookies.remove("user_details");
+      Cookies.set(
+        "user_details",
+        JSON.stringify({ ...UserDetails, paymentMethod: value })
+      );
       dispatch(NextPaymentStep());
     }
   };
-
   return (
     <div className="w-full flex flex-col items-center justify-center mt-7">
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="w-[80%] md:w-[60%] lg:w-[40%] py-3 pb-5 px-4 bg-white rounded-md shadow-md">
+      <div className="w-[90vw] md:w-[80%] lg:w-[60%] py-3 pb-5 px-4 bg-white rounded-md shadow-md">
         <h1 className="text-App_black_L text-xl font-medium capitalize">
           select your Payment Method
         </h1>
@@ -37,8 +46,9 @@ const PaymentMethod = () => {
             onChange={setValue}
           >
             <Chip value="paypal">Paypal</Chip>
-            <Chip value="bank">Bank</Chip>
-            <Chip value="cart">Cart</Chip>
+            <Chip value="bank">Bank Account</Chip>
+            <Chip value="card">Credit/Debit Card</Chip>
+            <Chip value="easypasia">Easypasia</Chip>
           </Chips>
         </div>
       </div>
