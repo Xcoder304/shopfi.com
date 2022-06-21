@@ -91,3 +91,11 @@ export const fetchTempData = async () => {
 
   return res;
 };
+
+// add order
+export const AddOrder = async (data) => {
+  await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/order/addOrder`,
+    data
+  );
+};

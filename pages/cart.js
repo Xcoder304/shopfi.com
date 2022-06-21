@@ -12,7 +12,10 @@ import {
 import { useRouter } from "next/router";
 import CartEmpty from "../components/CartEmpty";
 import { useSelector, useDispatch } from "react-redux";
-import { setOpenLoginModal } from "../Redux/features/OtherStateteSlice";
+import {
+  setOpenLoginModal,
+  setPaymentSection,
+} from "../Redux/features/OtherStateteSlice";
 import {
   setproductQty,
   selecteproductQty,
@@ -37,6 +40,10 @@ const Cart = ({ products }) => {
     if (!Cookies.get("token")) {
       dispatch(setOpenLoginModal(true));
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(setPaymentSection(1));
   }, []);
 
   const handelProductQty = (e, id, index) => {

@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    address: String,
-    phonenumber: String,
+    orderId: { type: String, required: true },
+    userDatils: { type: Object, required: true },
+    paymentMethod: { type: String, required: true },
+    paymentInfo: { type: Object, required: true },
     products: Array,
-    total: Number,
+    total: { type: Number, required: true },
     delivery: { type: Boolean, default: false },
   },
   {

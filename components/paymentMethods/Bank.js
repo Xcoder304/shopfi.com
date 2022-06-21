@@ -3,7 +3,11 @@ import { Toaster, toast } from "react-hot-toast";
 import { useForm } from "@mantine/form";
 import { Button, Checkbox, NumberInput } from "@mantine/core";
 import { Id, BuildingBank } from "tabler-icons-react";
-const Bank = ({ open, setopen, totalPrice }) => {
+import { AddOrder } from "../../utils/DatabaseFuntions";
+import { CreateRamdomOrderID } from "../../utils/UtilsFuntions";
+
+const Bank = ({ open, setopen, totalPrice, UserDetails, products }) => {
+  const theme = useMantineTheme();
   const form = useForm({
     initialValues: {
       BankAccountNum: "",
@@ -12,7 +16,27 @@ const Bank = ({ open, setopen, totalPrice }) => {
     },
   });
 
-  const theme = useMantineTheme();
+  const AddTheOrder = async () => {
+    const orderID = CreateRamdomOrderID();
+
+    let data = {
+      orderId: orderID,
+      userDatils: {
+        ...UserDetails,
+        Name: `${UserDetails.firstname} ${UserDetails.lastname}`,
+      },
+      paymentMethod: "Bank",
+      paymentInfo: form.values,
+      products: products,
+      total: totalPrice,
+      delivery: false,
+    };
+
+    await AddOrder(data);
+    setopen(false);
+    toast.success("Order Placed Successfully");
+  };
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -69,6 +93,7 @@ const Bank = ({ open, setopen, totalPrice }) => {
             <Button
               type="submit"
               className="bg-orange-600 text-white text-lg mt-5 transition-all duration-200 ease-out hover:bg-orange-700 hover:shadow-md lg:w-[80%]  w-[100%] h-12"
+              onClick={AddTheOrder}
             >
               Pay ${totalPrice}
             </Button>

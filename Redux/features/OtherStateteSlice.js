@@ -31,6 +31,10 @@ export const OtherStatesSlice = createSlice({
           ? state.ActivePaymentSection - 1
           : state.ActivePaymentSection;
     },
+
+    setPaymentSection: (state, action) => {
+      state.ActivePaymentSection = action.payload;
+    },
   },
 });
 
@@ -39,6 +43,7 @@ export const {
   setUser,
   NextPaymentStep,
   PrevPaymentSection,
+  setPaymentSection,
 } = OtherStatesSlice.actions;
 
 export const selecteUser = (state) => state.otherStates.user;

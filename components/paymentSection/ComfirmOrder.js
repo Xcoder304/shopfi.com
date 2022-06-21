@@ -16,12 +16,17 @@ import { Toaster, toast } from "react-hot-toast";
 import Paypal from "../paymentMethods/Paypal";
 import Bank from "../paymentMethods/Bank";
 import EasyPasia from "../paymentMethods/EasyPasia";
-import Card from "../paymentMethods/Cart";
+import Card from "../paymentMethods/Card";
 
 const ComfirmOrder = ({ tempProductdata }) => {
   const [products, setproducts] = useState(tempProductdata);
   const [UserDetails, setuserDetails] = useState(null);
   const [isModalOpen, setisModalOpen] = useState(false);
+  const [totalPrice, settotalPrice] = useState(
+    products
+      .map((data) => data.price * data.userSelectedQty)
+      .reduce((a, b) => a + b, 0)
+  );
 
   const dispatch = useDispatch();
 
@@ -73,36 +78,36 @@ const ComfirmOrder = ({ tempProductdata }) => {
         <Paypal
           open={isModalOpen}
           setopen={setisModalOpen}
-          totalPrice={products
-            .map((data) => data.price * data.userSelectedQty)
-            .reduce((a, b) => a + b, 0)}
+          totalPrice={totalPrice}
+          UserDetails={UserDetails}
+          products={products}
         />
       )}
       {UserDetails?.paymentMethod == "bank" && (
         <Bank
           open={isModalOpen}
           setopen={setisModalOpen}
-          totalPrice={products
-            .map((data) => data.price * data.userSelectedQty)
-            .reduce((a, b) => a + b, 0)}
+          totalPrice={totalPrice}
+          UserDetails={UserDetails}
+          products={products}
         />
       )}
       {UserDetails?.paymentMethod == "easypasia" && (
         <EasyPasia
           open={isModalOpen}
           setopen={setisModalOpen}
-          totalPrice={products
-            .map((data) => data.price * data.userSelectedQty)
-            .reduce((a, b) => a + b, 0)}
+          totalPrice={totalPrice}
+          UserDetails={UserDetails}
+          products={products}
         />
       )}
       {UserDetails?.paymentMethod == "card" && (
         <Card
           open={isModalOpen}
           setopen={setisModalOpen}
-          totalPrice={products
-            .map((data) => data.price * data.userSelectedQty)
-            .reduce((a, b) => a + b, 0)}
+          totalPrice={totalPrice}
+          UserDetails={UserDetails}
+          products={products}
         />
       )}
       <Toaster position="top-center" reverseOrder={false} />

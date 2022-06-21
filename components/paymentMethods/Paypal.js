@@ -3,7 +3,10 @@ import { Toaster, toast } from "react-hot-toast";
 import { useForm } from "@mantine/form";
 import { Button, Checkbox, NumberInput } from "@mantine/core";
 import { BrandPaypal } from "tabler-icons-react";
-const Paypal = ({ open, setopen, totalPrice }) => {
+import { AddOrder } from "../../utils/DatabaseFuntions";
+import { CreateRamdomOrderID } from "../../utils/UtilsFuntions";
+
+const Paypal = ({ open, setopen, totalPrice, UserDetails, products }) => {
   const form = useForm({
     initialValues: {
       paypalAccount: "",
@@ -12,6 +15,26 @@ const Paypal = ({ open, setopen, totalPrice }) => {
   });
 
   const theme = useMantineTheme();
+  const AddTheOrder = async () => {
+    const orderID = CreateRamdomOrderID();
+
+    let data = {
+      orderId: orderID,
+      userDatils: {
+        ...UserDetails,
+        Name: `${UserDetails.firstname} ${UserDetails.lastname}`,
+      },
+      paymentMethod: "Paypal",
+      paymentInfo: form.values,
+      products: products,
+      total: totalPrice,
+      delivery: false,
+    };
+
+    await AddOrder(data);
+    setopen(false);
+    toast.success("Order Placed Successfully");
+  };
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -56,6 +79,7 @@ const Paypal = ({ open, setopen, totalPrice }) => {
             <Button
               type="submit"
               className="bg-blue-600 text-white text-lg mt-5 transition-all duration-200 ease-out hover:bg-blue-800 hover:shadow-md lg:w-[80%]  w-[100%] h-12 rounded-full"
+              onClick={AddTheOrder}
             >
               Pay ${totalPrice}
             </Button>
