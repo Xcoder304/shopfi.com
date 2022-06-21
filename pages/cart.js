@@ -62,6 +62,13 @@ const Cart = ({ products }) => {
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
   };
 
+  const Buy_Product = async (e, id) => {
+    e.preventDefault();
+    let filteredProduct = products.filter((data) => data._id == id);
+    await AddTempData(filteredProduct);
+    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
+  };
+
   const Buy_All_Products = async () => {
     await AddTempData(products);
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
@@ -131,6 +138,7 @@ const Cart = ({ products }) => {
                     <Button
                       type="submit"
                       className="bg-App_green_L border hover:border-App_green_L hover:bg-white hover:text-App_green_L h-[47px] w-[120px] transition-all duration-200 ease-out rounded-lg my-3 py-2 px-4 lg:py-0text-base"
+                      onClick={(e) => Buy_Product(e, _id)}
                     >
                       Buy Now
                     </Button>

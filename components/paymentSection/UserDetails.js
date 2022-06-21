@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import {
   Button,
   NativeSelect,
@@ -12,12 +12,14 @@ import { useForm } from "@mantine/form";
 import { MdDelete } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { NextPaymentStep } from "../../Redux/features/OtherStateteSlice";
-import Cookies from "js-cookie";
 import { AddTempData } from "../../utils/DatabaseFuntions";
+import { GetTheUser } from "../../utils/AuthFuntions";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const UserDetails = ({ countriesName, tempProductdata }) => {
   const [products, setproducts] = useState(tempProductdata);
+  const [userInfo, setuserInfo] = useState(null);
   const [Errors, setErrors] = useState({
     status: false,
     message: "",
@@ -37,11 +39,6 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
       address: "",
       termsOfService: false,
     },
-
-    validate: {
-      phonenumber: (value) =>
-        value.length < 5 ? "phonenumber must be at least 5 Numbers" : null,
-    },
   });
 
   useEffect(() => {
@@ -55,6 +52,17 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
       router.back();
     }
   });
+
+  useLayoutEffect(() => {
+    const fetchUserData = async () => {
+      let data = {
+        token: Cookies.get("token"),
+      };
+      const user = await GetTheUser(data);
+      setuserInfo(user);
+    };
+    fetchUserData();
+  }, []);
 
   const NEXT_PAYMENT_SEC = () => {
     const regex =

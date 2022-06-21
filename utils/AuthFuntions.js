@@ -25,3 +25,13 @@ export const RegisterTheUser = async (userInfo) => {
   );
   return data;
 };
+
+// get the user
+export const GetTheUser = async (token) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/auth/getUser`,
+    token
+  );
+
+  return data;
+};

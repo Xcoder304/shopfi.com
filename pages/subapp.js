@@ -17,10 +17,10 @@ const Subapp = () => {
 
   useEffect(() => {
     fetchData();
-
     if (Cookies.get("token")) {
       dispatch(setUser(Cookies.get("token")));
     }
   });
 };
+
 export default Subapp;
