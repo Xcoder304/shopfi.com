@@ -70,8 +70,6 @@ export const ClearTheCart = async () => {
   await axios.post(
     `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/cart/clearTheCart`
   );
-
-  alert("Cart Cleared");
 };
 
 // adding the temp data

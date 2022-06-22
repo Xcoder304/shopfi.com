@@ -3,7 +3,8 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { ChangeCartValue } from "../Redux/features/ProductSlice";
 import { fetchCartDataWithApi } from "../utils/DatabaseFuntions";
-import { setUser } from "../Redux/features/OtherStateteSlice";
+import { setUser, setUserDetails } from "../Redux/features/OtherStateteSlice";
+import { GetTheUser } from "../utils/AuthFuntions";
 
 const Subapp = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,17 @@ const Subapp = () => {
       dispatch(setUser(Cookies.get("token")));
     }
   });
+
+  useEffect(() => {
+    const fetch = async () => {
+      const data = {
+        token: Cookies.get("token"),
+      };
+      const userInfo = await GetTheUser(data);
+      dispatch(setUserDetails(userInfo));
+    };
+    fetch();
+  }, []);
 };
 
 export default Subapp;

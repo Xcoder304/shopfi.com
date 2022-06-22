@@ -35,3 +35,13 @@ export const GetTheUser = async (token) => {
 
   return data;
 };
+
+// change user details
+export const ChangeUserDetails = async (userdata) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/auth/changeUserDetails`,
+    userdata
+  );
+
+  return data;
+};

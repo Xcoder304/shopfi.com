@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
+  userToken: null,
+  userDetails: null,
   openLoginModal: false,
   ActivePaymentSection: 1,
 };
@@ -11,7 +12,11 @@ export const OtherStatesSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload;
+      state.userToken = action.payload;
+    },
+
+    setUserDetails: (state, action) => {
+      state.userDetails = action.payload;
     },
 
     setOpenLoginModal: (state, action) => {
@@ -39,14 +44,16 @@ export const OtherStatesSlice = createSlice({
 });
 
 export const {
-  setOpenLoginModal,
   setUser,
+  setUserDetails,
+  setOpenLoginModal,
   NextPaymentStep,
   PrevPaymentSection,
   setPaymentSection,
 } = OtherStatesSlice.actions;
 
-export const selecteUser = (state) => state.otherStates.user;
+export const selecteUser = (state) => state.otherStates.userToken;
+export const selectUserDetails = (state) => state.otherStates.userDetails;
 
 export const selecteOpenLoginModal = (state) =>
   state.otherStates.openLoginModal;

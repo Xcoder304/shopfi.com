@@ -51,7 +51,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
     if (products.length == 0) {
       router.back();
     }
-  });
+  }, []);
 
   useLayoutEffect(() => {
     const fetchUserData = async () => {

@@ -21,6 +21,7 @@ import {
   selecteproductQty,
   selectecart,
 } from "../Redux/features/ProductSlice";
+import { Toaster, toast } from "react-hot-toast";
 import Cookies from "js-cookie";
 
 const Cart = ({ products }) => {
@@ -28,13 +29,6 @@ const Cart = ({ products }) => {
   const cart = useSelector(selectecart);
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const RemoveTheProduct = async (e, id, index) => {
-    e.preventDefault();
-    products.splice(index, 1);
-    await RemoveProductFromCart({ id });
-    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
-  };
 
   useEffect(() => {
     if (!Cookies.get("token")) {
@@ -56,10 +50,19 @@ const Cart = ({ products }) => {
     });
   };
 
+  const RemoveTheProduct = async (e, id, index) => {
+    e.preventDefault();
+    products.splice(index, 1);
+    await RemoveProductFromCart({ id });
+    toast.success("Product Removed");
+    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
+  };
+
   const ClearCart = async () => {
     await ClearTheCart();
     products.splice(0, products.length);
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
+    toast.success("Cleared The Cart");
   };
 
   const Buy_Product = async (e, id) => {
@@ -79,6 +82,7 @@ const Cart = ({ products }) => {
       <Head>
         <title>Cart - Shopfi</title>
       </Head>
+      <Toaster position="top-center" reverseOrder={false} />
 
       {products.length == 0 ? (
         <CartEmpty />

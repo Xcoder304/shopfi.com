@@ -60,11 +60,10 @@ const RegisterContent = ({ setIsLoginOpen, toast, setloading }) => {
           MainAdmin: false,
         };
         const reg = await RegisterTheUser(data);
-        console.log("req", reg);
 
         setStatus(reg);
         setloading(false);
-        if (Status.success) {
+        if (reg.success) {
           toast.success("Your are Successfully registered");
           setStatus({ success: false, message: "" });
           setIsLoginOpen(true);
