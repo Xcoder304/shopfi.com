@@ -11,7 +11,10 @@ import {
   selecteErrorMsgVal,
   setproductQty,
 } from "../../Redux/features/ProductSlice";
-import { setOpenLoginModal } from "../../Redux/features/OtherStateteSlice";
+import {
+  setOpenLoginModal,
+  selectUserDetails,
+} from "../../Redux/features/OtherStateteSlice";
 import { AddProductToCart } from "../../utils/DatabaseFuntions";
 import Cookies from "js-cookie";
 
@@ -22,10 +25,13 @@ const Slug = ({ product }) => {
   const Error = useSelector(selecteErrorMsgVal);
   const [checkVal, setCheckVal] = useState(0);
   const [imageUrlIndex, setimageUrlIndex] = useState(0);
+  const userDetails = useSelector(selectUserDetails);
 
   useEffect(() => {
     Cookies.set("cart", JSON.stringify(cart));
   }, [cart]);
+
+  console.log(cart);
 
   if (!product) {
     <h1>product not founded</h1>;
@@ -45,6 +51,7 @@ const Slug = ({ product }) => {
           let data = {
             ...product,
             productname: product.name,
+            userID: userDetails?._id,
           };
 
           await AddProductToCart(data);
@@ -59,7 +66,7 @@ const Slug = ({ product }) => {
 
   const AddToCart = async () => {
     if (Cookies.get("token")) {
-      dispatch(setTheCart(product));
+      dispatch(setTheCart({ ...product, userID: userDetails?._id }));
       setCheckVal(checkVal + 1);
     } else {
       dispatch(setOpenLoginModal(true));
@@ -116,7 +123,7 @@ const Slug = ({ product }) => {
               <h1 className="text-App_black_L text-3xl title-font font-medium mb-1">
                 {product?.name}
               </h1>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between flex-wrap">
                 {/*  */}
                 <div className="flex mt-3 mb-4">
                   <span className="flex items-center">

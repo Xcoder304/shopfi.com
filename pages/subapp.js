@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { ChangeCartValue } from "../Redux/features/ProductSlice";
@@ -10,10 +10,13 @@ const Subapp = () => {
   const dispatch = useDispatch();
 
   const fetchData = async () => {
-    const data = await fetchCartDataWithApi();
+    const info = {
+      token: Cookies.get("token"),
+    };
+    const data = await fetchCartDataWithApi(info);
     Cookies.remove("cart");
-    Cookies.set("cart", JSON.stringify(data));
-    dispatch(ChangeCartValue(data));
+    Cookies.set("cart", JSON.stringify(data.items));
+    dispatch(ChangeCartValue(data.items));
   };
 
   useEffect(() => {
@@ -21,9 +24,9 @@ const Subapp = () => {
     if (Cookies.get("token")) {
       dispatch(setUser(Cookies.get("token")));
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchData = async () => {
       let { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/auth/getUser`,

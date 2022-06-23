@@ -3,6 +3,7 @@ import axios from "axios";
 import Product from "../modals/Product";
 import Cart from "../modals/Cart";
 import TempData from "../modals/TempData";
+import Cookies from "js-cookie";
 
 // fetchProducts
 export const fetchProductsData = async () => {
@@ -29,9 +30,10 @@ export const fetchTheProduct = async (slug) => {
 // ***************cart functions**********************
 
 // fetching the cart data with api
-export const fetchCartDataWithApi = async () => {
-  const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/cart/getCartProduct`
+export const fetchCartDataWithApi = async (info) => {
+  const { data } = await axios.post(
+    "http://localhost:3000/api/cart/getCartProduct",
+    info
   );
 
   return data;

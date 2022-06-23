@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { MdDelete } from "react-icons/md";
 import { Button, NativeSelect } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import {
-  fetchCartData,
+  fetchCartDataWithApi,
   RemoveProductFromCart,
   ClearTheCart,
   AddTempData,
@@ -23,8 +23,11 @@ import {
 } from "../Redux/features/ProductSlice";
 import { Toaster, toast } from "react-hot-toast";
 import Cookies from "js-cookie";
+import { data } from "../utils/data";
+import cookie from "cookie";
 
 const Cart = ({ products }) => {
+  // const [products, setProducts] = useState(CartProductData);
   const productQty = useSelector(selecteproductQty);
   const cart = useSelector(selectecart);
   const dispatch = useDispatch();
@@ -35,6 +38,21 @@ const Cart = ({ products }) => {
       dispatch(setOpenLoginModal(true));
     }
   }, []);
+
+  console.log("pro", products);
+
+  // useEffect(() => {
+  //   const f = async () => {
+  //     const info = {
+  //       token: Cookies.get("token"),
+  //     };
+  //     const data = await fetchCartDataWithApi(info);
+
+  //     setProducts(data.items);
+  //   };
+
+  //   f();
+  // }, []);
 
   useEffect(() => {
     dispatch(setPaymentSection(1));
@@ -199,9 +217,24 @@ const Cart = ({ products }) => {
 };
 
 export async function getServerSideProps(context) {
-  const products = await fetchCartData();
+  const mycookie = cookie.parse(
+    (context.req && context.req.headers.cookie) || ""
+  );
+
+  let cookieNameData = {};
+  if (mycookie.token) {
+    cookieNameData = mycookie.token;
+  }
+
+  const info = {
+    token: cookieNameData,
+  };
+  const data = await fetchCartDataWithApi(info);
+
+  console.log(data);
+
   return {
-    props: { products },
+    props: { products: data.items },
   };
 }
 
