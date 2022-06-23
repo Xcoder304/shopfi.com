@@ -9,17 +9,18 @@ import {
 } from "@mantine/core";
 import { At, Phone, Lock } from "tabler-icons-react";
 import { useForm } from "@mantine/form";
-import { useSelector } from "react-redux";
-import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
 import { ChangeUserDetails } from "../utils/AuthFuntions";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "react-hot-toast";
 import { UploadImage } from "../utils/UtilsFuntions";
+import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const userInfo = useSelector(selectUserDetails);
   const [userProfile, setuserProfile] = useState(null);
+
   const router = useRouter();
 
   const form = useForm({
@@ -44,7 +45,7 @@ const Profile = () => {
 
       setuserProfile(userInfo.profileImg);
     }
-  }, []);
+  }, [userInfo]);
 
   useEffect(() => {
     form.values.password = "";

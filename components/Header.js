@@ -39,6 +39,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  console.log(userDetails);
+
   const LoginOutTheUser = () => {
     Cookies.remove("token");
     dispatch(setUser(null));
@@ -95,11 +97,7 @@ const Header = () => {
               <div className="hover:bg-slate-200 rounded-full transition-all duration-200 ease-out">
                 <Avatar
                   radius="xl"
-                  src={
-                    userDetails?.profileImg
-                      ? userDetails?.profileImg
-                      : "https://cdn-icons.flaticon.com/png/512/552/premium/552721.png?token=exp=1655886045~hmac=95b8b8195f24a9761dec731f73ce8ffe"
-                  }
+                  src={userDetails?.profileImg}
                   className="cursor-pointer hover:scale-90 transition-all duration-150 ease-out"
                 />
               </div>
