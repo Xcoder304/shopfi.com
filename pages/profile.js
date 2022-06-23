@@ -16,10 +16,12 @@ import { Toaster, toast } from "react-hot-toast";
 import { UploadImage } from "../utils/UtilsFuntions";
 import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
 import { useSelector } from "react-redux";
+import { Loader } from "@mantine/core";
 
 const Profile = () => {
   const userInfo = useSelector(selectUserDetails);
   const [userProfile, setuserProfile] = useState(null);
+  const [laoding, setlaoding] = useState(false);
 
   const router = useRouter();
 
@@ -72,8 +74,10 @@ const Profile = () => {
   };
 
   const haddleAvatar = async (e) => {
+    setlaoding(true);
     const file = e.target.files[0];
     const uploadedImg = await UploadImage([file]);
+    setlaoding(false);
     setuserProfile(null);
     setuserProfile(uploadedImg ? uploadedImg[0].imgURL : null);
   };
@@ -93,15 +97,23 @@ const Profile = () => {
               user profile
             </h2>
 
-            <img
-              src={
-                userProfile
-                  ? userProfile
-                  : "https://cdn-icons.flaticon.com/png/512/552/premium/552721.png?token=exp=1655886045~hmac=95b8b8195f24a9761dec731f73ce8ffe"
-              }
-              alt="user profie"
-              className="w-[160px] h-[160px] object-cover rounded-full object-center mt-4"
-            />
+            <div className="w-[160px] h-[160px] rounded-full mt-4 relative select-none">
+              <img
+                src={
+                  userProfile
+                    ? userProfile
+                    : "https://cdn-icons.flaticon.com/png/512/552/premium/552721.png?token=exp=1655886045~hmac=95b8b8195f24a9761dec731f73ce8ffe"
+                }
+                alt="user profie"
+                className="object-cover rounded-full object-center w-full h-full"
+              />
+
+              {laoding && (
+                <div className="w-full h-full rounded-full bg-[#f8f8f8a2] absolute top-0 left-0 flex justify-center items-center">
+                  <Loader />
+                </div>
+              )}
+            </div>
 
             <label
               htmlFor="filebutton"
