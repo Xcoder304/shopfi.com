@@ -15,6 +15,7 @@ import { ChangeUserDetails } from "../utils/AuthFuntions";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "react-hot-toast";
+import { UploadImage } from "../utils/UtilsFuntions";
 
 const Profile = () => {
   const userInfo = useSelector(selectUserDetails);
@@ -40,6 +41,8 @@ const Profile = () => {
         phonenumber: userInfo.phonenumber,
         address: userInfo?.address ? userInfo?.address : "",
       });
+
+      setuserProfile(userInfo.profileImg);
     }
   }, []);
 
@@ -52,11 +55,11 @@ const Profile = () => {
     const data = {
       token: Cookies.get("token"),
       name: form.values.name,
-      email: form.values.email,
       phonenumber: form.values.phonenumber,
       address: form.values.address,
       password: form.values.password,
       newPasswod: form.values.newPasswod,
+      profileImg: userProfile,
     };
     const user = await ChangeUserDetails(data);
     if (user.success) {
@@ -67,11 +70,16 @@ const Profile = () => {
     }
   };
 
-  const haddleAvatar = (e) => {
+  const haddleAvatar = async (e) => {
     const file = e.target.files[0];
+    const uploadedImg = await UploadImage([file]);
 
-    setuserProfile(file);
+    setuserProfile(null);
+
+    setuserProfile(uploadedImg ? uploadedImg[0].imgURL : null);
   };
+
+  console.log(userProfile);
 
   return (
     <>
@@ -87,10 +95,11 @@ const Profile = () => {
             <h2 className="text-3xl text-App_black_L font-bold capitalize select-none">
               user profile
             </h2>
+
             <img
               src={
                 userProfile
-                  ? URL.createObjectURL(userProfile)
+                  ? userProfile
                   : "https://cdn-icons.flaticon.com/png/512/552/premium/552721.png?token=exp=1655886045~hmac=95b8b8195f24a9761dec731f73ce8ffe"
               }
               alt="user profie"
@@ -149,7 +158,6 @@ const Profile = () => {
               size="lg"
               radius="md"
               className="flex-1 mx-auto mt-3"
-              hideControls
               {...form.getInputProps("phonenumber")}
             />
 
