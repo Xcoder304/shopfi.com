@@ -33,13 +33,11 @@ import { Toaster, toast } from "react-hot-toast";
 const Header = () => {
   const [openModal, handleModal] = useDisclosure(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const userDetails = useSelector(selectUserDetails);
   const user = useSelector(selecteUser);
   const cart = useSelector(selectecart);
-  const userDetails = useSelector(selectUserDetails);
   const dispatch = useDispatch();
   const router = useRouter();
-
-  console.log(userDetails);
 
   const LoginOutTheUser = () => {
     Cookies.remove("token");

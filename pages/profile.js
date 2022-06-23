@@ -74,13 +74,9 @@ const Profile = () => {
   const haddleAvatar = async (e) => {
     const file = e.target.files[0];
     const uploadedImg = await UploadImage([file]);
-
     setuserProfile(null);
-
     setuserProfile(uploadedImg ? uploadedImg[0].imgURL : null);
   };
-
-  console.log(userProfile);
 
   return (
     <>

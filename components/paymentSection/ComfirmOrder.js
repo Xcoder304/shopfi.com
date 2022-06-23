@@ -4,7 +4,7 @@ import {
   Checkbox,
   NativeSelect,
   TextInput,
-  NumberInput,
+  Input,
   Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -185,7 +185,7 @@ const ComfirmOrder = ({ tempProductdata }) => {
               {...form.getInputProps("email")}
             />
 
-            <NumberInput
+            <Input
               icon={<Phone />}
               required
               placeholder="***********"
@@ -193,7 +193,6 @@ const ComfirmOrder = ({ tempProductdata }) => {
               size="md"
               radius="md"
               className="flex-1 mx-auto mt-2"
-              hideControls
               {...form.getInputProps("phonenumber")}
             />
 
