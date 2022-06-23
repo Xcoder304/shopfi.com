@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Head from "next/head";
 import { MdDelete } from "react-icons/md";
 import { Button, NativeSelect } from "@mantine/core";
@@ -23,11 +23,9 @@ import {
 } from "../Redux/features/ProductSlice";
 import { Toaster, toast } from "react-hot-toast";
 import Cookies from "js-cookie";
-import { data } from "../utils/data";
 import cookie from "cookie";
 
 const Cart = ({ products }) => {
-  // const [products, setProducts] = useState(CartProductData);
   const productQty = useSelector(selecteproductQty);
   const cart = useSelector(selectecart);
   const dispatch = useDispatch();
@@ -40,19 +38,6 @@ const Cart = ({ products }) => {
   }, []);
 
   console.log("pro", products);
-
-  // useEffect(() => {
-  //   const f = async () => {
-  //     const info = {
-  //       token: Cookies.get("token"),
-  //     };
-  //     const data = await fetchCartDataWithApi(info);
-
-  //     setProducts(data.items);
-  //   };
-
-  //   f();
-  // }, []);
 
   useEffect(() => {
     dispatch(setPaymentSection(1));

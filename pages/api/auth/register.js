@@ -8,6 +8,8 @@ const handler = nc();
 handler.post(async (req, res) => {
   await db.connect();
   const user = await new User({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     name: req.body.name,
     email: req.body.email,
     phonenumber: req.body.phonenumber,

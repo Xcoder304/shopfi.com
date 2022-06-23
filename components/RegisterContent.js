@@ -51,6 +51,8 @@ const RegisterContent = ({ setIsLoginOpen, toast, setloading }) => {
       if (form.values.password == form.values.confirmPassword) {
         setloading(true);
         let data = {
+          firstname: form.values.firstname,
+          lastname: form.values.lastname,
           name: form.values.firstname + " " + form.values.lastname,
           email: form.values.email,
           phonenumber: form.values.phonenumber,

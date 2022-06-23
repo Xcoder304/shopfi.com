@@ -58,7 +58,8 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
   useEffect(() => {
     if (userInfo) {
       form.setValues({
-        firstname: userInfo.name,
+        firstname: userInfo.firstname,
+        lastname: userInfo.lastname,
         email: userInfo.email,
         phonenumber: userInfo.phonenumber,
         address: userInfo?.address ? userInfo?.address : "",
