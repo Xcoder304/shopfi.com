@@ -32,7 +32,7 @@ const PaymentMethod = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center mt-7">
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="w-[90vw] md:w-[80%] lg:w-[60%] py-3 pb-5 px-4 bg-white rounded-md shadow-md">
+      <div className="w-[90vw] md:w-[80%] lg:w-[60%] py-3 pb-12 px-4 bg-white rounded-md shadow-md">
         <h1 className="text-App_black_L text-xl font-medium capitalize">
           select your Payment Method
         </h1>

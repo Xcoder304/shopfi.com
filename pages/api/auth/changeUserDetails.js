@@ -7,8 +7,6 @@ import bcrypt from "bcryptjs";
 const handler = nc();
 
 handler.post(async (req, res) => {
-  console.log(req.body);
-
   await db.connect();
   const token = req.body.token;
   const tokenRes = jwt.verify(token, process.env.JWT_SECRET);

@@ -6,12 +6,14 @@ import { Button, Checkbox, NumberInput } from "@mantine/core";
 import { Id, BuildingBank } from "tabler-icons-react";
 import { AddOrder } from "../../utils/DatabaseFuntions";
 import { CreateRamdomOrderID } from "../../utils/UtilsFuntions";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { NextPaymentStep } from "../../Redux/features/OtherStateteSlice";
 
 const Bank = ({ open, setopen, totalPrice, UserDetails, products }) => {
   const [loading, setlaoding] = useState(false);
-  const router = useRouter();
   const theme = useMantineTheme();
+  const dispatch = useDispatch();
+
   const form = useForm({
     initialValues: {
       BankAccountNum: "",
@@ -41,7 +43,7 @@ const Bank = ({ open, setopen, totalPrice, UserDetails, products }) => {
     setlaoding(false);
     setopen(false);
     toast.success("Order Placed Successfully");
-    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
+    dispatch(NextPaymentStep());
   };
 
   return (

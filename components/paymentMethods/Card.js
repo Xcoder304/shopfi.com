@@ -4,15 +4,17 @@ import { Toaster, toast } from "react-hot-toast";
 import { useForm } from "@mantine/form";
 import { Button, Checkbox, NumberInput, TextInput } from "@mantine/core";
 import { CreditCard, Key } from "tabler-icons-react";
-import Image from "next/image";
 import { AddOrder } from "../../utils/DatabaseFuntions";
 import { CreateRamdomOrderID } from "../../utils/UtilsFuntions";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { NextPaymentStep } from "../../Redux/features/OtherStateteSlice";
+import Image from "next/image";
 
 const Card = ({ open, setopen, totalPrice, UserDetails, products }) => {
   const [loading, setlaoding] = useState(false);
-  const router = useRouter();
   const theme = useMantineTheme();
+  const dispatch = useDispatch();
+
   const form = useForm({
     initialValues: {
       cardNum: "",
@@ -44,7 +46,7 @@ const Card = ({ open, setopen, totalPrice, UserDetails, products }) => {
     setlaoding(false);
     setopen(false);
     toast.success("Order Placed Successfully");
-    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
+    dispatch(NextPaymentStep());
   };
 
   return (

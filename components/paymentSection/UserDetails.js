@@ -33,6 +33,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
 
   const form = useForm({
     initialValues: {
+      userId: "",
       firstname: "",
       lastname: "",
       email: "",
@@ -58,6 +59,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
   useEffect(() => {
     if (userInfo) {
       form.setValues({
+        userId: userInfo._id,
         firstname: userInfo.firstname,
         lastname: userInfo.lastname,
         email: userInfo.email,

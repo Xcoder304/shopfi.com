@@ -8,6 +8,7 @@ import UserDetails from "../components/paymentSection/UserDetails";
 import PaymentMethod from "../components/paymentSection/PaymentMethod";
 import ComfirmOrder from "../components/paymentSection/ComfirmOrder";
 import { fetchTempData } from "../utils/DatabaseFuntions";
+import ThanksForOrder from "../components/paymentMethods/ThanksForOrder";
 
 const PaymentSec = ({ countriesName, tempdata }) => {
   const active = useSelector(selecteActivePaymentSection);
@@ -50,7 +51,7 @@ const PaymentSec = ({ countriesName, tempdata }) => {
           </Stepper.Step>
 
           <Stepper.Completed>
-            Completed, click back button to get to previous step
+            <ThanksForOrder />
           </Stepper.Completed>
         </Stepper>
       </div>

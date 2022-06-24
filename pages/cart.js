@@ -101,7 +101,7 @@ const Cart = ({ products }) => {
                     key={index}
                   >
                     <div
-                      className="flex items-center space-x-2 select-none py-2 px-4 lg:py-0 cursor-pointer"
+                      className="flex flex-col md:flex-row items-start md:items-center select-none py-2 px-4 lg:py-0 cursor-pointer space-x-3"
                       onClick={() =>
                         router.push(
                           `${
@@ -114,18 +114,26 @@ const Cart = ({ products }) => {
                         src={images[0].url}
                         className="w-[130px] h-[100px] object-contain "
                       />
-                      <h2 className="font-bold text-lg text-App_black_L">
-                        {name.substr(0, 35)}...
-                      </h2>
+                      <div className="flex flex-col items-start">
+                        <h2 className="font-bold text-lg text-App_black_L">
+                          {name.substr(0, 100)}
+                        </h2>
+                        <span className="font-medium text-base text-App_green_L select-none">
+                          ${price}
+                        </span>
+                        <span className="font-medium text-base text-red-600 select-none capitalize">
+                          inshock {inStock}
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-center py-2 px-4 lg:py-0">
+                    {/* <div className="text-center py-2 px-4 lg:py-0">
                       <h4 className="font-medium text-lg select-none text-App_black_L capitalize">
                         price
                       </h4>
                       <span className="font-medium text-base text-App_green_L select-none">
                         ${price}
                       </span>
-                    </div>
+                    </div> */}
                     <div className="text-center flex flex-col items-center py-2 px-4 lg:py-0">
                       <h4 className="font-medium text-lg select-none text-App_black_L capitalize">
                         select Qty
@@ -144,14 +152,14 @@ const Cart = ({ products }) => {
                     </div>
                     <Button
                       type="submit"
-                      className="bg-App_green_L border hover:border-App_green_L hover:bg-white hover:text-App_green_L h-[47px] w-[120px] transition-all duration-200 ease-out rounded-lg my-3 py-2 px-4 lg:py-0text-base"
+                      className="bg-App_green_L border hover:border-App_green_L hover:bg-white hover:text-App_green_L h-[47px] w-[90px] transition-all duration-200 ease-out rounded-md my-3 py-2 px-4 lg:py-0 text-base"
                       onClick={(e) => Buy_Product(e, _id)}
                     >
-                      Buy Now
+                      Buy
                     </Button>
                     <Button
                       type="submit"
-                      className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] w-[76px] transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0"
+                      className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] w-[66px] transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0"
                       onClick={(e) => RemoveTheProduct(e, _id, index)}
                     >
                       <MdDelete className="text-3xl" />
@@ -215,8 +223,6 @@ export async function getServerSideProps(context) {
     token: cookieNameData,
   };
   const data = await fetchCartDataWithApi(info);
-
-  console.log(data);
 
   return {
     props: { products: data.items },

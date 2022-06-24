@@ -45,6 +45,7 @@ const LoginContent = ({ setIsLoginOpen, toast, setloading }) => {
         setStatus({ success: false, message: "" });
         dispatch(setUser(loginRes.token));
         dispatch(setOpenLoginModal(false));
+        window.location.reload(false);
       }
     }
   };

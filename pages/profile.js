@@ -18,11 +18,15 @@ import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
 import { useSelector } from "react-redux";
 import { Loader } from "@mantine/core";
 
+// icons
+import { MdDoneAll } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
+
 const Profile = () => {
   const userInfo = useSelector(selectUserDetails);
   const [userProfile, setuserProfile] = useState(null);
   const [laoding, setlaoding] = useState(false);
-
+  const [isDelivere, setisDelivere] = useState(true);
   const router = useRouter();
 
   const form = useForm({
@@ -45,7 +49,7 @@ const Profile = () => {
         address: userInfo?.address ? userInfo?.address : "",
       });
 
-      setuserProfile(userInfo.profileImg);
+      setuserProfile(userInfo?.profileImg);
     }
   }, [userInfo]);
 
@@ -73,13 +77,13 @@ const Profile = () => {
     }
   };
 
-  const haddleAvatar = async (e) => {
+  const haddleUserProfile = async (e) => {
     setlaoding(true);
     const file = e.target.files[0];
     const uploadedImg = await UploadImage([file]);
     setlaoding(false);
     setuserProfile(null);
-    setuserProfile(uploadedImg ? uploadedImg[0].imgURL : null);
+    setuserProfile(uploadedImg ? uploadedImg[0]?.imgURL : null);
   };
 
   return (
@@ -88,15 +92,13 @@ const Profile = () => {
         <title> User Profile - Shopfi </title>
       </Head>
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="py-3 px-3 flex items-start justify-between bg-App_white_L">
+      <div className="py-3 px-3 flex items-start w-full justify-between space-x-3 bg-App_white_L">
         {/* user profile */}
-
         <div className="px-5 w-[40%] py-3 bg-white rounded-md shadow-md">
+          <h2 className="text-3xl text-App_black_L font-bold capitalize select-none">
+            user profile
+          </h2>
           <div className="flex items-start justify-center flex-col ">
-            <h2 className="text-3xl text-App_black_L font-bold capitalize select-none">
-              user profile
-            </h2>
-
             <div className="w-[160px] h-[160px] rounded-full mt-4 relative select-none">
               <img
                 src={
@@ -127,7 +129,7 @@ const Profile = () => {
               id="filebutton"
               accept="image/*"
               style={{ visibility: "hidden", width: "0px", height: "0px" }}
-              onChange={haddleAvatar}
+              onChange={haddleUserProfile}
             />
           </div>
 
@@ -217,7 +219,48 @@ const Profile = () => {
         </div>
 
         {/* orders  */}
-        <div className="w-[60%] py-2"></div>
+        <div className="w-[60%] py-2">
+          <h2 className="text-3xl text-App_black_L font-bold capitalize select-none">
+            user orders
+          </h2>
+          <table className="border-2 w-full mt-3">
+            <thead className="capitalize space-x-2 bg-gray-200 h-10 select-none">
+              <tr>
+                <th className="border-r border-slate-300">order id</th>
+                <th className="border-r border-slate-300">date</th>
+                <th className="border-r border-slate-300">total</th>
+                <th className="border-r border-slate-300">Delivere status</th>
+                <th className="border-r border-slate-300">payment method</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr className="cursor-pointer border-b border-slate-300 hover:bg-slate-200 transition-all duration-200 ease-out">
+                <td className="border-r border-slate-300 px-3 font-medium text-App_blue_L">
+                  4234234234112543245
+                </td>
+                <td className="border-r border-slate-300 px-3 py-2 font-bold text-base text-gray-400">
+                  02/2/2022
+                </td>
+                <td className="border-r border-slate-300 px-3 py-2 text-App_green_L font-bold text-base">
+                  $34
+                </td>
+                <td className="border-r border-slate-300 px-3 py-2">
+                  {isDelivere ? (
+                    <MdDoneAll className="mx-auto text-2xl text-green-600" />
+                  ) : (
+                    <IoClose className="mx-auto text-2xl text-red-600" />
+                  )}
+                </td>
+                <td className="border-r border-slate-300 px-3 py-2 text-center">
+                  <span className="capitalize text-lg text-App_green_L font-bold select-none">
+                    paypal
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
