@@ -108,7 +108,7 @@ const Header = () => {
                 router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/profile`)
               }
             >
-              Profile Settings
+              Profile & Orders
             </Menu.Item>
             <Menu.Item
               icon={<AiOutlineMessage size={14} />}
