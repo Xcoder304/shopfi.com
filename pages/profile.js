@@ -20,7 +20,6 @@ const Profile = ({ orderData }) => {
   const userInfo = useSelector(selectUserDetails);
   const [userProfile, setuserProfile] = useState(null);
   const [laoding, setlaoding] = useState(false);
-  const [isDelivere, setisDelivere] = useState(true);
   const router = useRouter();
 
   const form = useForm({

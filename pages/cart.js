@@ -11,23 +11,18 @@ import {
 } from "../utils/DatabaseFuntions";
 import { useRouter } from "next/router";
 import CartEmpty from "../components/CartEmpty";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setOpenLoginModal,
   setPaymentSection,
 } from "../Redux/features/OtherStateteSlice";
-import {
-  setproductQty,
-  selecteproductQty,
-  selectecart,
-} from "../Redux/features/ProductSlice";
+import { setproductQty } from "../Redux/features/ProductSlice";
 import { Toaster, toast } from "react-hot-toast";
 import Cookies from "js-cookie";
 import cookie from "cookie";
+import { ArrowLeft } from "tabler-icons-react";
 
 const Cart = ({ products }) => {
-  const productQty = useSelector(selecteproductQty);
-  const cart = useSelector(selectecart);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -36,8 +31,6 @@ const Cart = ({ products }) => {
       dispatch(setOpenLoginModal(true));
     }
   }, []);
-
-  console.log("pro", products);
 
   useEffect(() => {
     dispatch(setPaymentSection(1));
@@ -76,7 +69,8 @@ const Cart = ({ products }) => {
   };
 
   const Buy_All_Products = async () => {
-    await AddTempData(products);
+    const CheckProducts = products.filter((data) => data.inStock > 0);
+    await AddTempData(CheckProducts);
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
   };
 
@@ -126,37 +120,37 @@ const Cart = ({ products }) => {
                         </span>
                       </div>
                     </div>
-                    {/* <div className="text-center py-2 px-4 lg:py-0">
-                      <h4 className="font-medium text-lg select-none text-App_black_L capitalize">
-                        price
-                      </h4>
-                      <span className="font-medium text-base text-App_green_L select-none">
-                        ${price}
-                      </span>
-                    </div> */}
-                    <div className="text-center flex flex-col items-center py-2 px-4 lg:py-0">
-                      <h4 className="font-medium text-lg select-none text-App_black_L capitalize">
-                        select Qty
-                      </h4>
+                    {inStock > 0 ? (
+                      <>
+                        <div className="text-center flex flex-col items-center py-2 px-4 lg:py-0">
+                          <h4 className="font-medium text-lg select-none text-App_black_L capitalize">
+                            select Qty
+                          </h4>
 
-                      <NativeSelect
-                        data={[...Array(inStock).keys()].map((x) => {
-                          const num = x + 1;
-                          return String(num);
-                        })}
-                        className="select-none"
-                        rightSection={<ChevronDown size={14} />}
-                        rightSectionWidth={25}
-                        onChange={(e) => handelProductQty(e, _id, index)}
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      className="bg-App_green_L border hover:border-App_green_L hover:bg-white hover:text-App_green_L h-[47px] w-[90px] transition-all duration-200 ease-out rounded-md my-3 py-2 px-4 lg:py-0 text-base"
-                      onClick={(e) => Buy_Product(e, _id)}
-                    >
-                      Buy
-                    </Button>
+                          <NativeSelect
+                            data={[...Array(inStock).keys()].map((x) => {
+                              const num = x + 1;
+                              return String(num);
+                            })}
+                            className="select-none"
+                            rightSection={<ChevronDown size={14} />}
+                            rightSectionWidth={25}
+                            onChange={(e) => handelProductQty(e, _id, index)}
+                          />
+                        </div>
+                        <Button
+                          type="submit"
+                          className="bg-App_green_L border hover:border-App_green_L hover:bg-white hover:text-App_green_L h-[47px] w-[90px] transition-all duration-200 ease-out rounded-md my-3 py-2 px-4 lg:py-0 text-base"
+                          onClick={(e) => Buy_Product(e, _id)}
+                        >
+                          Buy
+                        </Button>
+                      </>
+                    ) : (
+                      <h3 className="text-xl font-medium text-red-600 select-none capitalize">
+                        this product currently is out of Stock
+                      </h3>
+                    )}
                     <Button
                       type="submit"
                       className="bg-[#F03E3E] hover:bg-[#c91919] h-[47px] w-[66px] transition-all px-4duration-200 ease-out rounded-lg py-2 px-4 lg:py-0"
@@ -203,6 +197,17 @@ const Cart = ({ products }) => {
               </Button>
             </div>
           </div>
+        </div>
+      )}
+      {products.length !== 0 && (
+        <div className="flex items-center justify-center w-full bg-App_white_L pt-5 pb-3">
+          <Button
+            className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
+            onClick={() => router.back()}
+            leftIcon={<ArrowLeft strokeWidth={2} />}
+          >
+            Go Back
+          </Button>
         </div>
       )}
     </>

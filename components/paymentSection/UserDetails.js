@@ -233,7 +233,14 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
             {...form.getInputProps("termsOfService", { type: "checkbox" })}
           />
 
-          <div className="w-full flex items-center justify-center">
+          <div className="w-full flex items-center justify-center space-x-3">
+            <Button
+              type="submit"
+              onClick={() => router.back()}
+              className="bg-blue-600 hover:bg-blue-700 transition-all duration-200 ease-out"
+            >
+              Go Back
+            </Button>
             <Button
               type="submit"
               onClick={NEXT_PAYMENT_SEC}
