@@ -17,6 +17,7 @@ import { BiHelpCircle } from "react-icons/bi";
 import { MdPersonAddAlt } from "react-icons/md";
 import { CgLogOut } from "react-icons/cg";
 import { FiMenu } from "react-icons/fi";
+import { Pencil, Plus } from "tabler-icons-react";
 // import HeaderMenu from "./HeaderMenu";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
@@ -108,17 +109,41 @@ const Header = () => {
                 router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/profile`)
               }
             >
-              Profile & Orders
+              {!userDetails?.isAdmin
+                ? "Profile & Orders"
+                : "Profile & Manage Orders"}
             </Menu.Item>
-            <Menu.Item
-              icon={<AiOutlineMessage size={14} />}
-              className="hover:bg-blue-100"
-            >
-              Contact us
-            </Menu.Item>
+            {!userDetails?.isAdmin && (
+              <Menu.Item
+                icon={<AiOutlineMessage size={14} />}
+                className="hover:bg-blue-100"
+              >
+                Contact us
+              </Menu.Item>
+            )}
+
+            {userDetails?.isAdmin && (
+              <>
+                <Menu.Item
+                  icon={<Pencil size={14} />}
+                  className="hover:bg-blue-100"
+                >
+                  Manage Categroys
+                </Menu.Item>
+
+                <Menu.Item
+                  icon={<Plus size={14} />}
+                  className="hover:bg-blue-100"
+                >
+                  Add Products
+                </Menu.Item>
+              </>
+            )}
+
             <Menu.Item
               icon={<MdPersonAddAlt size={14} />}
               className="hover:bg-green-100"
+              onClick={() => dispatch(setOpenLoginModal(true))}
             >
               Add Another Account
             </Menu.Item>

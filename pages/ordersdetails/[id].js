@@ -1,12 +1,27 @@
-import { GetTheOrderDetails } from "../../utils/DatabaseFuntions";
+import {
+  GetTheOrderDetails,
+  MarkAsDelivered,
+} from "../../utils/DatabaseFuntions";
 import Head from "next/head";
 import CreatePaymentFeilds from "../../components/profile/CreatePaymentFeilds";
 import { useRouter } from "next/router";
 import { Button } from "@mantine/core";
 import { ArrowLeft } from "tabler-icons-react";
+import { useSelector } from "react-redux";
+import { selectUserDetails } from "../../Redux/features/OtherStateteSlice";
+import { MdDoneAll } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
 
 const OrdersDetails = ({ orderDetailsData }) => {
+  const userInfo = useSelector(selectUserDetails);
   const router = useRouter();
+
+  const Mark_As_Delivered = async (id) => {
+    await MarkAsDelivered(id);
+    router.push(
+      `${process.env.NEXT_PUBLIC_HOSTING_URL}/ordersdetails/${router.query.id}?spm=${router.query.spm} ${router.query.id} ${router.query.spm} ${router.query.spm} ${router.query.id} ${router.query.spm}`
+    );
+  };
 
   return (
     <>
@@ -17,7 +32,9 @@ const OrdersDetails = ({ orderDetailsData }) => {
         <div className="fixed top-[90px] md:top-[120px] left-2 lg:left-14 z-10">
           <Button
             className="w-12 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
-            onClick={() => router.back()}
+            onClick={() =>
+              router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/profile`)
+            }
           >
             <ArrowLeft strokeWidth={2} />
           </Button>
@@ -90,16 +107,7 @@ const OrdersDetails = ({ orderDetailsData }) => {
               </span>
             </div>
 
-            <div className="flex items-center space-x-3 mb-3">
-              <span className="text-lg capitalize font-medium text-App_black_L">
-                paymentMethod:
-              </span>
-              <span className="text-base font-medium capitalize text-gray-500">
-                {orderDetailsData?.userDatils?.paymentMethod}
-              </span>
-            </div>
-
-            <div className="flex items-center">
+            <div className="flex items-center mt-6">
               <span className="text-xl capitalize font-medium text-App_green_L underline">
                 payment info
               </span>
@@ -107,7 +115,7 @@ const OrdersDetails = ({ orderDetailsData }) => {
 
             <CreatePaymentFeilds orderDetailsData={orderDetailsData} />
 
-            <div className="flex items-center">
+            <div className="flex items-center mt-6">
               <span className="text-xl capitalize font-medium text-App_green_L underline mb-3">
                 other details
               </span>
@@ -126,9 +134,11 @@ const OrdersDetails = ({ orderDetailsData }) => {
               <span className="text-lg capitalize font-medium text-App_black_L">
                 is delivered:
               </span>
-              <span className="text-base font-medium capitalize text-red-600">
-                {orderDetailsData?.delivery ? "true" : "false"}
-              </span>
+              {orderDetailsData?.delivery ? (
+                <MdDoneAll className="mx-auto text-2xl text-green-600" />
+              ) : (
+                <IoClose className="mx-auto text-2xl text-red-600" />
+              )}
             </div>
 
             <div className="flex items-center space-x-3 mb-3">
@@ -140,6 +150,22 @@ const OrdersDetails = ({ orderDetailsData }) => {
                   new Date(orderDetailsData?.createdAt).toLocaleDateString()}
               </span>
             </div>
+
+            {userInfo?.isAdmin && (
+              <div className="mt-6">
+                <div className="flex items-center">
+                  <span className="text-2xl capitalize font-medium text-blue-600 underline mb-3">
+                    admin actions
+                  </span>
+                </div>
+                <Button
+                  className="w-44 h-10 capitalize text-base text-white bg-App_blue_L hover:bg-App_blue_D transition-all duration-200 ease-out"
+                  onClick={() => Mark_As_Delivered(orderDetailsData?._id)}
+                >
+                  mark as delivered
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -156,7 +182,16 @@ const OrdersDetails = ({ orderDetailsData }) => {
                   className="flex items-center justify-between w-[95%] mx-auto bg-white py-4 pl-2 pr-5 rounded-md shadow-mdt flex-wrap mb-5"
                   key={index}
                 >
-                  <div className="flex items-center space-x-2 select-none py-2 px-4 lg:py-0">
+                  <div
+                    className="flex items-center space-x-2 select-none py-2 px-4 lg:py-0 cursor-pointer"
+                    onClick={() =>
+                      router.push(
+                        `${
+                          process.env.NEXT_PUBLIC_HOSTING_URL
+                        }/product/${slug}?id=${_id}?spm=${_id + "-" + slug}`
+                      )
+                    }
+                  >
                     <img
                       src={images[0].url}
                       className="w-[130px] h-[100px] object-contain "

@@ -3,6 +3,14 @@ import React from "react";
 const CreatePaymentFeilds = ({ orderDetailsData }) => {
   return (
     <div className="flex items-start flex-col justify-start mt-3">
+      <div className="flex items-center space-x-3 mb-3">
+        <span className="text-lg capitalize font-medium text-App_black_L">
+          paymentMethod:
+        </span>
+        <span className="text-base font-medium capitalize text-gray-500">
+          {orderDetailsData?.userDatils?.paymentMethod}
+        </span>
+      </div>
       {orderDetailsData?.paymentMethod == "Bank" && (
         <>
           <div className="w-full flex items-center space-x-3 mb-2">

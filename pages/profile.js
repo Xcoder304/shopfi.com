@@ -15,8 +15,9 @@ import { Button } from "@mantine/core";
 import { ArrowLeft } from "tabler-icons-react";
 import UserProfile from "../components/profile/UserProfile";
 import Orders from "../components/profile/Orders";
+import { GetAllOrders } from "../utils/DatabaseFuntions";
 
-const Profile = ({ orderData }) => {
+const Profile = ({ orderData, allordersData }) => {
   const userInfo = useSelector(selectUserDetails);
   const [userProfile, setuserProfile] = useState(null);
   const [laoding, setlaoding] = useState(false);
@@ -82,13 +83,16 @@ const Profile = ({ orderData }) => {
   return (
     <>
       <Head>
-        <title> User Profile - Shopfi </title>
+        <title>
+          {" "}
+          {userInfo?.isAdmin ? "Admin Profile" : "User Profile"} - Shopfi{" "}
+        </title>
       </Head>
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex items-center justify-center w-full bg-App_white_L pt-5 pb-3">
         <Button
           className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
-          onClick={() => router.back()}
+          onClick={() => router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}`)}
           leftIcon={<ArrowLeft strokeWidth={2} />}
         >
           Go Back
@@ -99,6 +103,7 @@ const Profile = ({ orderData }) => {
 
         <UserProfile
           laoding={laoding}
+          userInfo={userInfo}
           userProfile={userProfile}
           haddleUserProfile={haddleUserProfile}
           ChangeTheUserDetails={ChangeTheUserDetails}
@@ -106,12 +111,15 @@ const Profile = ({ orderData }) => {
         />
 
         {/* orders  */}
-        <Orders Orders={orderData.orders} />
+        <Orders
+          Orders={userInfo?.isAdmin ? allordersData.orders : orderData.orders}
+          userInfo={userInfo}
+        />
       </div>
       <div className="flex items-center justify-center w-full bg-App_white_L pt-5 pb-3">
         <Button
           className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
-          onClick={() => router.back()}
+          onClick={() => router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}`)}
           leftIcon={<ArrowLeft strokeWidth={2} />}
         >
           Go Back
@@ -140,8 +148,10 @@ export const getServerSideProps = async (context) => {
     info
   );
 
+  const allorders = await GetAllOrders();
+
   return {
-    props: { orderData: data },
+    props: { orderData: data, allordersData: allorders },
   };
 };
 

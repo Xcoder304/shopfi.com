@@ -110,3 +110,24 @@ export const GetTheOrderDetails = async (id) => {
 
   return res;
 };
+
+// admin
+
+// get all orders
+export const GetAllOrders = async () => {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/GetAllOrders`
+  );
+
+  return data;
+};
+
+// mark as delivered
+export const MarkAsDelivered = async (itemId) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/markAsDelivered`,
+    { id: itemId }
+  );
+
+  return data;
+};

@@ -1,15 +1,11 @@
 import nc from "next-connect";
 import db from "../../../utils/db";
 import Order from "../../../modals/Order";
-var jwt = require("jsonwebtoken");
 const handler = nc();
 
-handler.post(async (req, res) => {
+handler.get(async (req, res) => {
   await db.connect();
-  const token = req.body.token;
-  const tokenRes = jwt.verify(token, process.env.JWT_SECRET);
-  console.log("token res", tokenRes);
-  const orders = await Order.find({ "userDatils.userId": tokenRes.id });
+  const orders = await Order.find({});
   res.send({ success: true, orders, message: "fetched the orders" });
   await db.disconnect();
 });

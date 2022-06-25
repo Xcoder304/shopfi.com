@@ -15,11 +15,12 @@ const UserProfile = ({
   haddleUserProfile,
   ChangeTheUserDetails,
   form,
+  userInfo,
 }) => {
   return (
     <div className="px-5 w-[98%] md:w-[70%] lg:w-[50%] mx-auto xl:m-0 xl:w-[40%] 2xl:w-[30%] py-3 bg-white rounded-md shadow-md">
       <h2 className="text-3xl text-App_black_L font-bold capitalize select-none">
-        user profile
+        {userInfo?.isAdmin ? "admin profile" : "user profile"}
       </h2>
       <div className="flex items-start justify-center flex-col ">
         <div className="w-[160px] h-[160px] rounded-full mt-4 relative select-none">
@@ -95,17 +96,19 @@ const UserProfile = ({
           {...form.getInputProps("phonenumber")}
         />
 
-        <Textarea
-          type="number"
-          placeholder="abc#31311"
-          label="Your address"
-          className="flex-1 mx-auto mt-3"
-          radius="md"
-          size="md"
-          autosize
-          required
-          {...form.getInputProps("address")}
-        />
+        {!userInfo?.isAdmin && (
+          <Textarea
+            type="number"
+            placeholder="abc#31311"
+            label="Your address"
+            className="flex-1 mx-auto mt-3"
+            radius="md"
+            size="md"
+            autosize
+            required
+            {...form.getInputProps("address")}
+          />
+        )}
 
         <h3 className="capitalize my-5 text-xl text-blue-800 select-none font-medium">
           change password
