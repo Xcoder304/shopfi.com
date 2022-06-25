@@ -3,6 +3,7 @@ import axios from "axios";
 import Product from "../modals/Product";
 import Cart from "../modals/Cart";
 import TempData from "../modals/TempData";
+import Order from "../modals/Order";
 import Cookies from "js-cookie";
 
 // fetchProducts
@@ -98,4 +99,14 @@ export const AddOrder = async (data) => {
     `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/order/addOrder`,
     data
   );
+};
+
+// getTheOrderDetails
+export const GetTheOrderDetails = async (id) => {
+  await db.connect();
+  const fetch = await Order.findOne({ _id: id }).lean();
+  const res = db.convertDocToString(fetch);
+  await db.disconnect();
+
+  return res;
 };
