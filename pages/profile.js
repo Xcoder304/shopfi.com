@@ -9,11 +9,10 @@ import { UploadImage } from "../utils/UtilsFuntions";
 import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
 import { useSelector } from "react-redux";
 import cookie from "cookie";
-
 import axios from "axios";
-
+import { Button } from "@mantine/core";
 // icons
-
+import { ArrowLeft } from "tabler-icons-react";
 import UserProfile from "../components/profile/UserProfile";
 import Orders from "../components/profile/Orders";
 
@@ -87,8 +86,18 @@ const Profile = ({ orderData }) => {
         <title> User Profile - Shopfi </title>
       </Head>
       <Toaster position="top-center" reverseOrder={false} />
+      <div className="flex items-center justify-center w-full bg-App_white_L pt-5 pb-3">
+        <Button
+          className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
+          onClick={() => router.back()}
+          leftIcon={<ArrowLeft strokeWidth={2} />}
+        >
+          Go Back
+        </Button>
+      </div>
       <div className="py-3 px-3 flex items-start xl:flex-row flex-col w-full justify-between xl:space-x-3 xl:space-y-0 space-y-4 space-x-0 bg-App_white_L">
         {/* user profile */}
+
         <UserProfile
           laoding={laoding}
           userProfile={userProfile}
@@ -99,6 +108,15 @@ const Profile = ({ orderData }) => {
 
         {/* orders  */}
         <Orders Orders={orderData.orders} />
+      </div>
+      <div className="flex items-center justify-center w-full bg-App_white_L pt-5 pb-3">
+        <Button
+          className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
+          onClick={() => router.back()}
+          leftIcon={<ArrowLeft strokeWidth={2} />}
+        >
+          Go Back
+        </Button>
       </div>
     </>
   );

@@ -1,18 +1,29 @@
 import { GetTheOrderDetails } from "../../utils/DatabaseFuntions";
 import Head from "next/head";
 import CreatePaymentFeilds from "../../components/profile/CreatePaymentFeilds";
+import { useRouter } from "next/router";
+import { Button } from "@mantine/core";
+import { ArrowLeft } from "tabler-icons-react";
 
 const OrdersDetails = ({ orderDetailsData }) => {
-  console.log(orderDetailsData);
+  const router = useRouter();
 
   return (
     <>
       <Head>
         <title>orders Details - Shopfi</title>
       </Head>
-      <div className="w-full bg-App_white_L">
+      <div className="w-full bg-App_white_L relative">
+        <div className="fixed top-[90px] md:top-[120px] left-2 lg:left-14 z-10">
+          <Button
+            className="w-12 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
+            onClick={() => router.back()}
+          >
+            <ArrowLeft strokeWidth={2} />
+          </Button>
+        </div>
         {/* order details */}
-        <div className="w-full flex items-center justify-center flex-col">
+        <div className="w-full flex items-center justify-center flex-col py-5">
           <h3 className="text-3xl text-App_black_L select-none font-medium mt-10 mb-5">
             Order #{orderDetailsData?.orderId}
           </h3>
