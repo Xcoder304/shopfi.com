@@ -15,6 +15,7 @@ handler.post(async (req, res) => {
       email: req.body.email,
       phonenumber: req.body.phonenumber,
       address: req.body.address,
+      isAdmin: req.body.isAdmin,
     }
   );
 

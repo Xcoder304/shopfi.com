@@ -5,7 +5,7 @@ const handler = nc();
 
 handler.post(async (req, res) => {
   await db.connect();
-  const user = await User.findOne({ _id: req.body.id });
+  const user = await User.findOne({ _id: req.body.id }).select("-MainAdmin");
   res.send({
     success: true,
     user: user,

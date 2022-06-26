@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Button, TextInput, Textarea, PasswordInput } from "@mantine/core";
+import {
+  Button,
+  TextInput,
+  Textarea,
+  PasswordInput,
+  Checkbox,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { At, Lock } from "tabler-icons-react";
 import { EditUserDetails, FetchTheUserByID } from "../../utils/AuthFuntions";
@@ -18,6 +24,7 @@ const EditUser = ({ UserID, toast }) => {
       address: "",
       password: "",
       newPasswod: "",
+      isUserAdmin: false,
     },
   });
 
@@ -39,6 +46,7 @@ const EditUser = ({ UserID, toast }) => {
         email: userInfo.email,
         phonenumber: userInfo.phonenumber,
         address: userInfo?.address ? userInfo?.address : "",
+        isUserAdmin: userInfo?.isAdmin ? true : false,
       });
     }
   }, [userInfo]);
@@ -59,6 +67,7 @@ const EditUser = ({ UserID, toast }) => {
       address: form.values.address,
       password: form.values.password,
       newPasswod: form.values.newPasswod,
+      isAdmin: form.values.isUserAdmin,
     };
     const user = await EditUserDetails(data);
     setloading(false);
@@ -69,6 +78,8 @@ const EditUser = ({ UserID, toast }) => {
       toast.error(user.message);
     }
   };
+
+  console.log(userInfo);
 
   return (
     <div>
@@ -143,6 +154,13 @@ const EditUser = ({ UserID, toast }) => {
           label="User New Password"
           placeholder="User New Password"
           {...form.getInputProps("newPasswod")}
+        />
+
+        <Checkbox
+          required
+          className="mt-4 lg:mt-3 cursor-pointer"
+          label="Do You wanna Make This User An Admin ?"
+          {...form.getInputProps("isUserAdmin", { type: "checkbox" })}
         />
 
         <Button
