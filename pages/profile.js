@@ -42,7 +42,6 @@ const Profile = ({ orderData, allordersData }) => {
         phonenumber: userInfo.phonenumber,
         address: userInfo?.address ? userInfo?.address : "",
       });
-
       setuserProfile(userInfo?.profileImg);
     }
   }, [userInfo]);
@@ -112,7 +111,11 @@ const Profile = ({ orderData, allordersData }) => {
 
         {/* orders  */}
         <Orders
-          Orders={userInfo?.isAdmin ? allordersData.orders : orderData.orders}
+          Orders={
+            userInfo?.isAdmin || userInfo?.MainAdmin
+              ? allordersData.orders
+              : orderData.orders
+          }
           userInfo={userInfo}
         />
       </div>

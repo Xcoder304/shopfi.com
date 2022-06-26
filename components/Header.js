@@ -14,7 +14,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { FcSettings } from "react-icons/fc";
 import { AiOutlineMessage } from "react-icons/ai";
 import { BiHelpCircle } from "react-icons/bi";
-import { MdPersonAddAlt } from "react-icons/md";
+import { MdPersonAddAlt, MdOutlineManageAccounts } from "react-icons/md";
 import { CgLogOut } from "react-icons/cg";
 import { FiMenu } from "react-icons/fi";
 import { Pencil, Plus } from "tabler-icons-react";
@@ -92,6 +92,7 @@ const Header = () => {
             opened={openModal}
             onOpen={handleModal.open}
             onClose={handleModal.close}
+            size="lg"
             control={
               <div className="hover:bg-slate-200 rounded-full transition-all duration-200 ease-out">
                 <Avatar
@@ -109,36 +110,52 @@ const Header = () => {
                 router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/profile`)
               }
             >
-              {!userDetails?.isAdmin
-                ? "Profile & Orders"
-                : "Profile & Manage Orders"}
+              {userDetails?.isAdmin || userDetails?.MainAdmin
+                ? "Profile & Manage Orders"
+                : "Profile & Orders"}
             </Menu.Item>
-            {!userDetails?.isAdmin && (
+            {!userDetails?.isAdmin ||
+              (!userDetails?.MainAdmin && (
+                <Menu.Item
+                  icon={<AiOutlineMessage size={14} />}
+                  className="hover:bg-blue-100"
+                >
+                  Contact us
+                </Menu.Item>
+              ))}
+
+            {userDetails?.MainAdmin && (
               <Menu.Item
-                icon={<AiOutlineMessage size={14} />}
+                icon={<MdOutlineManageAccounts size={14} />}
                 className="hover:bg-blue-100"
+                onClick={() =>
+                  router.push(
+                    `${process.env.NEXT_PUBLIC_HOSTING_URL}/manageUserAndAdmin`
+                  )
+                }
               >
-                Contact us
+                Manage Users & Admin
               </Menu.Item>
             )}
 
-            {userDetails?.isAdmin && (
-              <>
-                <Menu.Item
-                  icon={<Pencil size={14} />}
-                  className="hover:bg-blue-100"
-                >
-                  Manage Categroys
-                </Menu.Item>
+            {userDetails?.isAdmin ||
+              (userDetails?.MainAdmin && (
+                <>
+                  <Menu.Item
+                    icon={<Pencil size={14} />}
+                    className="hover:bg-blue-100"
+                  >
+                    Manage Categroys
+                  </Menu.Item>
 
-                <Menu.Item
-                  icon={<Plus size={14} />}
-                  className="hover:bg-blue-100"
-                >
-                  Add Products
-                </Menu.Item>
-              </>
-            )}
+                  <Menu.Item
+                    icon={<Plus size={14} />}
+                    className="hover:bg-blue-100"
+                  >
+                    Add Products
+                  </Menu.Item>
+                </>
+              ))}
 
             <Menu.Item
               icon={<MdPersonAddAlt size={14} />}

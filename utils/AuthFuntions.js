@@ -45,3 +45,30 @@ export const ChangeUserDetails = async (userdata) => {
 
   return data;
 };
+
+// admin
+export const GetAllUsers = async () => {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/getUsers`
+  );
+
+  return data;
+};
+
+export const EditUserDetails = async (userdata) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/editUserDetails`,
+    userdata
+  );
+
+  return data;
+};
+
+export const FetchTheUserByID = async (userId) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/getUserById`,
+    { id: userId }
+  );
+
+  return data;
+};

@@ -8,6 +8,7 @@ export const data = {
       profileImg: null,
       password: bcrypt.hashSync("imkaifali"),
       isAdmin: true,
+      job: "Eng",
     },
     {
       name: "jhonwick",
@@ -17,6 +18,7 @@ export const data = {
         "https://m.media-amazon.com/images/I/714s29JGWIL._AC_UY500_.jpg",
       password: bcrypt.hashSync("imjhonwick"),
       isAdmin: false,
+      job: "Eng",
     },
   ],
   newProducts: [

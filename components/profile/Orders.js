@@ -47,14 +47,15 @@ const Orders = ({ Orders, userInfo }) => {
                 <th scope="col" className="px-6 py-3 border-r border-slate-300">
                   payment method
                 </th>
-                {userInfo?.isAdmin && (
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border-r border-slate-300"
-                  >
-                    Admin Action
-                  </th>
-                )}
+                {userInfo?.isAdmin ||
+                  (userInfo?.MainAdmin && (
+                    <th
+                      scope="col"
+                      className="px-6 py-3 border-r border-slate-300"
+                    >
+                      Admin Action
+                    </th>
+                  ))}
               </tr>
             </thead>
             <tbody>
@@ -114,14 +115,17 @@ const Orders = ({ Orders, userInfo }) => {
                         </span>
                       </td>
 
-                      <td className="px-6 py-4 border-r border-slate-300 text-center">
-                        <span
-                          className="text-blue-600 underline cursor-pointer select-none hover:text-blue-700 transition-all duration-150 ease-in capitalize"
-                          onClick={() => Mark_As_Delivered(_id)}
-                        >
-                          mark as delivered
-                        </span>
-                      </td>
+                      {userInfo?.isAdmin ||
+                        (userInfo?.MainAdmin && (
+                          <td className="px-6 py-4 border-r border-slate-300 text-center">
+                            <span
+                              className="text-blue-600 underline cursor-pointer select-none hover:text-blue-700 transition-all duration-150 ease-in capitalize"
+                              onClick={() => Mark_As_Delivered(_id)}
+                            >
+                              mark as delivered
+                            </span>
+                          </td>
+                        ))}
                     </tr>
                   );
                 }

@@ -96,19 +96,20 @@ const UserProfile = ({
           {...form.getInputProps("phonenumber")}
         />
 
-        {!userInfo?.isAdmin && (
-          <Textarea
-            type="number"
-            placeholder="abc#31311"
-            label="Your address"
-            className="flex-1 mx-auto mt-3"
-            radius="md"
-            size="md"
-            autosize
-            required
-            {...form.getInputProps("address")}
-          />
-        )}
+        {!userInfo?.isAdmin ||
+          (userInfo?.MainAdmin && (
+            <Textarea
+              type="number"
+              placeholder="abc#31311"
+              label="Your address"
+              className="flex-1 mx-auto mt-3"
+              radius="md"
+              size="md"
+              autosize
+              required
+              {...form.getInputProps("address")}
+            />
+          ))}
 
         <h3 className="capitalize my-5 text-xl text-blue-800 select-none font-medium">
           change password

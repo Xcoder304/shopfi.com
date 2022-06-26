@@ -151,21 +151,22 @@ const OrdersDetails = ({ orderDetailsData }) => {
               </span>
             </div>
 
-            {userInfo?.isAdmin && (
-              <div className="mt-6">
-                <div className="flex items-center">
-                  <span className="text-2xl capitalize font-medium text-blue-600 underline mb-3">
-                    admin actions
-                  </span>
+            {userInfo?.isAdmin ||
+              (userInfo?.MainAdmin && (
+                <div className="mt-6">
+                  <div className="flex items-center">
+                    <span className="text-2xl capitalize font-medium text-blue-600 underline mb-3">
+                      admin actions
+                    </span>
+                  </div>
+                  <Button
+                    className="w-44 h-10 capitalize text-base text-white bg-App_blue_L hover:bg-App_blue_D transition-all duration-200 ease-out"
+                    onClick={() => Mark_As_Delivered(orderDetailsData?._id)}
+                  >
+                    mark as delivered
+                  </Button>
                 </div>
-                <Button
-                  className="w-44 h-10 capitalize text-base text-white bg-App_blue_L hover:bg-App_blue_D transition-all duration-200 ease-out"
-                  onClick={() => Mark_As_Delivered(orderDetailsData?._id)}
-                >
-                  mark as delivered
-                </Button>
-              </div>
-            )}
+              ))}
           </div>
         </div>
 
