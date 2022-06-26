@@ -114,15 +114,14 @@ const Header = () => {
                 ? "Profile & Manage Orders"
                 : "Profile & Orders"}
             </Menu.Item>
-            {!userDetails?.isAdmin ||
-              (!userDetails?.MainAdmin && (
-                <Menu.Item
-                  icon={<AiOutlineMessage size={14} />}
-                  className="hover:bg-blue-100"
-                >
-                  Contact us
-                </Menu.Item>
-              ))}
+            {!userDetails?.isAdmin && !userDetails?.MainAdmin && (
+              <Menu.Item
+                icon={<AiOutlineMessage size={14} />}
+                className="hover:bg-blue-100"
+              >
+                Contact us
+              </Menu.Item>
+            )}
 
             {userDetails?.MainAdmin && (
               <Menu.Item
@@ -138,24 +137,25 @@ const Header = () => {
               </Menu.Item>
             )}
 
-            {userDetails?.isAdmin ||
-              (userDetails?.MainAdmin && (
-                <>
-                  <Menu.Item
-                    icon={<Pencil size={14} />}
-                    className="hover:bg-blue-100"
-                  >
-                    Manage Categroys
-                  </Menu.Item>
+            {userDetails?.isAdmin || userDetails?.MainAdmin ? (
+              <>
+                <Menu.Item
+                  icon={<Pencil size={14} />}
+                  className="hover:bg-blue-100"
+                >
+                  Manage Categroys
+                </Menu.Item>
 
-                  <Menu.Item
-                    icon={<Plus size={14} />}
-                    className="hover:bg-blue-100"
-                  >
-                    Add Products
-                  </Menu.Item>
-                </>
-              ))}
+                <Menu.Item
+                  icon={<Plus size={14} />}
+                  className="hover:bg-blue-100"
+                >
+                  Add Products
+                </Menu.Item>
+              </>
+            ) : (
+              ""
+            )}
 
             <Menu.Item
               icon={<MdPersonAddAlt size={14} />}

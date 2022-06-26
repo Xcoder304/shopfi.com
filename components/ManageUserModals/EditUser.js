@@ -11,7 +11,7 @@ import { At, Lock } from "tabler-icons-react";
 import { EditUserDetails, FetchTheUserByID } from "../../utils/AuthFuntions";
 import { useRouter } from "next/router";
 
-const EditUser = ({ UserID, toast }) => {
+const EditUser = ({ UserID, toast, setopenModal }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setloading] = useState(false);
   const router = useRouter();
@@ -63,6 +63,7 @@ const EditUser = ({ UserID, toast }) => {
       firstname: form.values.firstname,
       lastname: form.values.lastname,
       name: `${form.values.firstname} ${form.values.lastname}`,
+      email: form.values.email,
       phonenumber: form.values.phonenumber,
       address: form.values.address,
       password: form.values.password,
@@ -71,6 +72,7 @@ const EditUser = ({ UserID, toast }) => {
     };
     const user = await EditUserDetails(data);
     setloading(false);
+    setopenModal(false);
     if (user.success) {
       router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/manageUserAndAdmin`);
       toast.success(user.message);

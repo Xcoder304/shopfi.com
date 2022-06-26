@@ -8,7 +8,7 @@ handler.post(async (req, res) => {
   const updateOrder = await Order.findOneAndUpdate(
     { _id: req.body.id },
     {
-      delivery: true,
+      delivery: req.body.deliveryVal,
     }
   );
   res.send({ success: true, updateOrder, message: "fetched the orders" });

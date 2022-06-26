@@ -123,10 +123,10 @@ export const GetAllOrders = async () => {
 };
 
 // mark as delivered
-export const MarkAsDelivered = async (itemId) => {
+export const MarkAsDelivered = async (itemId, deliveryStaus) => {
   const { data } = await axios.post(
     `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/markAsDelivered`,
-    { id: itemId }
+    { id: itemId, deliveryVal: deliveryStaus }
   );
 
   return data;

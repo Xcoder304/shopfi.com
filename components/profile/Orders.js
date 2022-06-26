@@ -9,12 +9,16 @@ const Orders = ({ Orders, userInfo }) => {
 
   const Route_To_Next_Page = (id, orderID) => {
     router.push(
-      `${process.env.NEXT_PUBLIC_HOSTING_URL}/ordersdetails/${id}?spm=${orderID} ${id} ${orderID} ${orderID} ${id} ${orderID}`
+      `${process.env.NEXT_PUBLIC_HOSTING_URL}/ordersdetails/${id}?spm=${orderID}-${id}`
     );
   };
 
   const Mark_As_Delivered = async (id) => {
-    await MarkAsDelivered(id);
+    await MarkAsDelivered(id, true);
+    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/profile`);
+  };
+  const UnMark_As_Delivered = async (id) => {
+    await MarkAsDelivered(id, false);
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/profile`);
   };
 
@@ -47,15 +51,16 @@ const Orders = ({ Orders, userInfo }) => {
                 <th scope="col" className="px-6 py-3 border-r border-slate-300">
                   payment method
                 </th>
-                {userInfo?.isAdmin ||
-                  (userInfo?.MainAdmin && (
-                    <th
-                      scope="col"
-                      className="px-6 py-3 border-r border-slate-300"
-                    >
-                      Admin Action
-                    </th>
-                  ))}
+                {userInfo?.isAdmin || userInfo?.MainAdmin ? (
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border-r border-slate-300"
+                  >
+                    Admin Action
+                  </th>
+                ) : (
+                  ""
+                )}
               </tr>
             </thead>
             <tbody>
@@ -115,17 +120,24 @@ const Orders = ({ Orders, userInfo }) => {
                         </span>
                       </td>
 
-                      {userInfo?.isAdmin ||
-                        (userInfo?.MainAdmin && (
-                          <td className="px-6 py-4 border-r border-slate-300 text-center">
-                            <span
-                              className="text-blue-600 underline cursor-pointer select-none hover:text-blue-700 transition-all duration-150 ease-in capitalize"
-                              onClick={() => Mark_As_Delivered(_id)}
-                            >
-                              mark as delivered
-                            </span>
-                          </td>
-                        ))}
+                      {userInfo?.isAdmin || userInfo?.MainAdmin ? (
+                        <td className="px-6 py-4 border-r border-slate-300 text-center flex items-start flex-col 2xl:flex-row gap-2">
+                          <span
+                            className="text-blue-600 underline cursor-pointer select-none hover:text-blue-700 transition-all duration-150 ease-in capitalize"
+                            onClick={() => Mark_As_Delivered(_id)}
+                          >
+                            mark as delivered
+                          </span>
+                          <span
+                            className="text-blue-600 underline cursor-pointer select-none hover:text-blue-700 transition-all duration-150 ease-in capitalize"
+                            onClick={() => UnMark_As_Delivered(_id)}
+                          >
+                            unMark as delivered
+                          </span>
+                        </td>
+                      ) : (
+                        ""
+                      )}
                     </tr>
                   );
                 }

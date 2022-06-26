@@ -11,16 +11,28 @@ import { useSelector } from "react-redux";
 import { selectUserDetails } from "../../Redux/features/OtherStateteSlice";
 import { MdDoneAll } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
+import { useState } from "react";
 
 const OrdersDetails = ({ orderDetailsData }) => {
   const userInfo = useSelector(selectUserDetails);
+  const [loading, setloading] = useState(false);
   const router = useRouter();
 
   const Mark_As_Delivered = async (id) => {
-    await MarkAsDelivered(id);
-    router.push(
+    setloading(true);
+    await MarkAsDelivered(id, true);
+    router.replace(
       `${process.env.NEXT_PUBLIC_HOSTING_URL}/ordersdetails/${router.query.id}?spm=${router.query.spm} ${router.query.id} ${router.query.spm} ${router.query.spm} ${router.query.id} ${router.query.spm}`
     );
+    setloading(false);
+  };
+  const UnMark_As_Delivered = async (id) => {
+    setloading(true);
+    await MarkAsDelivered(id, false);
+    router.replace(
+      `${process.env.NEXT_PUBLIC_HOSTING_URL}/ordersdetails/${router.query.id}?spm=${router.query.spm}-${router.query.spm}`
+    );
+    setloading(false);
   };
 
   return (
@@ -151,22 +163,33 @@ const OrdersDetails = ({ orderDetailsData }) => {
               </span>
             </div>
 
-            {userInfo?.isAdmin ||
-              (userInfo?.MainAdmin && (
-                <div className="mt-6">
-                  <div className="flex items-center">
-                    <span className="text-2xl capitalize font-medium text-blue-600 underline mb-3">
-                      admin actions
-                    </span>
-                  </div>
+            {userInfo?.isAdmin || userInfo?.MainAdmin ? (
+              <div className="mt-6">
+                <div className="flex items-center">
+                  <span className="text-2xl capitalize font-medium text-blue-600 underline mb-3">
+                    admin actions
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
                   <Button
                     className="w-44 h-10 capitalize text-base text-white bg-App_blue_L hover:bg-App_blue_D transition-all duration-200 ease-out"
                     onClick={() => Mark_As_Delivered(orderDetailsData?._id)}
+                    disabled={loading ? true : false}
                   >
                     mark as delivered
                   </Button>
+                  <Button
+                    className="w-46 h-10 capitalize text-base text-white bg-red-600 hover:bg-red-700 transition-all duration-200 ease-out"
+                    onClick={() => UnMark_As_Delivered(orderDetailsData?._id)}
+                    disabled={loading ? true : false}
+                  >
+                    unmark as delivered
+                  </Button>
                 </div>
-              ))}
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
