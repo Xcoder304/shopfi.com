@@ -79,8 +79,6 @@ const EditUser = ({ UserID, toast }) => {
     }
   };
 
-  console.log(userInfo);
-
   return (
     <div>
       <form

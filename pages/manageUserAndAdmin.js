@@ -31,12 +31,13 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
   const [UserID, setUserID] = useState(null);
   const [currentIndex, setcurrentIndex] = useState(null);
 
-  const Open_Delete_Modal = (index) => {
+  const Open_Delete_Modal = (id, index) => {
     setopenModal(true);
     setdeletedModalOpened(true);
     seteditModalOpened(false);
     setaddNewUserModalOpened(false);
     setcurrentIndex(index);
+    setUserID(id);
   };
 
   const Open_Edit_Modal = (id) => {
@@ -82,7 +83,10 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
               <ActionIcon>
                 <Pencil size={20} onClick={() => Open_Edit_Modal(_id)} />
               </ActionIcon>
-              <ActionIcon color="red" onClick={() => Open_Delete_Modal(index)}>
+              <ActionIcon
+                color="red"
+                onClick={() => Open_Delete_Modal(_id, index)}
+              >
                 <Trash size={20} />
               </ActionIcon>
             </Group>
@@ -114,6 +118,8 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
             AllUsersData={AllUsersData}
             currentIndex={currentIndex}
             setopenModal={setopenModal}
+            UserID={UserID}
+            toast={toast}
           />
         )}
 

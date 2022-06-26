@@ -72,3 +72,12 @@ export const FetchTheUserByID = async (userId) => {
 
   return data;
 };
+
+export const DeleteTheUserByID = async (userId) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/deleteUserById`,
+    { id: userId }
+  );
+
+  return data;
+};
