@@ -105,7 +105,9 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
       <Modal
         opened={openModal}
         onClose={() => setopenModal(false)}
-        title={"Wanna Delete"}
+        title={`${deletedModalOpened ? "Wanna Delete" : ""} ${
+          editModalOpened ? "Wanna Edit The User" : ""
+        } ${addNewUserModalOpened ? "Wanna Create A New User" : ""}`}
         overlayColor={theme.colors.dark[9]}
         overlayOpacity={0.7}
         overlayBlur={7}
@@ -123,9 +125,13 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
           />
         )}
 
-        {editModalOpened && <EditUser UserID={UserID} toast={toast} />}
+        {editModalOpened && (
+          <EditUser UserID={UserID} toast={toast} setopenModal={setopenModal} />
+        )}
 
-        {addNewUserModalOpened && <AddNewUser />}
+        {addNewUserModalOpened && (
+          <AddNewUser toast={toast} setopenModal={setopenModal} />
+        )}
       </Modal>
 
       <div className="w-full">

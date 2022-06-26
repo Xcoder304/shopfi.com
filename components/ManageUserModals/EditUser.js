@@ -155,7 +155,6 @@ const EditUser = ({ UserID, toast }) => {
         />
 
         <Checkbox
-          required
           className="mt-4 lg:mt-3 cursor-pointer"
           label="Do You wanna Make This User An Admin ?"
           {...form.getInputProps("isUserAdmin", { type: "checkbox" })}
