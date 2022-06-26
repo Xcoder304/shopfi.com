@@ -4,6 +4,7 @@ import Product from "../modals/Product";
 import Cart from "../modals/Cart";
 import TempData from "../modals/TempData";
 import Order from "../modals/Order";
+import Categories from "../modals/Categories";
 import Cookies from "js-cookie";
 
 // fetchProducts
@@ -111,7 +112,7 @@ export const GetTheOrderDetails = async (id) => {
   return res;
 };
 
-// admin
+//**************************************************Admin************************************************************
 
 // get all orders
 export const GetAllOrders = async () => {
@@ -127,6 +128,43 @@ export const MarkAsDelivered = async (itemId, deliveryStaus) => {
   const { data } = await axios.post(
     `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/markAsDelivered`,
     { id: itemId, deliveryVal: deliveryStaus }
+  );
+
+  return data;
+};
+
+export const AddCategorie = async (name) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/manageCategory/AddCategories`,
+    name
+  );
+
+  return data;
+};
+
+export const GetAllCategories = async () => {
+  await db.connect();
+  const f = await Categories.find({}).lean();
+  const res = f.map((data) => db.convertDocToString(data));
+
+  await db.disconnect();
+
+  return res;
+};
+
+export const DelecteTheCategories = async (id) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/manageCategory/delecteCategory`,
+    { id: id }
+  );
+
+  return data;
+};
+
+export const UpdateTheCategories = async (id, categoryName) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/manageCategory/updateCategory`,
+    { id: id, name: categoryName }
   );
 
   return data;

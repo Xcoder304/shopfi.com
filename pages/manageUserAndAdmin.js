@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import {
   Avatar,
@@ -12,7 +12,7 @@ import {
   Button,
   Modal,
 } from "@mantine/core";
-import { Pencil, Trash, Plus } from "tabler-icons-react";
+import { Pencil, Trash, Plus, ArrowLeft } from "tabler-icons-react";
 import { GetAllUsers } from "../utils/AuthFuntions";
 import DelecteUser from "../components/ManageUserModals/DelecteUser";
 import EditUser from "../components/ManageUserModals/EditUser";
@@ -35,11 +35,13 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
   const [UserID, setUserID] = useState(null);
   const [currentIndex, setcurrentIndex] = useState(null);
 
-  useLayoutEffect(() => {
-    if (!userDetails?.MainAdmin) {
-      router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}`);
+  useEffect(() => {
+    if (userDetails) {
+      if (!userDetails?.MainAdmin) {
+        router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}`);
+      }
     }
-  }, []);
+  }, [userDetails]);
 
   const Open_Delete_Modal = (id, index) => {
     setopenModal(true);
@@ -144,7 +146,7 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
         )}
       </Modal>
 
-      {userDetails?.MainAdmin ? (
+      {userDetails && userDetails?.MainAdmin ? (
         <div className="w-full">
           <div className="mt-5 flex items-end justify-end mr-2">
             <Button
@@ -175,6 +177,15 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
               </Table>
             </div>
           </ScrollArea>
+          <div className="flex items-center justify-center w-full pt-5 pb-3">
+            <Button
+              className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
+              onClick={() => router.back()}
+              leftIcon={<ArrowLeft strokeWidth={2} />}
+            >
+              Go Back
+            </Button>
+          </div>
         </div>
       ) : (
         <div className="flex items-center justify-center w-full h-screen">

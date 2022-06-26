@@ -142,6 +142,11 @@ const Header = () => {
                 <Menu.Item
                   icon={<Pencil size={14} />}
                   className="hover:bg-blue-100"
+                  onClick={() =>
+                    router.push(
+                      `${process.env.NEXT_PUBLIC_HOSTING_URL}/manageCategories`
+                    )
+                  }
                 >
                   Manage Categroys
                 </Menu.Item>
