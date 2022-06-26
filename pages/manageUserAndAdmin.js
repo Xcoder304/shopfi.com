@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import Head from "next/head";
 import {
   Avatar,
@@ -17,19 +17,29 @@ import { GetAllUsers } from "../utils/AuthFuntions";
 import DelecteUser from "../components/ManageUserModals/DelecteUser";
 import EditUser from "../components/ManageUserModals/EditUser";
 import AddNewUser from "../components/ManageUserModals/AddNewUser";
+import { useSelector } from "react-redux";
+import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
 import { Toaster, toast } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const ManageUserAndAdmin = ({ AllUsersData }) => {
+  const userDetails = useSelector(selectUserDetails);
   const [openModal, setopenModal] = useState(false);
   const [deletedModalOpened, setdeletedModalOpened] = useState(false);
   const [editModalOpened, seteditModalOpened] = useState(false);
   const [addNewUserModalOpened, setaddNewUserModalOpened] = useState(false);
-
   const theme = useMantineTheme();
+  const router = useRouter();
 
   // ids
   const [UserID, setUserID] = useState(null);
   const [currentIndex, setcurrentIndex] = useState(null);
+
+  useLayoutEffect(() => {
+    if (!userDetails?.MainAdmin) {
+      router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}`);
+    }
+  }, []);
 
   const Open_Delete_Modal = (id, index) => {
     setopenModal(true);
@@ -134,37 +144,46 @@ const ManageUserAndAdmin = ({ AllUsersData }) => {
         )}
       </Modal>
 
-      <div className="w-full">
-        <div className="mt-5 flex items-end justify-end mr-2">
-          <Button
-            leftIcon={<Plus size={16} />}
-            className="w-72 h-12 bg-App_green_L hover:bg-App_green_D transition-all duration-300 ease-out capitalize text-white text-base"
-            onClick={Open_Add_New_User_Modal}
-          >
-            add a new user or admin
-          </Button>
-        </div>
-
-        <ScrollArea>
-          <h3 className="text-2xl capitalize text-blue-600 select-none mb-2 text-center mt-6">
-            manage users & admins
-          </h3>
-          <div className="w-[95%] md:w-[90%] my-10 mx-auto">
-            <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
-              <thead>
-                <tr>
-                  <th>Users</th>
-                  <th>Roles</th>
-                  <th>Email</th>
-                  <th>Created At</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>{rows}</tbody>
-            </Table>
+      {userDetails?.MainAdmin ? (
+        <div className="w-full">
+          <div className="mt-5 flex items-end justify-end mr-2">
+            <Button
+              leftIcon={<Plus size={16} />}
+              className="w-72 h-12 bg-App_green_L hover:bg-App_green_D transition-all duration-300 ease-out capitalize text-white text-base"
+              onClick={Open_Add_New_User_Modal}
+            >
+              add a new user or admin
+            </Button>
           </div>
-        </ScrollArea>
-      </div>
+
+          <ScrollArea>
+            <h3 className="text-2xl capitalize text-blue-600 select-none mb-2 text-center mt-6">
+              manage users & admins
+            </h3>
+            <div className="w-[95%] md:w-[90%] my-10 mx-auto">
+              <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
+                <thead>
+                  <tr>
+                    <th>Users</th>
+                    <th>Roles</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>{rows}</tbody>
+              </Table>
+            </div>
+          </ScrollArea>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center w-full h-screen">
+          <h2 className="text-4xl text-red-600 font-bold capitalize">
+            {" "}
+            your are not Main Admin you Manage The users
+          </h2>
+        </div>
+      )}
     </>
   );
 };

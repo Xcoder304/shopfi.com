@@ -17,6 +17,7 @@ import {
 } from "../../Redux/features/OtherStateteSlice";
 import { AddProductToCart } from "../../utils/DatabaseFuntions";
 import Cookies from "js-cookie";
+import { Toaster, toast } from "react-hot-toast";
 
 const Slug = ({ product }) => {
   const router = useRouter();
@@ -46,7 +47,7 @@ const Slug = ({ product }) => {
     const fetchData = async () => {
       if (checkVal > 0) {
         if (Error.status) {
-          alert(Error.message);
+          toast.error(Error.message);
         } else {
           let data = {
             ...product,
@@ -56,7 +57,13 @@ const Slug = ({ product }) => {
 
           await AddProductToCart(data);
           dispatch(setproductQty(1));
-          router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
+          router.replace(
+            `${process.env.NEXT_PUBLIC_HOSTING_URL}/product/${
+              router.query.slug
+            }?id=${router.query.id}?spm=${
+              router.query.id + "-" + router.query.slug
+            }`
+          );
         }
       }
     };
@@ -80,6 +87,7 @@ const Slug = ({ product }) => {
       <Head>
         <title>{product?.name + "-"} shopfi</title>
       </Head>
+      <Toaster position="top-center" reverseOrder={false} />
       <section className="text-gray-600 body-font overflow-hidden relative">
         <div className="fixed top-[120px] left-5 lg:left-14 z-10">
           <Button
@@ -99,7 +107,7 @@ const Slug = ({ product }) => {
                 src={product?.images[imageUrlIndex].url}
               />
 
-              <div className="flex items-center justify-center mt-5 lg:mt-0 gap-3 flex-wrap w-[100%]">
+              <div className="flex items-center justify-center mt-5 lg:mt-6 gap-3 flex-wrap w-[100%]">
                 {product?.images.map((imageUrl, index) => {
                   return (
                     <img
