@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 
 import {
@@ -9,7 +9,11 @@ import {
   Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { GetAllCategories } from "../../utils/DatabaseFuntions";
+import {
+  fetchTheProductByID,
+  GetAllCategories,
+  UpdateProduct,
+} from "../../utils/DatabaseFuntions";
 import { Toaster, toast } from "react-hot-toast";
 import { MdClose } from "react-icons/md";
 import { UploadImage } from "../../utils/UtilsFuntions";
@@ -17,7 +21,7 @@ import { AddProduct } from "../../utils/DatabaseFuntions";
 import { ArrowLeft } from "tabler-icons-react";
 import { useRouter } from "next/router";
 
-const CreateProduct = ({ allCategoriesData }) => {
+const CreateProduct = ({ allCategoriesData, product }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -33,6 +37,22 @@ const CreateProduct = ({ allCategoriesData }) => {
       description: "",
     },
   });
+
+  useEffect(() => {
+    if (product) {
+      setImages(product?.images);
+
+      form.setValues({
+        name: product?.name,
+        slug: product?.slug,
+        price: product?.price,
+        brand: product?.brand,
+        inStock: product?.inStock,
+        category: product?.category,
+        description: product?.description,
+      });
+    }
+  }, [product]);
 
   const handleUploadImage = (e) => {
     const newImages = [];
@@ -73,10 +93,18 @@ const CreateProduct = ({ allCategoriesData }) => {
         media = await UploadImage(imgNewURL);
       }
 
-      const res = await AddProduct({
+      let data = {
+        id: product?._id,
         ...formData,
-        images: [...imgOldURL, ...media],
-      });
+        images: media ? media : [...imgOldURL],
+      };
+
+      const res = product
+        ? await UpdateProduct(data)
+        : await AddProduct({
+            ...formData,
+            images: [...imgOldURL, ...media],
+          });
 
       setLoading(false);
       if (res.success) {
@@ -190,7 +218,7 @@ const CreateProduct = ({ allCategoriesData }) => {
                 className="text-lg bg-App_green_L hover:bg-App_green_D transition-all duration-200 ease-out w-[80%] mx-auto lg:mx-0 md:w-[60%] lg:w-[40%] mt-2 h-12 "
                 disabled={loading ? true : false}
               >
-                Create Product
+                {product ? "Update Product" : "Create Product"}
               </Button>
             </div>
           </form>
@@ -230,17 +258,14 @@ const CreateProduct = ({ allCategoriesData }) => {
 
           <div className="flex items-start lg:items-center gap-2 gap-x-3 flex-wrap">
             {images.map((img, index) => {
+              console.log("img", img);
               return (
                 <div
-                  className="lg:first:w-full lg:first:h-auto lg:first:max-h-[350px] w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] lg:first:mb-10 2xl:first:mb-36 relative"
+                  className="lg:first:w-full lg:first:h-[500px] w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] lg:first:mb-10 2xl:first:mb-36 relative"
                   key={index}
                 >
                   <img
-                    src={
-                      images.imgURL || images.url
-                        ? images?.imgURL || images?.url
-                        : URL.createObjectURL(img)
-                    }
+                    src={img?.imgURL ? img?.imgURL : URL.createObjectURL(img)}
                     alt="image"
                     className="w-full h-full object-cover object-center rounded transition-all duration-200 ease-out"
                   />
@@ -279,9 +304,13 @@ const CreateProduct = ({ allCategoriesData }) => {
 
 export const getServerSideProps = async (ctx) => {
   const data = await GetAllCategories();
+  let product = null;
+  if (ctx.query.id) {
+    product = await fetchTheProductByID(ctx.query.id);
+  }
 
   return {
-    props: { allCategoriesData: data },
+    props: { allCategoriesData: data, product },
   };
 };
 

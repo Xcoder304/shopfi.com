@@ -61,11 +61,11 @@ const PaymentSec = ({ countriesName, tempdata }) => {
 
 export const getServerSideProps = async (ctx) => {
   // fetching the countries data from the API
+  const tempdata = await fetchTempData();
   const { data } = await axios.get("https://restcountries.com/v3.1/all");
   const res = data.map((data) => data.name.common);
 
   // fetching the temp data from the server
-  const tempdata = await fetchTempData();
 
   return {
     props: {

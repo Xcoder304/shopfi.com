@@ -29,6 +29,15 @@ export const fetchTheProduct = async (slug) => {
   return product;
 };
 
+export const fetchTheProductByID = async (id) => {
+  db.connect();
+  const fetchData = await Product.findOne({ _id: id }).lean();
+  const product = db.convertDocToString(fetchData);
+  db.disconnect();
+
+  return product;
+};
+
 // ***************cart functions**********************
 
 // fetching the cart data with api
@@ -174,6 +183,15 @@ export const UpdateTheCategories = async (id, categoryName) => {
 export const AddProduct = async (ProductData) => {
   const { data } = await axios.post(
     `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/product/addProduct`,
+    ProductData
+  );
+
+  return data;
+};
+
+export const UpdateProduct = async (ProductData) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/product/updateProduct`,
     ProductData
   );
 
