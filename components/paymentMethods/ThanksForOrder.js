@@ -60,10 +60,6 @@ export default function ThanksForOrder() {
   };
 
   useEffect(() => {
-    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
-  }, []);
-
-  useEffect(() => {
     return () => {
       clearInterval(intervalId);
     };

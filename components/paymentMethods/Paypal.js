@@ -2,16 +2,22 @@ import { useState } from "react";
 import { Modal, useMantineTheme } from "@mantine/core";
 import { Toaster, toast } from "react-hot-toast";
 import { useForm } from "@mantine/form";
-import { Button, Checkbox, NumberInput } from "@mantine/core";
+import { Button, Checkbox, Input } from "@mantine/core";
 import { BrandPaypal } from "tabler-icons-react";
 import { AddOrder } from "../../utils/DatabaseFuntions";
 import { CreateRamdomOrderID } from "../../utils/UtilsFuntions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NextPaymentStep } from "../../Redux/features/OtherStateteSlice";
+import {
+  ChangeCartValue,
+  selectecart,
+} from "../../Redux/features/ProductSlice";
 
 const Paypal = ({ open, setopen, totalPrice, UserDetails, products }) => {
   const [loading, setlaoding] = useState(false);
   const dispatch = useDispatch();
+  const cartItems = useSelector(selectecart);
+
   const form = useForm({
     initialValues: {
       paypalAccount: "",
@@ -21,7 +27,7 @@ const Paypal = ({ open, setopen, totalPrice, UserDetails, products }) => {
 
   const theme = useMantineTheme();
   const AddTheOrder = async () => {
-    setlaoding(true);
+    // setlaoding(true);
     const orderID = CreateRamdomOrderID();
 
     let data = {
@@ -38,6 +44,14 @@ const Paypal = ({ open, setopen, totalPrice, UserDetails, products }) => {
     };
 
     await AddOrder(data);
+    //remove from the data state
+    let newCartArr;
+    products.forEach((data) => {
+      newCartArr = cartItems.filter((item) => item?._id !== data?._id);
+    });
+
+    dispatch(ChangeCartValue(newCartArr));
+
     setlaoding(false);
     setopen(false);
     toast.success("Order Placed Successfully");
@@ -64,7 +78,7 @@ const Paypal = ({ open, setopen, totalPrice, UserDetails, products }) => {
           onSubmit={form.onSubmit((values) => console.log("register done"))}
           className="w-[90%] mx-auto mt-6"
         >
-          <NumberInput
+          <Input
             icon={<BrandPaypal />}
             required
             placeholder="***********"

@@ -27,6 +27,8 @@ const Cart = ({ productsData }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  console.log(products);
+
   useEffect(() => {
     if (!Cookies.get("token")) {
       dispatch(setOpenLoginModal(true));
@@ -39,12 +41,14 @@ const Cart = ({ productsData }) => {
 
   const handelProductQty = (e, id, index) => {
     dispatch(setproductQty(e.target.value));
-
-    products.forEach((data) => {
+    let newArr = [...products];
+    newArr.forEach((data) => {
       if (data._id == id) {
+        console.log("hello");
         data.userSelectedQty = parseInt(e.target.value);
       }
     });
+    setProducts(newArr);
   };
 
   const RemoveTheProduct = async (e, id, index) => {
@@ -58,10 +62,9 @@ const Cart = ({ productsData }) => {
   };
 
   const ClearCart = async () => {
-    await ClearTheCart();
     setProducts([]);
+    await ClearTheCart();
     dispatch(ChangeCartValue([]));
-    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
     toast.success("Cleared The Cart");
   };
 

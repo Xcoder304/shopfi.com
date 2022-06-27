@@ -64,7 +64,7 @@ const OrdersDetails = ({ orderDetailsData }) => {
                 order id:
               </span>
               <span className="text-base font-medium text-App_blue_L">
-                {orderDetailsData?.orderId}
+                #{orderDetailsData?.orderId}
               </span>
             </div>
 

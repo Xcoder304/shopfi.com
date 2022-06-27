@@ -54,7 +54,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
     if (products.length == 0) {
       router.back();
     }
-  }, []);
+  }, [products]);
 
   useEffect(() => {
     if (userInfo) {
@@ -101,9 +101,10 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
   };
 
   const Remove_temp_Product = async (index) => {
-    products.splice(index, 1);
-    await AddTempData(products);
-    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/PaymentSection`);
+    const newArr = [...products];
+    newArr.splice(index, 1);
+    setproducts(newArr);
+    await AddTempData(newArr);
   };
 
   return (
@@ -208,6 +209,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
           <NativeSelect
             data={countriesName}
             label="Select your Region"
+            placeholder="Select your Region"
             className="flex-1 mx-auto mt-3"
             size="md"
             radius="md"
