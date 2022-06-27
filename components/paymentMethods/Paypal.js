@@ -27,7 +27,7 @@ const Paypal = ({ open, setopen, totalPrice, UserDetails, products }) => {
 
   const theme = useMantineTheme();
   const AddTheOrder = async () => {
-    // setlaoding(true);
+    setlaoding(true);
     const orderID = CreateRamdomOrderID();
 
     let data = {
