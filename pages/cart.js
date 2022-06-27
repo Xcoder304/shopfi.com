@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { MdDelete } from "react-icons/md";
 import { Button, NativeSelect } from "@mantine/core";
@@ -16,13 +16,14 @@ import {
   setOpenLoginModal,
   setPaymentSection,
 } from "../Redux/features/OtherStateteSlice";
-import { setproductQty } from "../Redux/features/ProductSlice";
+import { setproductQty, ChangeCartValue } from "../Redux/features/ProductSlice";
 import { Toaster, toast } from "react-hot-toast";
 import Cookies from "js-cookie";
 import cookie from "cookie";
 import { ArrowLeft } from "tabler-icons-react";
 
-const Cart = ({ products }) => {
+const Cart = ({ productsData }) => {
+  const [products, setProducts] = useState(productsData);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -48,15 +49,18 @@ const Cart = ({ products }) => {
 
   const RemoveTheProduct = async (e, id, index) => {
     e.preventDefault();
-    products.splice(index, 1);
+    const newArr = [...products];
+    newArr.splice(index, 1);
+    setProducts(newArr);
+    dispatch(ChangeCartValue(newArr));
     await RemoveProductFromCart({ id });
     toast.success("Product Removed");
-    router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
   };
 
   const ClearCart = async () => {
     await ClearTheCart();
-    products.splice(0, products.length);
+    setProducts([]);
+    dispatch(ChangeCartValue([]));
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`);
     toast.success("Cleared The Cart");
   };
@@ -230,7 +234,7 @@ export async function getServerSideProps(context) {
   const data = await fetchCartDataWithApi(info);
 
   return {
-    props: { products: data.items },
+    props: { productsData: data.items },
   };
 }
 

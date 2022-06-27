@@ -257,7 +257,7 @@ const CreateProduct = ({ allCategoriesData }) => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center w-full bg-App_white_L pt-5 pb-3">
+      <div className="flex items-center justify-center w-full bg-App_white_L pt-5 pb-3 gap-5">
         <Button
           className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
           onClick={() => router.back()}
@@ -266,7 +266,7 @@ const CreateProduct = ({ allCategoriesData }) => {
           Go Back
         </Button>
         <Button
-          className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
+          className="w-48 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
           onClick={() => router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}`)}
           leftIcon={<ArrowLeft strokeWidth={2} />}
         >

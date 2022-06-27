@@ -34,7 +34,7 @@ export const fetchTheProduct = async (slug) => {
 // fetching the cart data with api
 export const fetchCartDataWithApi = async (info) => {
   const { data } = await axios.post(
-    "http://localhost:3000/api/cart/getCartProduct",
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/cart/getCartProduct`,
     info
   );
 

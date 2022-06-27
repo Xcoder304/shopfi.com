@@ -9,7 +9,9 @@ handler.post(async (req, res) => {
   const token = req.body.token;
   const tokenRes = jwt.verify(token, process.env.JWT_SECRET);
   console.log("token res", tokenRes);
-  const orders = await Order.find({ "userDatils.userId": tokenRes.id });
+  const orders = await Order.find({ "userDatils.userId": tokenRes.id }).sort({
+    createdAt: -1,
+  });
   res.send({ success: true, orders, message: "fetched the orders" });
   await db.disconnect();
 });
