@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { ChangeCartValue } from "../Redux/features/ProductSlice";
@@ -24,9 +24,9 @@ const Subapp = () => {
     if (Cookies.get("token")) {
       dispatch(setUser(Cookies.get("token")));
     }
-  });
+  }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       let { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/auth/getUser`,

@@ -23,7 +23,7 @@ const HomeLayout = ({ products }) => {
               }) => {
                 return (
                   <div
-                    className="lg:w-1/4 w-[350px] m-2 h-[470px] bg-white !cursor-pointer rounded-lg shadow-md p-5 hover:scale-105 tranition-all duration-300 ease-out"
+                    className="lg:w-1/4 w-[300px] m-2 h-[470px] bg-white !cursor-pointer rounded-lg shadow-md p-5 hover:scale-105 tranition-all duration-300 ease-out"
                     key={_id}
                     onClick={() =>
                       router.push(
@@ -37,7 +37,7 @@ const HomeLayout = ({ products }) => {
                       <img
                         alt="ecommerce"
                         className="object-contain object-center block select-none w-full h-full mx-auto"
-                        src={images[0].url}
+                        src={images[0]?.imgURL || images[0]?.url}
                       />
                     </div>
 

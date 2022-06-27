@@ -116,7 +116,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
           >
             <div className="flex items-center space-x-2 select-none py-2 px-4 lg:py-0">
               <img
-                src={images[0].url}
+                src={images[0]?.imgURL || images[0]?.url}
                 className="w-[130px] h-[100px] object-contain "
               />
               <h2 className="font-bold text-lg text-App_black_L">{name}</h2>

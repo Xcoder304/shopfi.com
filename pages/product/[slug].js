@@ -32,8 +32,6 @@ const Slug = ({ product }) => {
     Cookies.set("cart", JSON.stringify(cart));
   }, [cart]);
 
-  console.log(cart);
-
   if (!product) {
     <h1>product not founded</h1>;
   }
@@ -43,7 +41,7 @@ const Slug = ({ product }) => {
     else return "";
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       if (checkVal > 0) {
         if (Error.status) {
@@ -104,7 +102,10 @@ const Slug = ({ product }) => {
               <img
                 alt="ecommerce"
                 className="lg:w-1/2 w-full lg:h-[400px] h-64 object-contain object-center rounded mx-auto"
-                src={product?.images[imageUrlIndex].url}
+                src={
+                  product?.images[imageUrlIndex].imgURL ||
+                  product?.images[imageUrlIndex].url
+                }
               />
 
               <div className="flex items-center justify-center mt-5 lg:mt-6 gap-3 flex-wrap w-[100%]">
@@ -116,7 +117,7 @@ const Slug = ({ product }) => {
                       className={`w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] object-cover object-center rounded hover:scale-95 transition-all duration-200 ease-out cursor-pointer ${CheckActiveImg(
                         index
                       )} `}
-                      src={imageUrl.url}
+                      src={imageUrl?.imgURL || imageUrl.url}
                       onClick={() => setimageUrlIndex(index)}
                     />
                   );

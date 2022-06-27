@@ -105,7 +105,7 @@ const Cart = ({ products }) => {
                       }
                     >
                       <img
-                        src={images[0].url}
+                        src={images[0]?.imgURL || images[0]?.url}
                         className="w-[130px] h-[100px] object-contain "
                       />
                       <div className="flex flex-col items-start">

@@ -169,3 +169,13 @@ export const UpdateTheCategories = async (id, categoryName) => {
 
   return data;
 };
+
+// add Product
+export const AddProduct = async (ProductData) => {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/product/addProduct`,
+    ProductData
+  );
+
+  return data;
+};

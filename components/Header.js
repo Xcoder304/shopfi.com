@@ -154,8 +154,13 @@ const Header = () => {
                 <Menu.Item
                   icon={<Plus size={14} />}
                   className="hover:bg-blue-100"
+                  onClick={() =>
+                    router.push(
+                      `${process.env.NEXT_PUBLIC_HOSTING_URL}/createProduct`
+                    )
+                  }
                 >
-                  Add Products
+                  Create Product
                 </Menu.Item>
               </>
             ) : (
