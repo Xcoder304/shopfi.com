@@ -14,7 +14,9 @@ import {
 import { useSelector } from "react-redux";
 import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
 
-const ManageCategories = ({ categoriesData }) => {
+const ManageCategories = ({ allcategories }) => {
+  const [categoriesData, setcategoriesData] = useState(allcategories);
+
   const userDetails = useSelector(selectUserDetails);
   const [isUpdate, setisUpdate] = useState(false);
   const [loading, setloading] = useState(false);
@@ -69,8 +71,11 @@ const ManageCategories = ({ categoriesData }) => {
   };
 
   const Delete_The_Category = async (id, index) => {
+    const newCategoriesArr = [...categoriesData];
+    newCategoriesArr.splice(index, 1);
+    setcategoriesData(newCategoriesArr);
+
     const res = await DelecteTheCategories(id);
-    router.replace(`${process.env.NEXT_PUBLIC_HOSTING_URL}/manageCategories`);
     setisUpdate(false);
     setcategoryId(null);
     res.success
@@ -218,9 +223,9 @@ const ManageCategories = ({ categoriesData }) => {
 };
 
 export const getServerSideProps = async (ctx) => {
-  const categoriesData = await GetAllCategories();
+  const allcategories = await GetAllCategories();
   return {
-    props: { categoriesData },
+    props: { allcategories },
   };
 };
 
