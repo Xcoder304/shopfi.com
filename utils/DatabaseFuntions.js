@@ -180,18 +180,9 @@ export const UpdateTheCategories = async (id, categoryName) => {
 };
 
 // add Product
-export const AddProduct = async (ProductData) => {
+export const ManageProduct = async (apiName, ProductData) => {
   const { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/product/addProduct`,
-    ProductData
-  );
-
-  return data;
-};
-
-export const UpdateProduct = async (ProductData) => {
-  const { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/product/updateProduct`,
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/admin/product/${apiName}`,
     ProductData
   );
 

@@ -12,12 +12,11 @@ import { useForm } from "@mantine/form";
 import {
   fetchTheProductByID,
   GetAllCategories,
-  UpdateProduct,
+  ManageProduct,
 } from "../../utils/DatabaseFuntions";
 import { Toaster, toast } from "react-hot-toast";
 import { MdClose } from "react-icons/md";
 import { UploadImage } from "../../utils/UtilsFuntions";
-import { AddProduct } from "../../utils/DatabaseFuntions";
 import { ArrowLeft } from "tabler-icons-react";
 import { useRouter } from "next/router";
 
@@ -96,12 +95,12 @@ const CreateProduct = ({ allCategoriesData, product }) => {
       let data = {
         id: product?._id,
         ...formData,
-        images: media ? media : [...imgOldURL],
+        images: media.length > 0 ? media : [...imgOldURL],
       };
 
       const res = product
-        ? await UpdateProduct(data)
-        : await AddProduct({
+        ? await ManageProduct("updateProduct", data)
+        : await ManageProduct("addProduct", {
             ...formData,
             images: [...imgOldURL, ...media],
           });

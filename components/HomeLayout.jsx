@@ -3,20 +3,30 @@ import { useRouter } from "next/router";
 import { Button } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
+import { ManageProduct } from "../utils/DatabaseFuntions";
+import { Toaster, toast } from "react-hot-toast";
 
 const HomeLayout = ({ products }) => {
   const userDetails = useSelector(selectUserDetails);
-
   const router = useRouter();
 
   const Update_Product = (id) => {
     router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/createProduct/${id}`);
   };
 
-  console.log(products);
+  const Delete_Product = async (id) => {
+    const res = await ManageProduct("delecteProduct", { id });
+    if (res.success) {
+      toast.success(res.message);
+      router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}`);
+    } else {
+      toast.error(res.message);
+    }
+  };
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <section className="text-gray-600 body-font w-full bg-App_white_L">
         <div className="py-5">
           <div className="flex flex-wrap px-2 justify-center w-[95%] mx-auto">
@@ -105,7 +115,10 @@ const HomeLayout = ({ products }) => {
                           update
                         </Button>
 
-                        <Button className="w-[45%] h-10 text-white text-base font-medium bg-red-600 hover:bg-red-700 transition-all duration-200 ease-out capitalize shadow-md hover:shadow-lg rounded-md">
+                        <Button
+                          className="w-[45%] h-10 text-white text-base font-medium bg-red-600 hover:bg-red-700 transition-all duration-200 ease-out capitalize shadow-md hover:shadow-lg rounded-md"
+                          onClick={() => Delete_Product(_id)}
+                        >
                           delete
                         </Button>
                       </div>

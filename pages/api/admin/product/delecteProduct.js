@@ -6,8 +6,8 @@ const handler = nc();
 
 handler.post(async (req, res) => {
   await db.connect();
-  const update = await Product.findOneAndUpdate({ _id: req.body.id }, req.body);
-  res.send({ success: true, message: " Product Update Successfully" });
+  const del = await Product.findOneAndRemove({ _id: req.body.id });
+  res.send({ success: true, message: "Product Removed Successfully" });
 
   await db.disconnect();
 });
