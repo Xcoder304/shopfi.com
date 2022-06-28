@@ -2,6 +2,11 @@
 
 shopfi is the full-stack e-com web-app with latest web technologys. click here to vist the website 👉 https://shopfi-com.vercel.app/
 
+## Account for test the website
+* email: admin1@gmail.com | password: _imadmin1_ ( This is admin account bu with main admin account you can create more admins)
+* email: rootuser@gmail.com | password: _imrootuser_ (this is main admin account)
+
+
 ## Web technologys i Used in This Project
 
 * ### Next js  ( is a fullstack web framework 😎 build top of react )
