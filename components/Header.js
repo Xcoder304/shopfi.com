@@ -47,6 +47,7 @@ const Header = () => {
   const LoginOutTheUser = () => {
     Cookies.remove("token");
     dispatch(setUser(null));
+    window.location.reload(false);
     toast.success("Logout Successfully");
   };
 
@@ -99,8 +100,8 @@ const Header = () => {
         </form>
       </div>
 
-      <div className="flex items-center space-x-2 md:space-x-4 lg:space-x-7">
-        <div className="mx-2">
+      <div className="flex items-center space-x-1 md:space-x-4 lg:space-x-7">
+        <div className="mx-0 md:mx-2">
           {!OpenNavbar && (
             <Button
               className="bg-[#E0F2FF] hover:bg-[#bfe3fc] transition-all duration-200 ease-out outline-none w-12 p-0 m-0"

@@ -117,7 +117,7 @@ const Cart = ({ productsData }) => {
                       />
                       <div className="flex flex-col items-start">
                         <h2 className="font-bold text-lg text-App_black_L">
-                          {name.substr(0, 100)}
+                          {name.substr(0, 30)}
                         </h2>
                         <span className="font-medium text-base text-App_green_L select-none">
                           ${price}

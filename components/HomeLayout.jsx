@@ -56,8 +56,8 @@ const HomeLayout = () => {
                     <div
                       className={`lg:w-1/4 w-[300px] m-2 ${
                         userDetails?.MainAdmin || userDetails?.isAdmin
-                          ? "h-[520px]"
-                          : "h-[470px]"
+                          ? "h-[500px]"
+                          : "h-[450px]"
                       } bg-white rounded-lg shadow-md p-5 hover:scale-105 hover:shadow-lg tranition-all duration-300 ease-out`}
                       key={_id}
                     >
@@ -89,7 +89,9 @@ const HomeLayout = () => {
                             </span>
                           </h3>
                           <h2 className="text-App_black_L title-font text-lg font-medium">
-                            {name}
+                            {name.length > 30
+                              ? name.substr(0, 30) + "..."
+                              : name.substr(0, 30)}
                           </h2>
                           <div className="flex items-center justify-between mt-1">
                             <span className="flex items-center">

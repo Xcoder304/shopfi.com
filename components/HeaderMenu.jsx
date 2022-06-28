@@ -88,11 +88,17 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links }) {
   const handleClick = async (event, link, categoryId) => {
     event.preventDefault();
     if (categoryId) {
-      const newProducts = await FetchTheData(
-        `product/getProducts?category=${categoryId}`
-      );
-      dispatch(setProducts(newProducts));
-      dispatch(setOpenNavbar(false));
+      if (categoryId == "all") {
+        const newProducts = await FetchTheData(`product/getProducts`);
+        dispatch(setProducts(newProducts));
+        dispatch(setOpenNavbar(false));
+      } else {
+        const newProducts = await FetchTheData(
+          `product/getProducts?category=${categoryId}`
+        );
+        dispatch(setProducts(newProducts));
+        dispatch(setOpenNavbar(false));
+      }
     } else {
       router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/${link}`);
     }
@@ -151,9 +157,22 @@ const HeaderMenu = ({ open }) => {
 
   const mockdata = [
     {
+      label: "Remove Filters",
+      icon: Notes,
+      initiallyOpened: true,
+      links: [
+        {
+          label: "Remove All Filter",
+          link: "/",
+          categoryId: "all",
+        },
+      ],
+    },
+    {
       label: "Categroys",
       icon: Notes,
       initiallyOpened: true,
+
       links: categoryArr?.map((data) => {
         return { label: data.name, link: "/", categoryId: data._id };
       }),
