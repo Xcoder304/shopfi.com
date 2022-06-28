@@ -18,7 +18,7 @@ import { MdPersonAddAlt, MdOutlineManageAccounts } from "react-icons/md";
 import { CgLogOut } from "react-icons/cg";
 import { FiMenu } from "react-icons/fi";
 import { Pencil, Plus, Search } from "tabler-icons-react";
-// import HeaderMenu from "./HeaderMenu";
+import HeaderMenu from "./HeaderMenu";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { selectecart, setProducts } from "../Redux/features/ProductSlice";
@@ -27,6 +27,8 @@ import {
   setOpenLoginModal,
   setUser,
   selectUserDetails,
+  selectOpenNavbar,
+  setOpenNavbar,
 } from "../Redux/features/OtherStateteSlice";
 import Cookies from "js-cookie";
 import { Toaster, toast } from "react-hot-toast";
@@ -35,7 +37,7 @@ import { FetchTheData } from "../utils/DatabaseFuntions";
 const Header = () => {
   const [searchInput, setsearchInput] = useState("");
   const [openModal, handleModal] = useDisclosure(false);
-  const [openMenu, setOpenMenu] = useState(false);
+  const OpenNavbar = useSelector(selectOpenNavbar);
   const userDetails = useSelector(selectUserDetails);
   const user = useSelector(selecteUser);
   const cart = useSelector(selectecart);
@@ -68,7 +70,7 @@ const Header = () => {
   return (
     <header className="w-full flex items-center justify-between py-4 px-2 md:px-5 shadow-md overflow-x-hidden sticky top-0 z-30 bg-white">
       <Toaster position="top-center" reverseOrder={false} />
-      {/* <HeaderMenu open={openMenu} setOpen={setOpenMenu} /> */}
+      <HeaderMenu open={OpenNavbar} />
       <div className="flex items-center justify-center space-x-2 md:space-x-5">
         <h1
           className="font-bold capitalize text-App_green_L select-none text-5xl cursor-pointer px-0 hidden sm:inline-block"
@@ -99,10 +101,10 @@ const Header = () => {
 
       <div className="flex items-center space-x-2 md:space-x-4 lg:space-x-7">
         <div className="mx-2">
-          {!openMenu && (
+          {!OpenNavbar && (
             <Button
               className="bg-[#E0F2FF] hover:bg-[#bfe3fc] transition-all duration-200 ease-out outline-none w-12 p-0 m-0"
-              onClick={() => setOpenMenu(!openMenu)}
+              onClick={() => dispatch(setOpenNavbar(true))}
             >
               <FiMenu className="text-blue-500 !text-[20px]" />
             </Button>

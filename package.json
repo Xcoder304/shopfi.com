@@ -36,7 +36,8 @@
     "react-top-loading-bar": "^2.1.0",
     "redux": "^4.2.0",
     "styled-components": "^5.3.5",
-    "tabler-icons-react": "^1.48.1"
+    "tabler-icons-react": "^1.48.1",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",

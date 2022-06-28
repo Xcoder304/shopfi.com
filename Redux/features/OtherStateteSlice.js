@@ -5,6 +5,8 @@ const initialState = {
   userDetails: null,
   openLoginModal: false,
   ActivePaymentSection: 1,
+  allCategorys: null,
+  OpenNavbar: false,
 };
 
 export const OtherStatesSlice = createSlice({
@@ -40,6 +42,12 @@ export const OtherStatesSlice = createSlice({
     setPaymentSection: (state, action) => {
       state.ActivePaymentSection = action.payload;
     },
+    setallCategorys: (state, action) => {
+      state.allCategorys = action.payload;
+    },
+    setOpenNavbar: (state, action) => {
+      state.OpenNavbar = action.payload;
+    },
   },
 });
 
@@ -50,6 +58,8 @@ export const {
   NextPaymentStep,
   PrevPaymentSection,
   setPaymentSection,
+  setallCategorys,
+  setOpenNavbar,
 } = OtherStatesSlice.actions;
 
 export const selecteUser = (state) => state.otherStates.userToken;
@@ -60,5 +70,9 @@ export const selecteOpenLoginModal = (state) =>
 
 export const selecteActivePaymentSection = (state) =>
   state.otherStates.ActivePaymentSection;
+
+export const selectallCategorys = (state) => state.otherStates.allCategorys;
+
+export const selectOpenNavbar = (state) => state.otherStates.OpenNavbar;
 
 export default OtherStatesSlice.reducer;
