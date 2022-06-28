@@ -1,23 +1,31 @@
 import Head from "next/dist/shared/lib/head";
 import HomeLayout from "../components/HomeLayout";
-import { fetchTheProducts } from "../utils/DatabaseFuntions";
+import { useDispatch } from "react-redux";
+import { setProducts } from "../Redux/features/ProductSlice";
+import { setallCategorys } from "../Redux/features/OtherStateteSlice";
+import { FetchTheData, GetAllCategories } from "../utils/DatabaseFuntions";
 
-const Home = ({ products }) => {
+const Home = ({ products, categorys }) => {
+  const dispatch = useDispatch();
+  dispatch(setProducts(products));
+  dispatch(setallCategorys(categorys));
+
   return (
     <div>
       <Head>
         <title>Shopfi</title>
       </Head>
-      <HomeLayout products={products} />
+      <HomeLayout />
     </div>
   );
 };
 
-export async function getServerSideProps(context) {
-  const products = await fetchTheProducts();
+export async function getServerSideProps(ctx) {
+  const data = await FetchTheData("product/getProducts");
+  const categorys = await GetAllCategories();
 
   return {
-    props: { products: products },
+    props: { products: data, categorys },
   };
 }
 

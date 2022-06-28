@@ -1,14 +1,13 @@
 import nc from "next-connect";
 import db from "../../../utils/db";
-import Product from "../../../modals/Product";
-import { data } from "../../../utils/data";
+import TempData from "../../../modals/TempData";
 
 const handler = nc();
 
 handler.post(async (req, res) => {
   await db.connect();
-  await Product.deleteMany();
-  await Product.insertMany(data.products);
+  await TempData.deleteMany();
+  await TempData.insertMany(req.body);
   await db.disconnect();
 
   res.send({ message: "success" });
