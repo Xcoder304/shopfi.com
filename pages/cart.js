@@ -27,8 +27,6 @@ const Cart = ({ productsData }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  console.log(products);
-
   useEffect(() => {
     if (!Cookies.get("token")) {
       dispatch(setOpenLoginModal(true));
@@ -44,7 +42,6 @@ const Cart = ({ productsData }) => {
     let newArr = [...products];
     newArr.forEach((data) => {
       if (data._id == id) {
-        console.log("hello");
         data.userSelectedQty = parseInt(e.target.value);
       }
     });

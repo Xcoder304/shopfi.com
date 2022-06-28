@@ -64,9 +64,6 @@ handler.post(async (req, res) => {
     user: user,
     message: "Details are Updated 😎",
   });
-
-  await db.disconnect();
-  s;
 });
 
 export default handler;

@@ -295,7 +295,6 @@ const CreateProduct = ({ allCategoriesData, product }) => {
 
               <div className="flex items-start lg:items-center gap-2 gap-x-3 flex-wrap">
                 {images.map((img, index) => {
-                  console.log("img", img);
                   return (
                     <div
                       className="lg:first:w-full lg:first:h-[500px] w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] lg:first:mb-10 2xl:first:mb-36 relative"

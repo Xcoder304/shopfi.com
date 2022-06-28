@@ -8,8 +8,6 @@ handler.post(async (req, res) => {
   await db.connect();
   const update = await Product.findOneAndUpdate({ _id: req.body.id }, req.body);
   res.send({ success: true, message: " Product Update Successfully" });
-
-  await db.disconnect();
 });
 
 export default handler;

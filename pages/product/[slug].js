@@ -78,8 +78,6 @@ const Slug = ({ product }) => {
     }
   };
 
-  console.log("error", Error);
-
   return (
     <>
       <Head>
@@ -243,8 +241,6 @@ const Slug = ({ product }) => {
 
 export async function getServerSideProps(context) {
   const product = await fetchTheProduct(context.query.slug);
-  console.log(product);
-
   return {
     props: { product },
   };

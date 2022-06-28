@@ -8,7 +8,6 @@ export const CreateRamdomOrderID = () => {
 
 // upload image on cloudinary
 export const UploadImage = async (images) => {
-  console.log(images);
   let imgArr = [];
   const formData = new FormData();
 

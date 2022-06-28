@@ -10,8 +10,6 @@ handler.post(async (req, res) => {
     success: true,
     message: "user Delecte successfully",
   });
-
-  await db.disconnect();
 });
 
 export default handler;

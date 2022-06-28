@@ -12,7 +12,6 @@ handler.post(async (req, res) => {
     }
   );
   res.send({ success: true, updateOrder, message: "fetched the orders" });
-  await db.disconnect();
 });
 
 export default handler;

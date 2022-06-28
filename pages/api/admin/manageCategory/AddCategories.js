@@ -18,8 +18,6 @@ handler.post(async (req, res) => {
     categorie.save();
     res.send({ success: true, message: "new categorie Created" });
   }
-
-  await db.disconnect();
 });
 
 export default handler;

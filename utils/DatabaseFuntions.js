@@ -20,7 +20,6 @@ export const fetchTheProduct = async (slug) => {
   db.connect();
   const fetchData = await Product.findOne({ slug }).lean();
   const product = db.convertDocToString(fetchData);
-  db.disconnect();
 
   return product;
 };
@@ -29,7 +28,6 @@ export const fetchTheProductByID = async (id) => {
   db.connect();
   const fetchData = await Product.findOne({ _id: id }).lean();
   const product = db.convertDocToString(fetchData);
-  db.disconnect();
 
   return product;
 };
@@ -53,7 +51,6 @@ export const fetchCartData = async () => {
 
   const res = f.map((data) => db.convertDocToString(data));
   // const res = db.convertDocToString(f.data);
-  db.disconnect();
 
   return res;
 };
@@ -94,7 +91,6 @@ export const fetchTempData = async () => {
   db.connect();
   const f = await TempData.find({}).lean();
   const res = f.map((data) => db.convertDocToString(data));
-  db.disconnect();
 
   return res;
 };
@@ -112,7 +108,6 @@ export const GetTheOrderDetails = async (id) => {
   await db.connect();
   const fetch = await Order.findOne({ _id: id }).lean();
   const res = db.convertDocToString(fetch);
-  await db.disconnect();
 
   return res;
 };
@@ -151,8 +146,6 @@ export const GetAllCategories = async () => {
   await db.connect();
   const f = await Categories.find({}).lean();
   const res = f.map((data) => db.convertDocToString(data));
-
-  await db.disconnect();
 
   return res;
 };

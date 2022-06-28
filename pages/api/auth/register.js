@@ -20,8 +20,6 @@ handler.post(async (req, res) => {
   });
   user.save();
 
-  await db.disconnect();
-
   res.send({ success: true, message: "user added" });
 });
 

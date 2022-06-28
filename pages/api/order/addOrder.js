@@ -31,8 +31,6 @@ handler.post(async (req, res) => {
     await RemoveProductFromCart({ id });
   }
 
-  await db.disconnect();
-
   res.send({ message: "success" });
 });
 

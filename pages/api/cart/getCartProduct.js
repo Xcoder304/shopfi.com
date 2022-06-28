@@ -10,7 +10,6 @@ const handler = async (req, res) => {
   const token = req.body.token;
   const tokenRes = jwt.verify(token, process.env.JWT_SECRET);
   const items = await Cart.find({ userID: tokenRes.id });
-  await db.disconnect();
   res.send({ success: true, items, message: "data fetched" });
 };
 export default handler;

@@ -18,8 +18,6 @@ handler.post(async (req, res) => {
     upload.save();
     res.send({ success: true, message: "New Product Created Successfully" });
   }
-
-  await db.disconnect();
 });
 
 export default handler;

@@ -11,7 +11,6 @@ handler.get(async (req, res) => {
     "-phonenumber",
   ]);
   res.send({ success: true, users, message: "fetched the orders" });
-  await db.disconnect();
 });
 
 export default handler;

@@ -7,7 +7,6 @@ const handler = nc();
 handler.post(async (req, res) => {
   await db.connect();
   const remove = await Cart.findByIdAndRemove(req.body.id, req.body);
-  await db.disconnect();
 
   res.send("removed");
 });

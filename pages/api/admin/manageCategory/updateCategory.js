@@ -5,8 +5,6 @@ import Categories from "../../../../modals/Categories";
 const handler = nc();
 
 handler.post(async (req, res) => {
-  console.log(req.body);
-
   await db.connect();
   const check = await Categories.findOne({ name: req.body.name });
   if (check) {
@@ -21,8 +19,6 @@ handler.post(async (req, res) => {
     );
     res.send({ success: true, message: "Category Updated Successfully" });
   }
-
-  await db.disconnect();
 });
 
 export default handler;

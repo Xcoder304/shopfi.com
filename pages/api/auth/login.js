@@ -40,8 +40,6 @@ handler.post(async (req, res) => {
       message: "Account not found please create an account",
     });
   }
-
-  await db.disconnect();
 });
 
 export default handler;

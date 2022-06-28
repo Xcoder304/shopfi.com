@@ -10,7 +10,6 @@ handler.post(async (req, res) => {
   let token = req.body.token;
   let tokenRes = jwt.verify(token, process.env.JWT_SECRET);
   const user = await User.findOne({ email: tokenRes.email });
-  await db.disconnect();
   res.send(user);
 });
 

@@ -49,7 +49,6 @@ handler.post(async (req, res) => {
     message: "Details are Updated 😎",
   });
 
-  await db.disconnect();
   s;
 });
 

@@ -1,39 +1,26 @@
 import mongoose from "mongoose";
 
-let connection = {};
-
-async function connect() {
-  if (connection.isConnected) {
-    console.log("already connected");
+const connect = async () => {
+  if (mongoose.connections[0].readyState) {
+    console.log("Already connected.");
     return;
   }
-  if (mongoose.connections.length > 0) {
-    connection.isConnected = mongoose.connections[0].readyState;
+  mongoose.connect(process.env.MONGODB_URI, (err) => {
+    if (err) throw err;
+    console.log("Connected to mongodb.");
+  });
+};
 
-    if (connection.isConnected == 1) {
-      console.log("use old connection");
-      return;
-    }
-
-    await mongoose.disconnect();
-  }
-  let db = mongoose.connect(process.env.MONGODB_URI);
-
-  console.log("this is new connection");
-
-  connection.isConnected = db.connections[0].readyState;
-}
-
-async function disconnect() {
-  if (connection.isConnected) {
-    if (process.env.NODE_ENV === "production") {
-      await mongoose.disconnect();
-      connection.isConnected = false;
-    } else {
-      console.log("not disconnected");
-    }
-  }
-}
+// async function disconnect() {
+//   if (connection.isConnected) {
+//     if (process.env.NODE_ENV === "production") {
+//       await mongoose.disconnect();
+//       connection.isConnected = false;
+//     } else {
+//       console.log("not disconnected");
+//     }
+//   }
+// }
 
 const convertDocToString = (doc) => {
   doc._id = doc._id.toString();
@@ -43,6 +30,6 @@ const convertDocToString = (doc) => {
   return doc;
 };
 
-const db = { connect, disconnect, convertDocToString };
+const db = { connect, convertDocToString };
 
 export default db;

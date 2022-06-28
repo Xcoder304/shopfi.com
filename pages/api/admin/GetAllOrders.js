@@ -9,7 +9,6 @@ handler.get(async (req, res) => {
     createdAt: -1,
   });
   res.send({ success: true, orders, message: "fetched the orders" });
-  await db.disconnect();
 });
 
 export default handler;

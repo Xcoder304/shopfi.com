@@ -8,7 +8,6 @@ handler.post(async (req, res) => {
   await db.connect();
   await TempData.deleteMany();
   await TempData.insertMany(req.body);
-  await db.disconnect();
 
   res.send({ message: "success" });
 });

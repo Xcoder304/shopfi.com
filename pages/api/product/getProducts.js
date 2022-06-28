@@ -7,7 +7,6 @@ const handler = nc();
 handler.get(async (req, res) => {
   db.connect();
   let query = [];
-  console.log(req.query);
 
   // search
   if (req.query.keyword && req.query.keyword !== "") {
@@ -49,7 +48,6 @@ handler.get(async (req, res) => {
   let product = req.query
     ? await Product.aggregate(query)
     : await Product.find({});
-  db.disconnect();
 
   res.send(product);
 });
