@@ -18,6 +18,7 @@ import {
 import { AddTempData } from "../../utils/DatabaseFuntions";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { Toaster, toast } from "react-hot-toast";
 
 const UserDetails = ({ countriesName, tempProductdata }) => {
   const [products, setproducts] = useState(tempProductdata);
@@ -70,18 +71,11 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
   }, []);
 
   const NEXT_PAYMENT_SEC = () => {
+    console.log(form.values);
     const regex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (
-      form.values.termsOfService == false &&
-      form.values.firstname == "" &&
-      form.values.lastname == "" &&
-      form.values.email == "" &&
-      form.values.phonenumber == "" &&
-      form.values.region == "Pick one" &&
-      form.values.address == ""
-    ) {
-      setErrors({ status: true, message: "Please fill all fields" });
+    if (!form.values.region) {
+      toast.error("Region is requrid");
     } else if (
       !form.values.email ||
       form.values.email == null ||
@@ -109,6 +103,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
 
   return (
     <div className="mt-10">
+      <Toaster position="top-center" reverseOrder={false} />
       {products.map(({ images, name, userSelectedQty, price }, index) => {
         return (
           <div
