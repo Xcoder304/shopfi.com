@@ -56,8 +56,8 @@ const HomeLayout = () => {
                     <div
                       className={`lg:w-1/4 w-[300px] m-2 ${
                         userDetails?.MainAdmin || userDetails?.isAdmin
-                          ? "h-[500px]"
-                          : "h-[450px]"
+                          ? "h-[520px]"
+                          : "h-[470px]"
                       } bg-white rounded-lg shadow-md p-5 hover:scale-105 hover:shadow-lg tranition-all duration-300 ease-out`}
                       key={_id}
                     >

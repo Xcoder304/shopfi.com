@@ -10,7 +10,6 @@ import LoadingBar from "react-top-loading-bar";
 import Subapp from "./subapp";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import AuthModal from "../components/AuthModal";
 
 function MyApp({ Component, pageProps }) {
   const [progress, setProgress] = useState(0);
@@ -38,7 +37,6 @@ function MyApp({ Component, pageProps }) {
           waitingTime={300}
           onLoaderFinished={() => setProgress(0)}
         />
-        <AuthModal />
         <Header />
         <Head>
           <link rel="icon" href="/assist/web-icon.png" />

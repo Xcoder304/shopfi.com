@@ -5,6 +5,7 @@ import { ChangeCartValue } from "../Redux/features/ProductSlice";
 import { fetchCartDataWithApi } from "../utils/DatabaseFuntions";
 import { setUser, setUserDetails } from "../Redux/features/OtherStateteSlice";
 import axios from "axios";
+import AuthModal from "../components/AuthModal";
 
 const Subapp = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,8 @@ const Subapp = () => {
       fetchUser();
     }
   }, []);
+
+  return <AuthModal />;
 };
 
 export default Subapp;

@@ -63,7 +63,7 @@ const Header = () => {
   const Search_The_keyword = async (e) => {
     e.preventDefault();
     const newProducts = await FetchTheData(
-      `product/getProducts?keyword=${searchInput}`
+      `product/getProducts?keyword=${searchInput.toLowerCase()}`
     );
     dispatch(setProducts(newProducts));
   };
