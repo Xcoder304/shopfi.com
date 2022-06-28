@@ -5,8 +5,10 @@ import { useSelector } from "react-redux";
 import { selectUserDetails } from "../Redux/features/OtherStateteSlice";
 import { ManageProduct } from "../utils/DatabaseFuntions";
 import { Toaster, toast } from "react-hot-toast";
+import { selecteProducts } from "../Redux/features/ProductSlice";
 
-const HomeLayout = ({ products }) => {
+const HomeLayout = () => {
+  const products = useSelector(selecteProducts);
   const userDetails = useSelector(selectUserDetails);
   const router = useRouter();
 

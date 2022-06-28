@@ -11,7 +11,10 @@ handler.post(async (req, res) => {
   if (check) {
     res.send({ success: false, message: "This Product already Exites" });
   } else {
-    const upload = await new Product(req.body);
+    const upload = await new Product({
+      ...req.body,
+      name: req.body.name.toLowerCase(),
+    });
     upload.save();
     res.send({ success: true, message: "New Product Created Successfully" });
   }

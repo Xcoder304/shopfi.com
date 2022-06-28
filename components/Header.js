@@ -17,11 +17,11 @@ import { BiHelpCircle } from "react-icons/bi";
 import { MdPersonAddAlt, MdOutlineManageAccounts } from "react-icons/md";
 import { CgLogOut } from "react-icons/cg";
 import { FiMenu } from "react-icons/fi";
-import { Pencil, Plus } from "tabler-icons-react";
+import { Pencil, Plus, Search } from "tabler-icons-react";
 // import HeaderMenu from "./HeaderMenu";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { selectecart } from "../Redux/features/ProductSlice";
+import { selectecart, setProducts } from "../Redux/features/ProductSlice";
 import {
   selecteUser,
   setOpenLoginModal,
@@ -30,8 +30,10 @@ import {
 } from "../Redux/features/OtherStateteSlice";
 import Cookies from "js-cookie";
 import { Toaster, toast } from "react-hot-toast";
+import { FetchTheData } from "../utils/DatabaseFuntions";
 
 const Header = () => {
+  const [searchInput, setsearchInput] = useState("");
   const [openModal, handleModal] = useDisclosure(false);
   const [openMenu, setOpenMenu] = useState(false);
   const userDetails = useSelector(selectUserDetails);
@@ -46,6 +48,23 @@ const Header = () => {
     toast.success("Logout Successfully");
   };
 
+  const haddleSearchInput = async (e) => {
+    setsearchInput(e.target.value);
+
+    if (e.target.value.length == 0) {
+      const nproduct = await FetchTheData("product/getProducts");
+      dispatch(setProducts(nproduct));
+    }
+  };
+
+  const Search_The_keyword = async (e) => {
+    e.preventDefault();
+    const newProducts = await FetchTheData(
+      `product/getProducts?keyword=${searchInput}`
+    );
+    dispatch(setProducts(newProducts));
+  };
+
   return (
     <header className="w-full flex items-center justify-between py-4 px-2 md:px-5 shadow-md overflow-x-hidden sticky top-0 z-30 bg-white">
       <Toaster position="top-center" reverseOrder={false} />
@@ -58,11 +77,24 @@ const Header = () => {
           shopfi
           <span className="font-bold text-App_blue_L text-5xl">.</span>
         </h1>
-        <input
-          type="text"
-          placeholder="Search....."
-          className="w-[180px] md:w-[380px] lg:w-[500px] px-3 py-2 focus-within:placeholder:opacity-0 placeholder:transition-all placeholder:duration-100 placeholder:ease-in focus-within:-translate-y-1 focus-within:shadow-md shadow-slate-400 font-bold text-App_green_L placeholder:font-medium rounded-full bg-componets_white text-[22px] placeholder:text-[18px] placeholder:text-gray-600 transition-all duration-300 ease-out outline-none"
-        />
+        <form
+          className="w-[180px] md:w-[380px] lg:w-[500px] relative"
+          onSubmit={Search_The_keyword}
+        >
+          <input
+            type="text"
+            placeholder="Search....."
+            className="w-full px-3 py-2 focus-within:placeholder:opacity-0 placeholder:transition-all placeholder:duration-100 placeholder:ease-in focus-within:-translate-y-1 focus-within:shadow-md shadow-slate-400 font-bold text-App_green_L placeholder:font-medium rounded-full bg-componets_white text-[22px] placeholder:text-[18px] placeholder:text-gray-600 transition-all duration-300 ease-out outline-none"
+            value={searchInput}
+            onChange={haddleSearchInput}
+          />
+          <Button
+            type="submit"
+            className="w-10 h-10 p-0 m-0 rounded-full bg-App_green_L hover:bg-App_green_D transition-all duration-200 ease-out absolute right-2 top-[4px]"
+          >
+            <Search className="text-2xl text-white" />
+          </Button>
+        </form>
       </div>
 
       <div className="flex items-center space-x-2 md:space-x-4 lg:space-x-7">

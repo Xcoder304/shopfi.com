@@ -4,6 +4,7 @@ const initialState = {
   cart: [],
   errorMsg: { status: false, message: "" },
   productQty: 1,
+  Products: null,
 };
 
 export const ProductSlice = createSlice({
@@ -42,12 +43,16 @@ export const ProductSlice = createSlice({
     setproductQty: (state, action) => {
       state.productQty = action.payload;
     },
+    setProducts: (state, action) => {
+      state.Products = action.payload;
+    },
   },
 });
 
-export const { setproductQty, setTheCart, ChangeCartValue } =
+export const { setproductQty, setTheCart, ChangeCartValue, setProducts } =
   ProductSlice.actions;
 export const selecteproductQty = (state) => state.product.productQty;
 export const selectecart = (state) => state.product.cart;
 export const selecteErrorMsgVal = (state) => state.product.errorMsg;
+export const selecteProducts = (state) => state.product.Products;
 export default ProductSlice.reducer;

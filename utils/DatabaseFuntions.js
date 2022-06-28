@@ -5,19 +5,15 @@ import Cart from "../modals/Cart";
 import TempData from "../modals/TempData";
 import Order from "../modals/Order";
 import Categories from "../modals/Categories";
-import Cookies from "js-cookie";
 
 // fetchProducts
-export const fetchProductsData = async () => {
-  db.connect();
-  const product = await Product.find({}).lean();
-
-  const res = product.map((data) => db.convertDocToString(data));
-
-  db.disconnect();
-
-  return res;
+export const FetchTheData = async (apiPath) => {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/${apiPath}`
+  );
+  return data;
 };
+// product/getProducts
 
 // fetching the singal product for the Product Page
 export const fetchTheProduct = async (slug) => {

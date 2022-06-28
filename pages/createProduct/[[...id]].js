@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 
-import {
-  Button,
-  TextInput,
-  NativeSelect,
-  NumberInput,
-  Textarea,
-} from "@mantine/core";
+import { Button, TextInput, NumberInput, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
   fetchTheProductByID,
@@ -24,16 +18,17 @@ const CreateProduct = ({ allCategoriesData, product }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [categoryId, setcategoryId] = useState("");
 
   const form = useForm({
     initialValues: {
-      name: "",
+      name: "".toLowerCase(),
       slug: "",
       price: "",
       brand: "",
       inStock: "",
-      category: "",
       description: "",
+      category: "",
     },
   });
 
@@ -42,7 +37,7 @@ const CreateProduct = ({ allCategoriesData, product }) => {
       setImages(product?.images);
 
       form.setValues({
-        name: product?.name,
+        name: product?.name.toLowerCase(),
         slug: product?.slug,
         price: product?.price,
         brand: product?.brand,
@@ -52,6 +47,14 @@ const CreateProduct = ({ allCategoriesData, product }) => {
       });
     }
   }, [product]);
+
+  const Generate_Slug = () => {
+    const newStr = form.values.name.replace(/\s+/g, "-").toLowerCase();
+    form.setValues({
+      ...form.values,
+      slug: newStr,
+    });
+  };
 
   const handleUploadImage = (e) => {
     const newImages = [];
@@ -80,6 +83,9 @@ const CreateProduct = ({ allCategoriesData, product }) => {
   };
 
   const handleSubmit = async (formData) => {
+    if (!categoryId) {
+      toast.error("Please Enter The Category");
+    }
     setLoading(true);
     if (images.length == 0) {
       toast.error("Please Enter atleast One Image");
@@ -95,6 +101,7 @@ const CreateProduct = ({ allCategoriesData, product }) => {
       let data = {
         id: product?._id,
         ...formData,
+        category: categoryId,
         images: media.length > 0 ? media : [...imgOldURL],
       };
 
@@ -102,6 +109,7 @@ const CreateProduct = ({ allCategoriesData, product }) => {
         ? await ManageProduct("updateProduct", data)
         : await ManageProduct("addProduct", {
             ...formData,
+            category: categoryId,
             images: [...imgOldURL, ...media],
           });
 
@@ -155,6 +163,14 @@ const CreateProduct = ({ allCategoriesData, product }) => {
               className="md:flex-1 w-full mx-auto mb-5"
               {...form.getInputProps("slug")}
             />
+
+            <Button
+              className="w-46 h-10 capitalize text-white text-base bg-App_green_L hover:bg-App_green_D transition-all duration-150 ease-out hover:shadow-lg rounded-md"
+              onClick={Generate_Slug}
+            >
+              generate slug
+            </Button>
+
             <div className="w-full mt-12 flex flex-col items-start md:flex-row space-y-3 md:space-x-3 md:space-y-0">
               <TextInput
                 required
@@ -176,7 +192,7 @@ const CreateProduct = ({ allCategoriesData, product }) => {
                 {...form.getInputProps("brand")}
               />
             </div>
-            <div className="w-full flex flex-col items-start md:flex-row space-y-3 md:space-x-3 md:space-y-0">
+            <div className="w-full flex flex-col items-center md:flex-row space-y-3 md:space-x-3 md:space-y-0">
               <NumberInput
                 required
                 placeholder="***********"
@@ -188,16 +204,20 @@ const CreateProduct = ({ allCategoriesData, product }) => {
                 {...form.getInputProps("inStock")}
               />
 
-              <NativeSelect
-                data={allCategoriesData.map((data) => data.name)}
-                label="Select your Category"
-                size="lg"
+              <select
                 placeholder="Please Selecte A Category"
-                radius="md"
-                className="md:flex-1 w-full mx-auto mb-5 capitalize"
-                required
-                {...form.getInputProps("category")}
-              />
+                id="sltCategory"
+                className="outline-none h-12 md:flex-1 w-full mx-auto mb-5 capitalize border-2 border-App_white_L"
+                onChange={(e) => setcategoryId(e.target.value)}
+              >
+                {allCategoriesData.map((data) => {
+                  return (
+                    <option value={data._id} key={data?._id}>
+                      {data?.name}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
 
             <Textarea
