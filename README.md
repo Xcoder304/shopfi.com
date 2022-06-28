@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# _Shopfi_
 
-## Getting Started
+shopfi is the full-stack e-com web-app with latest web technologys. click here to vist the website 👉 https://shopfi-com.vercel.app/
 
-First, run the development server:
+## Account for test the website
+* email: admin1@gmail.com | password: _imadmin1_ ( This is admin account bu with main admin account you can create more admins)
+* email: rootuser@gmail.com | password: _imrootuser_ (this is main admin account)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Web technologys i Used in This Project
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+* ### Next js  ( is a fullstack web framework 😎 build top of react )
+* ### Mongodb ( for storing the data )
+* ### Tailwind css
+* ### Mantine ui (for beautiful button or modal and more)
+* ### Redux ( for state management )
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+# Description 🖥
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+_shopfi is the full-stack e-com build with next-js tailwind mongodb and more. with full admin control_
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+# Unkown Bugs 🐛
+* this the website dont load its show 504/500 just refreash the page i dont no its bug on server or bug on my code if you help me at mail me here 👉 xcoder304@gmail.ccom
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 🛡 Wearing
+* ## The payment method is fake because i dont find any that would be to add.many payment getways dont work in Pakistan 🤓 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Features/Functionality
 
-## Deploy on Vercel
+## _User Control_
+* _User can add to cart_
+* _User can order the order with his details_
+* _user can login and login out with encrypt password_
+* _user can payment but the is fake_
+* _user can view has orderd product with delivery status and product details_
+* _user can change his profile details like ( name,address,phonenumber,password,ProfileImg)_
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## _Admin Control_
+* _admin Can Login and login out with encrypt password_
+* _admin can change his profile details like ( name,address,phonenumber,password,ProfileImg)_
+* _admin can see the order with users ordered_
+* _admin can marked as delivery or unmarked as delivery the user order_
+* _admin add delete or update a Category_
+* _admin add delete or update a Product_
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## _Main Admin Control_
+* _Main admin Can Login and login out with encrypt password_
+* _Main admin can change his profile details like ( name,address,phonenumber,password,ProfileImg)_
+* _Main admin can see the order with users ordered_
+* _Main admin can marked as delivery or unmarked as delivery the user order_
+* _Main admin add delete or update a Category_
+* _Main admin add delete or update a Product_
+* _Main admin add an user/admin update user/admin create a user an admin or create an admin a user and Main admin can delete the admin/user _
+
+# End 
