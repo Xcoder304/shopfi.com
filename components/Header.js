@@ -81,13 +81,13 @@ const Header = () => {
           <span className="font-bold text-App_blue_L text-5xl">.</span>
         </h1>
         <form
-          className="w-[180px] md:w-[380px] lg:w-[500px] relative"
+          className="w-[180px] md:w-[380px] lg:w-[500px] relative focus-within:-translate-y-1 transition-all duration-300 ease-out"
           onSubmit={Search_The_keyword}
         >
           <input
             type="text"
             placeholder="Search....."
-            className="w-full px-3 py-2 focus-within:placeholder:opacity-0 placeholder:transition-all placeholder:duration-100 placeholder:ease-in focus-within:-translate-y-1 focus-within:shadow-md shadow-slate-400 font-bold text-App_green_L placeholder:font-medium rounded-full bg-componets_white text-[22px] placeholder:text-[18px] placeholder:text-gray-600 transition-all duration-300 ease-out outline-none"
+            className="w-full px-3 py-2 focus-within:placeholder:opacity-0 placeholder:transition-all placeholder:duration-100 placeholder:ease-in  focus-within:shadow-md shadow-slate-400 font-bold text-App_green_L placeholder:font-medium rounded-full bg-componets_white text-[22px] placeholder:text-[18px] placeholder:text-gray-600 transition-all duration-300 ease-out outline-none"
             value={searchInput}
             onChange={haddleSearchInput}
           />
@@ -111,17 +111,19 @@ const Header = () => {
             </Button>
           )}
         </div>
-        <Indicator inline label={cart.length} size={16} color="green">
-          <ActionIcon
-            color="blue"
-            size="xl"
-            onClick={() =>
-              router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`)
-            }
-          >
-            <MdShoppingCart className="text-blue-600 text-3xl" />
-          </ActionIcon>
-        </Indicator>
+        {user && (
+          <Indicator inline label={cart.length} size={16} color="green">
+            <ActionIcon
+              color="blue"
+              size="xl"
+              onClick={() =>
+                router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}/cart`)
+              }
+            >
+              <MdShoppingCart className="text-blue-600 text-3xl" />
+            </ActionIcon>
+          </Indicator>
+        )}
         {user ? (
           <Menu
             opened={openModal}

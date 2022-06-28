@@ -21,6 +21,7 @@ import { Toaster, toast } from "react-hot-toast";
 import Cookies from "js-cookie";
 import cookie from "cookie";
 import { ArrowLeft } from "tabler-icons-react";
+var jwt = require("jsonwebtoken");
 
 const Cart = ({ productsData }) => {
   const [products, setProducts] = useState(productsData);
@@ -32,6 +33,14 @@ const Cart = ({ productsData }) => {
       dispatch(setOpenLoginModal(true));
     }
   }, []);
+
+  useEffect(() => {
+    if (!products) {
+      router.push(`${process.env.NEXT_PUBLIC_HOSTING_URL}`);
+    }
+  }, []);
+
+  console.log(products);
 
   useEffect(() => {
     dispatch(setPaymentSection(1));
@@ -85,7 +94,14 @@ const Cart = ({ productsData }) => {
       </Head>
       <Toaster position="top-center" reverseOrder={false} />
 
-      {products.length == 0 ? (
+      {products == null || !products ? (
+        <div className="flex items-center justify-center w-full h-screen">
+          <h2 className="text-4xl text-red-600 font-bold capitalize">
+            {" "}
+            no product founded
+          </h2>
+        </div>
+      ) : products && products.length == 0 ? (
         <CartEmpty />
       ) : (
         <div className="flex  p-7 bg-App_white_L lg:items-start items-center justify-start lg:justify-between flex-col-reverse lg:flex-row gap-3">
@@ -203,7 +219,7 @@ const Cart = ({ productsData }) => {
           </div>
         </div>
       )}
-      {products.length !== 0 && (
+      {products && products.length !== 0 && (
         <div className="flex items-center justify-center w-full bg-App_white_L pt-5 pb-3">
           <Button
             className="w-44 h-12 !p-0 cursor-pointer !m-0 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-full"
@@ -223,18 +239,19 @@ export async function getServerSideProps(context) {
     (context.req && context.req.headers.cookie) || ""
   );
 
-  let cookieNameData = {};
+  let data = null;
+
   if (mycookie.token) {
-    cookieNameData = mycookie.token;
+    const info = {
+      token: mycookie.token,
+    };
+    let f = await fetchCartDataWithApi(info);
+
+    data = f.items;
   }
 
-  const info = {
-    token: cookieNameData,
-  };
-  const data = await fetchCartDataWithApi(info);
-
   return {
-    props: { productsData: data.items },
+    props: { productsData: data },
   };
 }
 

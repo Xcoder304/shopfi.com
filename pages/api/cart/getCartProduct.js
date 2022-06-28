@@ -6,7 +6,7 @@ var jwt = require("jsonwebtoken");
 const handler = nc();
 
 handler.post(async (req, res) => {
-  await db.connect();
+  db.connect();
   const token = req.body.token;
   const tokenRes = jwt.verify(token, process.env.JWT_SECRET);
   const items = await Cart.find({ userID: tokenRes.id });

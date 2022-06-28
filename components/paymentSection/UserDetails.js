@@ -115,7 +115,12 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
                 src={images[0]?.imgURL || images[0]?.url}
                 className="w-[130px] h-[100px] object-contain "
               />
-              <h2 className="font-bold text-lg text-App_black_L">{name}</h2>
+              <h2 className="font-bold text-lg text-App_black_L">
+                {" "}
+                {name.length > 30
+                  ? name.substr(0, 30) + "..."
+                  : name.substr(0, 30)}
+              </h2>
             </div>
             <div className="text-center py-2 px-4 lg:py-0">
               <h4 className="font-medium text-lg select-none text-App_black_L capitalize">
@@ -145,7 +150,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
         );
       })}
 
-      <div className="w-[90vw] lg:w-[70vw]  mx-auto">
+      <div className="w-[70vw] lg:w-[70%]  mx-auto">
         <form
           onSubmit={form.onSubmit((values) => console.log("register done"))}
           className="w-full  mt-14"
@@ -230,7 +235,7 @@ const UserDetails = ({ countriesName, tempProductdata }) => {
             {...form.getInputProps("termsOfService", { type: "checkbox" })}
           />
 
-          <div className="w-full flex items-center justify-center space-x-3">
+          <div className="w-full flex items-center justify-center space-x-3 mt-3">
             <Button
               type="submit"
               onClick={() => router.back()}

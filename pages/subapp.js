@@ -20,14 +20,14 @@ const Subapp = () => {
   };
 
   useEffect(() => {
-    fetchData();
     if (Cookies.get("token")) {
       dispatch(setUser(Cookies.get("token")));
+      fetchData();
     }
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUser = async () => {
       let { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/auth/getUser`,
         {
@@ -37,7 +37,9 @@ const Subapp = () => {
       dispatch(setUserDetails(data));
     };
 
-    fetchData();
+    if (Cookies.get("token")) {
+      fetchUser();
+    }
   }, []);
 };
 

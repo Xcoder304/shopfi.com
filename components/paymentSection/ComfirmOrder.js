@@ -111,7 +111,7 @@ const ComfirmOrder = ({ tempProductdata }) => {
         />
       )}
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="flex mt-7 items-start justify-start flex-col space-y-7 space-x-0 lg:flex-row lg:space-x-7 lg:space-y-0 lg:justify-between">
+      <div className="flex mt-7 items-center lg:items-start justify-start flex-col space-y-7 space-x-0 lg:flex-row lg:space-x-7 lg:space-y-0 lg:justify-between">
         <div className="w-[90vw] lg:w-[70%]">
           {products.map(({ images, name, userSelectedQty, price }, index) => {
             return (
@@ -148,7 +148,7 @@ const ComfirmOrder = ({ tempProductdata }) => {
           })}
         </div>
 
-        <div className="bg-white w-[90vw] sm:w-[60%] lg:w-[30%] py-6 px-4 rounded-md shadow-md">
+        <div className="bg-white w-[80vw] sm:w-[60%] lg:w-[30%] py-6 px-4 rounded-md shadow-md">
           <form
             onSubmit={form.onSubmit((values) => console.log("register done"))}
             className="w-full"
@@ -237,7 +237,7 @@ const ComfirmOrder = ({ tempProductdata }) => {
             <div className="flex items-center justify-center">
               <Button
                 type="submit"
-                className="bg-App_green_L hover:bg-App_green_D transition-all duration-200 ease-out mt-4 w-[80%] h-12 text-lg"
+                className="bg-App_green_L hover:bg-App_green_D transition-all duration-200 ease-out mt-4 w-[80%] h-12 text-base lg:text-lg"
                 onClick={Comfirm_The_Order}
               >
                 Proceed to Payment
