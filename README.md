@@ -19,10 +19,6 @@ shopfi is the full-stack e-com web-app with latest web technologys. click here t
 
 _shopfi is the full-stack e-com build with next-js tailwind mongodb and more. with full admin control_
 
-
-# Unkown Bugs 🐛
-* this the website dont load its show 504/500 just refreash the page i dont no its bug on server or bug on my code if you help me at mail me here 👉 xcoder304@gmail.ccom
-
 # 🛡 Wearing
 * ## The payment method is fake because i dont find any that would be to add.many payment getways dont work in Pakistan 🤓 
 
