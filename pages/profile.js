@@ -136,25 +136,23 @@ export const getServerSideProps = async (context) => {
   const mycookie = cookie.parse(
     (context.req && context.req.headers.cookie) || ""
   );
+  let res = null;
 
-  let cookieNameData = {};
   if (mycookie.token) {
-    cookieNameData = mycookie.token;
+    const info = {
+      token: mycookie.token,
+    };
+    const { data } = await axios.post(
+      `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/order/getorders`,
+      info
+    );
+    res = data;
   }
-
-  const info = {
-    token: cookieNameData,
-  };
-
-  const { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_HOSTING_URL}/api/order/getorders`,
-    info
-  );
 
   const allorders = await GetAllOrders();
 
   return {
-    props: { orderData: data, allordersData: allorders },
+    props: { orderData: res, allordersData: allorders },
   };
 };
 
