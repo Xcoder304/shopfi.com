@@ -11,8 +11,6 @@ handler.post(async (req, res) => {
     user: user,
     message: "user fetched",
   });
-
-  await db.disconnect();
 });
 
 export default handler;
