@@ -19,9 +19,6 @@ shopfi is the full-stack e-com web-app with latest web technologys. click here t
 
 _shopfi is the full-stack e-com build with next-js tailwind mongodb and more. with full admin control_
 
-# 🛡 Wearing
-* ## The payment method is fake because i dont find any that would be to add.many payment getways dont work in Pakistan 🤓 
-
 # Features/Functionality
 
 ## _User Control_
